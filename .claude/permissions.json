@@ -1,0 +1,53 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(xcode-select:*)",
+      "Bash(xcodebuild:*)",
+      "Bash(mas search:*)",
+      "Bash(brew:*)",
+      "Bash(xcodegen generate:*)",
+      "Bash(xcrun simctl:*)",
+      "Bash(open:*)",
+      "Bash(python3 -m venv:*)",
+      "Bash(source:*)",
+      "Bash(pip install:*)",
+      "Bash(gcloud:*)",
+      "Bash(export PATH=\"/opt/homebrew/share/google-cloud-sdk/bin:$PATH\")",
+      "Bash(/opt/homebrew/share/google-cloud-sdk/bin/gcloud:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push:*)",
+      "Bash(python3:*)",
+      "Bash(uvicorn:*)",
+      "Bash(curl:*)",
+      "Bash(python -m pytest:*)",
+      "Bash(ls:*)",
+      "Bash(git status:*)",
+      "Bash(wc:*)",
+      "Bash(xargs basename:*)",
+      "Bash(pip3.12 show:*)",
+      "Bash(gh repo view:*)",
+      "Bash(git pull:*)"
+    ],
+    "deny": [
+      "Bash(rm -rf *)",
+      "Bash(rm -r *)",
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git reset --hard*)",
+      "Bash(git checkout .*)",
+      "Bash(git restore .*)",
+      "Bash(git clean -f*)",
+      "Bash(git clean -fd*)",
+      "Bash(git branch -D*)",
+      "Bash(git rebase -i*)",
+      "Bash(chmod 777*)",
+      "Bash(mkfs*)",
+      "Bash(dd if=*)",
+      "Bash(kill -9*)",
+      "Bash(killall*)",
+      "Bash(shutdown*)",
+      "Bash(reboot*)"
+    ]
+  }
+}
