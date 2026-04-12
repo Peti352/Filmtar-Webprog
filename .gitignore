@@ -1,0 +1,29 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Feltöltött fájlok (ne kerüljenek verziókezelésbe)
+uploads/*
+!uploads/.gitkeep
+
+# Videók (méretkorlát miatt)
+videos/*
+!videos/.gitkeep
+
+# Érzékeny adatok (opcionális - dev környezetben a config.php része a repo-nak)
+# config.php
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temp files
+*.tmp
+*.bak
