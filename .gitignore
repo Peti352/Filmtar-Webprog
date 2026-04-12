@@ -3,6 +3,9 @@
 .AppleDouble
 .LSOverride
 
+# AI tools (ne kerüljenek a repo-ba)
+.claude/
+
 # Feltöltött fájlok (ne kerüljenek verziókezelésbe)
 uploads/*
 !uploads/.gitkeep
