@@ -1,10 +1,10 @@
 </main>
 
 <footer>
-    <p>&copy; <?= date('Y') ?> Filmtár - Minden jog fenntartva.</p>
+    <p>&copy; 2026 Filmtár. Minden jog fenntartva.</p>
 </footer>
 
-<script src="js/validation.js"></script>
 <script src="js/main.js"></script>
+<script src="js/validation.js"></script>
 </body>
 </html>
