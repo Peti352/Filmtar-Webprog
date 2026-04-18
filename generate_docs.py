@@ -1,9 +1,4 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Filmtar Dokumentacio Generator
-Generalja a Filmtar webalkalmazas dokumentaciojat Word (.docx) formatumban.
-"""
+
 
 from docx import Document
 from docx.shared import Pt, Cm, Inches, RGBColor
@@ -16,7 +11,7 @@ import os
 
 
 def set_cell_shading(cell, color_hex):
-    """Cella hatterzinenek beallitasa."""
+    
     shading = OxmlElement("w:shd")
     shading.set(qn("w:fill"), color_hex)
     shading.set(qn("w:val"), "clear")
@@ -24,7 +19,7 @@ def set_cell_shading(cell, color_hex):
 
 
 def set_cell_border(cell, **kwargs):
-    """Cella szegely beallitasa."""
+    
     tc = cell._tc
     tcPr = tc.get_or_add_tcPr()
     tcBorders = OxmlElement("w:tcBorders")
@@ -38,19 +33,18 @@ def set_cell_border(cell, **kwargs):
 
 
 def add_page_break(doc):
-    """Oldaltores beszurasa."""
+    
     doc.add_page_break()
 
 
 def set_run_font(run, name="Times New Roman", size=12, bold=False, italic=False, color=None):
-    """Run betutipus beallitasa."""
+    
     run.font.name = name
     run.font.size = Pt(size)
     run.font.bold = bold
     run.font.italic = italic
     if color:
         run.font.color.rgb = RGBColor(*color)
-    # Fix for Eastern Asian font fallback
     r = run._element
     rPr = r.get_or_add_rPr()
     rFonts = rPr.find(qn("w:rFonts"))
@@ -63,7 +57,7 @@ def set_run_font(run, name="Times New Roman", size=12, bold=False, italic=False,
 
 
 def add_heading_styled(doc, text, level=1):
-    """Stilizalt fejlec hozzaadasa."""
+    
     heading = doc.add_heading(level=level)
     run = heading.add_run(text)
     if level == 1:
@@ -76,7 +70,7 @@ def add_heading_styled(doc, text, level=1):
 
 
 def add_paragraph_styled(doc, text, bold=False, italic=False, size=12, alignment=None, space_after=6, first_line_indent=None):
-    """Stilizalt bekezdes hozzaadasa."""
+    
     para = doc.add_paragraph()
     run = para.add_run(text)
     set_run_font(run, size=size, bold=bold, italic=italic)
@@ -89,7 +83,7 @@ def add_paragraph_styled(doc, text, bold=False, italic=False, size=12, alignment
 
 
 def add_bullet_point(doc, text, bold_prefix=None, level=0):
-    """Listaelem hozzaadasa."""
+    
     para = doc.add_paragraph(style="List Bullet")
     if bold_prefix:
         run_bold = para.add_run(bold_prefix)
@@ -105,14 +99,13 @@ def add_bullet_point(doc, text, bold_prefix=None, level=0):
 
 
 def add_code_block(doc, code_text):
-    """Kodblokk hozzaadasa szurke hatterrel."""
+    
     para = doc.add_paragraph()
     para.paragraph_format.space_before = Pt(6)
     para.paragraph_format.space_after = Pt(6)
     para.paragraph_format.left_indent = Cm(1)
     run = para.add_run(code_text)
     set_run_font(run, name="Courier New", size=9, color=(40, 40, 40))
-    # Szurke hatter a bekezdesen
     pPr = para._element.get_or_add_pPr()
     shd = OxmlElement("w:shd")
     shd.set(qn("w:fill"), "F0F0F0")
@@ -122,11 +115,10 @@ def add_code_block(doc, code_text):
 
 
 def create_styled_table(doc, headers, rows, col_widths=None):
-    """Stilizalt tablazat letrehozasa."""
+    
     table = doc.add_table(rows=1 + len(rows), cols=len(headers))
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
 
-    # Fejlec sor
     header_row = table.rows[0]
     for i, header_text in enumerate(headers):
         cell = header_row.cells[i]
@@ -137,7 +129,6 @@ def create_styled_table(doc, headers, rows, col_widths=None):
         para.alignment = WD_ALIGN_PARAGRAPH.CENTER
         set_cell_shading(cell, "1A1A2E")
 
-    # Adatsorok
     for row_idx, row_data in enumerate(rows):
         row = table.rows[row_idx + 1]
         for col_idx, cell_text in enumerate(row_data):
@@ -146,17 +137,14 @@ def create_styled_table(doc, headers, rows, col_widths=None):
             para = cell.paragraphs[0]
             run = para.add_run(str(cell_text))
             set_run_font(run, size=10)
-            # Zebra csikozas
             if row_idx % 2 == 1:
                 set_cell_shading(cell, "F4F4F8")
 
-    # Oszlopszelessegek beallitasa ha megadva
     if col_widths:
         for i, width in enumerate(col_widths):
             for row in table.rows:
                 row.cells[i].width = Cm(width)
 
-    # Szegely beallitasa
     tbl = table._tbl
     tblPr = tbl.tblPr if tbl.tblPr is not None else OxmlElement("w:tblPr")
     borders = OxmlElement("w:tblBorders")
@@ -173,7 +161,7 @@ def create_styled_table(doc, headers, rows, col_widths=None):
 
 
 def add_screenshot_placeholder(doc, caption=""):
-    """Kep placeholder hozzaadasa."""
+    
     para = doc.add_paragraph()
     para.alignment = WD_ALIGN_PARAGRAPH.CENTER
     para.paragraph_format.space_before = Pt(12)
@@ -190,21 +178,15 @@ def add_screenshot_placeholder(doc, caption=""):
 
 
 def generate_documentation():
-    """Fo dokumentacio generalas."""
+    
     doc = Document()
 
-    # =========================================================================
-    # MARGOK BEALLITASA - 2.5 cm minden oldalon
-    # =========================================================================
     for section in doc.sections:
         section.top_margin = Cm(2.5)
         section.bottom_margin = Cm(2.5)
         section.left_margin = Cm(2.5)
         section.right_margin = Cm(2.5)
 
-    # =========================================================================
-    # Alapertelmezett stilus beallitasa
-    # =========================================================================
     style = doc.styles["Normal"]
     font = style.font
     font.name = "Times New Roman"
@@ -218,15 +200,10 @@ def generate_documentation():
     rFonts.set(qn("w:hAnsi"), "Times New Roman")
     rFonts.set(qn("w:cs"), "Times New Roman")
 
-    # =========================================================================
-    # 1. FEDOLAP
-    # =========================================================================
-    # Ures sorok a kozepre igazitashoz
     for _ in range(6):
         p = doc.add_paragraph()
         p.paragraph_format.space_after = Pt(0)
 
-    # Cim
     title_para = doc.add_paragraph()
     title_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = title_para.add_run("Filmtar")
@@ -237,16 +214,13 @@ def generate_documentation():
     run = subtitle_para.add_run("Webalkalmazas Dokumentacio")
     set_run_font(run, size=24, bold=True, color=(226, 182, 22))
 
-    # Elvalaszto vonal
     line_para = doc.add_paragraph()
     line_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = line_para.add_run("_" * 50)
     set_run_font(run, size=12, color=(200, 200, 200))
 
-    # Ures sor
     doc.add_paragraph()
 
-    # Tantargy
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = p.add_run("Webprogramozas 1 - Gyakorlat beadando")
@@ -254,7 +228,6 @@ def generate_documentation():
 
     doc.add_paragraph()
 
-    # Keszitette
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = p.add_run("Keszitette:")
@@ -267,7 +240,6 @@ def generate_documentation():
 
     doc.add_paragraph()
 
-    # Datum
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     run = p.add_run("2026")
@@ -275,9 +247,6 @@ def generate_documentation():
 
     add_page_break(doc)
 
-    # =========================================================================
-    # 2. TARTALOMJEGYZEK
-    # =========================================================================
     add_heading_styled(doc, "Tartalomjegyzek", level=1)
 
     toc_items = [
@@ -314,31 +283,23 @@ def generate_documentation():
     for num, title, page in toc_items:
         p = doc.add_paragraph()
         p.paragraph_format.space_after = Pt(2)
-        # Szam
         run_num = p.add_run(num + " ")
         is_main = not "." in num[:-1]  # Fo fejezet-e
         set_run_font(run_num, size=12, bold=is_main)
-        # Cim
         run_title = p.add_run(title)
         set_run_font(run_title, size=12, bold=is_main)
-        # Pontok es oldalszam
         dots = " " + "." * (60 - len(num) - len(title)) + " "
         run_dots = p.add_run(dots)
         set_run_font(run_dots, size=12, color=(180, 180, 180))
         run_page = p.add_run(page)
         set_run_font(run_page, size=12)
-        # Behuzas alfejezetenel
         if num.count(".") > 1:
             p.paragraph_format.left_indent = Cm(1)
 
     add_page_break(doc)
 
-    # =========================================================================
-    # 3. PROJEKT ATTEKINTESE
-    # =========================================================================
     add_heading_styled(doc, "1. Projekt attekintese", level=1)
 
-    # 1.1 Alkalmazas celja
     add_heading_styled(doc, "1.1. Az alkalmazas celja es funkcioi", level=2)
 
     add_paragraph_styled(doc,
@@ -364,7 +325,6 @@ def generate_documentation():
     for f in features:
         add_bullet_point(doc, f)
 
-    # 1.2 Temavalasztas
     add_heading_styled(doc, "1.2. Temavalasztas indoklasa", level=2)
 
     add_paragraph_styled(doc,
@@ -381,7 +341,6 @@ def generate_documentation():
         "magyar film szerepel, koztuk Oscar-dijas alkotasok (Saul fia, Mindenki) "
         "es ikonikus klasszikusok (A tanu, Macskafogo).")
 
-    # 1.3 Technologiak
     add_heading_styled(doc, "1.3. Hasznalt technologiak", level=2)
 
     tech_data = [
@@ -400,7 +359,6 @@ def generate_documentation():
 
     doc.add_paragraph()
 
-    # 1.4 Front-controller
     add_heading_styled(doc, "1.4. Front-controller tervezesi minta", level=2)
 
     add_paragraph_styled(doc,
@@ -422,9 +380,6 @@ def generate_documentation():
 
     add_page_break(doc)
 
-    # =========================================================================
-    # 4. RENDSZERKOVETELMENYEK
-    # =========================================================================
     add_heading_styled(doc, "2. Rendszerkovetelmenyek", level=1)
 
     add_heading_styled(doc, "2.1. Szerver oldali kovetelmenyek", level=2)
@@ -472,9 +427,6 @@ def generate_documentation():
 
     add_page_break(doc)
 
-    # =========================================================================
-    # 5. ADATBAZIS TERVEZES
-    # =========================================================================
     add_heading_styled(doc, "3. Adatbazis tervezes", level=1)
 
     add_paragraph_styled(doc,
@@ -483,7 +435,6 @@ def generate_documentation():
         "utf8mb4_hungarian_ci rendezessel mukodik, biztositva a magyar "
         "karakterek helyes kezeleset.")
 
-    # 3.1 ER diagram
     add_heading_styled(doc, "3.1. ER diagram (szoveges abrazolas)", level=2)
 
     er_text = (
@@ -522,10 +473,8 @@ def generate_documentation():
         "es a kepek tablak kapcsolodnak kulso kulcsokon keresztul. A filmek "
         "tabla onallo entitas, nem kapcsolodik mas tablakhoz.")
 
-    # 3.2 Tablak reszletes leirasa
     add_heading_styled(doc, "3.2. Tablak reszletes leirasa", level=2)
 
-    # felhasznalok tabla
     add_heading_styled(doc, "felhasznalok tabla", level=3)
     add_paragraph_styled(doc,
         "A rendszer regisztralt felhasznaloit tarolja. A jelszo mezo "
@@ -547,7 +496,6 @@ def generate_documentation():
 
     doc.add_paragraph()
 
-    # filmek tabla
     add_heading_styled(doc, "filmek tabla", level=3)
     add_paragraph_styled(doc,
         "A filmadatbazis kozponti tablaja. Minden film adatait itt taroljuk. "
@@ -570,7 +518,6 @@ def generate_documentation():
 
     doc.add_paragraph()
 
-    # uzenetek tabla
     add_heading_styled(doc, "uzenetek tabla", level=3)
     add_paragraph_styled(doc,
         "A kapcsolatfelveteli urlapon keresztul kuldott uzeneteket tarolja. "
@@ -593,7 +540,6 @@ def generate_documentation():
 
     doc.add_paragraph()
 
-    # kepek tabla
     add_heading_styled(doc, "kepek tabla", level=3)
     add_paragraph_styled(doc,
         "A felhasznalok altal feltoltott galeria kepek nyilvantartasa. "
@@ -612,7 +558,6 @@ def generate_documentation():
         kepek_rows,
         col_widths=[3.5, 3.5, 5, 5])
 
-    # 3.3 Kapcsolatok
     add_heading_styled(doc, "3.3. Kapcsolatok (kulso kulcsok)", level=2)
 
     add_paragraph_styled(doc, "Az adatbazisban ket kulso kulcs (Foreign Key) kapcsolat talalhato:")
@@ -635,12 +580,8 @@ def generate_documentation():
 
     add_page_break(doc)
 
-    # =========================================================================
-    # 6. ALKALMAZAS FELEPITESE
-    # =========================================================================
     add_heading_styled(doc, "4. Alkalmazas felepitese", level=1)
 
-    # 4.1 Mappastruktura
     add_heading_styled(doc, "4.1. Mappastruktura", level=2)
 
     add_paragraph_styled(doc,
@@ -681,7 +622,6 @@ def generate_documentation():
     )
     add_code_block(doc, tree)
 
-    # 4.2 Fajlok es szerepuk
     add_heading_styled(doc, "4.2. Fajlok es szerepuk", level=2)
 
     files_data = [
@@ -710,7 +650,6 @@ def generate_documentation():
 
     doc.add_paragraph()
 
-    # 4.3 Front-controller mukodese
     add_heading_styled(doc, "4.3. Front-controller minta mukodese", level=2)
 
     add_paragraph_styled(doc,
@@ -740,7 +679,6 @@ def generate_documentation():
         else:
             add_bullet_point(doc, step)
 
-    # 4.4 PRG minta
     add_heading_styled(doc, "4.4. PRG (Post-Redirect-Get) minta", level=2)
 
     add_paragraph_styled(doc,
@@ -765,12 +703,8 @@ def generate_documentation():
 
     add_page_break(doc)
 
-    # =========================================================================
-    # 7. FUNKCIOK BEMUTATASA
-    # =========================================================================
     add_heading_styled(doc, "5. Funkciok bemutatasa", level=1)
 
-    # 5.1 Fooldal
     add_heading_styled(doc, "5.1. Fooldal", level=2)
 
     add_paragraph_styled(doc,
@@ -804,7 +738,6 @@ def generate_documentation():
 
     add_screenshot_placeholder(doc, "5.1.c. abra: Fooldal - Google Maps beagyazas")
 
-    # 5.2 Regisztracio es bejelentkezes
     add_heading_styled(doc, "5.2. Regisztracio es bejelentkezes", level=2)
 
     add_heading_styled(doc, "Regisztracio", level=3)
@@ -850,7 +783,6 @@ def generate_documentation():
         "fooldalra. A kijelentkezes.php csak egy visszajelzo oldal, amelyre "
         "normalis esetben nem jutunk el (az atiranyitas korabban megtortenik).")
 
-    # 5.3 Kepgaleria
     add_heading_styled(doc, "5.3. Kepgaleria es feltoltes", level=2)
 
     add_paragraph_styled(doc,
@@ -889,7 +821,6 @@ def generate_documentation():
 
     add_page_break(doc)
 
-    # 5.4 Kapcsolati urlap
     add_heading_styled(doc, "5.4. Kapcsolati urlap", level=2)
 
     add_paragraph_styled(doc,
@@ -929,7 +860,6 @@ def generate_documentation():
 
     add_screenshot_placeholder(doc, "5.4. abra: Kapcsolati urlap validacios hibauzenetekkel")
 
-    # 5.5 Uzenetek
     add_heading_styled(doc, "5.5. Uzenetek oldal", level=2)
 
     add_paragraph_styled(doc,
@@ -946,7 +876,6 @@ def generate_documentation():
 
     add_screenshot_placeholder(doc, "5.5. abra: Uzenetek oldal tablazatos nezetben")
 
-    # 5.6 CRUD muveletek
     add_heading_styled(doc, "5.6. CRUD muveletek (filmek kezelese)", level=2)
 
     add_paragraph_styled(doc,
@@ -1006,9 +935,6 @@ def generate_documentation():
 
     add_page_break(doc)
 
-    # =========================================================================
-    # 8. BIZTONSAG
-    # =========================================================================
     add_heading_styled(doc, "6. Biztonsag", level=1)
 
     add_paragraph_styled(doc,
@@ -1077,9 +1003,6 @@ def generate_documentation():
 
     add_page_break(doc)
 
-    # =========================================================================
-    # 9. RESZPONZIV DIZAJN
-    # =========================================================================
     add_heading_styled(doc, "7. Reszponziv dizajn", level=1)
 
     add_paragraph_styled(doc,
@@ -1162,9 +1085,6 @@ def generate_documentation():
 
     add_page_break(doc)
 
-    # =========================================================================
-    # 10. OSSZEFOGLALAS
-    # =========================================================================
     add_heading_styled(doc, "8. Osszefoglalas", level=1)
 
     add_paragraph_styled(doc,
@@ -1194,9 +1114,6 @@ def generate_documentation():
         "valamint RESTful API kialakitasa. A jelenlegi verzio stabil "
         "alapot biztosit ezekhez a bovitesekhez.")
 
-    # =========================================================================
-    # 11. IRODALOMJEGYZEK
-    # =========================================================================
     add_heading_styled(doc, "9. Irodalomjegyzek", level=1)
 
     references = [
@@ -1240,30 +1157,24 @@ def generate_documentation():
         p = doc.add_paragraph()
         p.paragraph_format.space_after = Pt(8)
 
-        # Sorszam es cim
         run_num = p.add_run("[{}] ".format(i))
         set_run_font(run_num, size=11, bold=True)
 
         run_title = p.add_run(ref[0])
         set_run_font(run_title, size=11, bold=True)
 
-        # URL
         p2 = doc.add_paragraph()
         p2.paragraph_format.space_after = Pt(2)
         p2.paragraph_format.left_indent = Cm(0.7)
         run_url = p2.add_run(ref[1])
         set_run_font(run_url, size=10, italic=True, color=(0, 100, 200))
 
-        # Leiras
         p3 = doc.add_paragraph()
         p3.paragraph_format.space_after = Pt(12)
         p3.paragraph_format.left_indent = Cm(0.7)
         run_desc = p3.add_run(ref[2])
         set_run_font(run_desc, size=10)
 
-    # =========================================================================
-    # MENTES
-    # =========================================================================
     output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Filmtar_Dokumentacio.docx")
     doc.save(output_path)
     print("Dokumentacio sikeresen generalva: {}".format(output_path))

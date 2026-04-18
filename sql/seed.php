@@ -1,33 +1,16 @@
 <?php
-/**
- * seed.php - Filmtár adatbázis inicializáló szkript
- *
- * Ez a szkript létrehozza az adatbázis tábláit és feltölti mintaadatokkal.
- * A jelszavakat a PHP password_hash() függvényével generálja, így
- * a password_verify() azonnal működni fog a bejelentkezésnél.
- *
- * Használat:
- *   Parancssor:  php seed.php
- *   Böngésző:    http://localhost/WebProg/sql/seed.php
- *
- * FIGYELEM: A szkript törli az összes meglévő adatot!
- */
 
-// --- Kimenet beállítása (CLI és böngésző kompatibilitás) ---------------------
 $isCli = (php_sapi_name() === 'cli');
 if (!$isCli) {
     header('Content-Type: text/html; charset=utf-8');
     echo '<!DOCTYPE html><html lang="hu"><head><meta charset="utf-8">';
     echo '<title>Filmtár - Adatbázis inicializálás</title>';
-    echo '<style>body{font-family:monospace;padding:20px;background:#1a1a2e;color:#e0e0e0;}'
-       . '.ok{color:#4ecca3;}.hiba{color:#e74c3c;}.info{color:#f39c12;}'
-       . 'h1{color:#4ecca3;}</style>';
+    echo '<style>body{font-family:monospace;padding:20px;background:
+       . '.ok{color:
+       . 'h1{color:
     echo '</head><body><h1>Filmtár - Adatbázis inicializálás</h1><pre>';
 }
 
-/**
- * Üzenet kiírása formázással
- */
 function msg(string $szoveg, string $tipus = 'info'): void
 {
     global $isCli;
@@ -44,13 +27,10 @@ function msg(string $szoveg, string $tipus = 'info'): void
     }
 }
 
-// =============================================================================
-// 1. Kapcsolódás az adatbázisszerverhez (adatbázis nélkül)
-// =============================================================================
 msg('Kapcsolódás a MySQL szerverhez...');
 
 try {
-    // Először adatbázis nélkül kapcsolódunk, hogy létre tudjuk hozni
+
     $pdo = new PDO(
         'mysql:host=localhost;charset=utf8mb4',
         'root',
@@ -67,9 +47,6 @@ try {
     exit(1);
 }
 
-// =============================================================================
-// 2. Adatbázis létrehozása és kiválasztása
-// =============================================================================
 msg('Adatbázis létrehozása (filmtar)...');
 
 $pdo->exec("CREATE DATABASE IF NOT EXISTS `filmtar`
@@ -80,18 +57,13 @@ $pdo->exec("SET NAMES utf8mb4");
 
 msg('Adatbázis kész.', 'ok');
 
-// =============================================================================
-// 3. Táblák létrehozása (régi táblák törlésével)
-// =============================================================================
 msg('Táblák létrehozása...');
 
-// -- Törlés fordított függőségi sorrendben --
 $pdo->exec("DROP TABLE IF EXISTS `kepek`");
 $pdo->exec("DROP TABLE IF EXISTS `uzenetek`");
 $pdo->exec("DROP TABLE IF EXISTS `filmek`");
 $pdo->exec("DROP TABLE IF EXISTS `felhasznalok`");
 
-// -- felhasznalok --
 $pdo->exec("
     CREATE TABLE `felhasznalok` (
         `id`              INT          AUTO_INCREMENT PRIMARY KEY   COMMENT 'Egyedi azonosító',
@@ -106,7 +78,6 @@ $pdo->exec("
 ");
 msg('  felhasznalok tábla létrehozva.', 'ok');
 
-// -- filmek --
 $pdo->exec("
     CREATE TABLE `filmek` (
         `id`         INT           AUTO_INCREMENT PRIMARY KEY   COMMENT 'Egyedi azonosító',
@@ -121,7 +92,6 @@ $pdo->exec("
 ");
 msg('  filmek tábla létrehozva.', 'ok');
 
-// -- uzenetek --
 $pdo->exec("
     CREATE TABLE `uzenetek` (
         `id`        INT          AUTO_INCREMENT PRIMARY KEY   COMMENT 'Egyedi azonosító',
@@ -140,7 +110,6 @@ $pdo->exec("
 ");
 msg('  uzenetek tábla létrehozva.', 'ok');
 
-// -- kepek --
 $pdo->exec("
     CREATE TABLE `kepek` (
         `id`            INT          AUTO_INCREMENT PRIMARY KEY   COMMENT 'Egyedi azonosító',
@@ -159,13 +128,6 @@ msg('  kepek tábla létrehozva.', 'ok');
 
 msg('Minden tábla sikeresen létrehozva.', 'ok');
 
-// =============================================================================
-// 4. Mintaadatok beszúrása
-// =============================================================================
-
-// -----------------------------------------------------------------------------
-// 4a. Felhasználók (jelszavak PHP password_hash()-sel generálva)
-// -----------------------------------------------------------------------------
 msg('Felhasználók beszúrása...');
 
 $felhasznalok = [
@@ -203,7 +165,7 @@ $stmt = $pdo->prepare("
 ");
 
 foreach ($felhasznalok as $f) {
-    // Jelszó hash generálása PHP-vel (bcrypt, PASSWORD_DEFAULT)
+
     $hash = password_hash($f['jelszo'], PASSWORD_DEFAULT);
 
     $stmt->execute([
@@ -218,9 +180,6 @@ foreach ($felhasznalok as $f) {
     msg("  {$f['felhasznalonev']} (jelszó: {$f['jelszo']}) - hash: " . substr($hash, 0, 30) . '...', 'ok');
 }
 
-// -----------------------------------------------------------------------------
-// 4b. Filmek (12 magyar film)
-// -----------------------------------------------------------------------------
 msg('Filmek beszúrása...');
 
 $filmek = [
@@ -291,9 +250,6 @@ foreach ($filmek as $film) {
     msg("  {$film[0]} ({$film[2]})", 'ok');
 }
 
-// -----------------------------------------------------------------------------
-// 4c. Üzenetek (5 minta: 3 bejelentkezett felhasználó + 2 vendég)
-// -----------------------------------------------------------------------------
 msg('Üzenetek beszúrása...');
 
 $uzenetek = [
@@ -357,14 +313,10 @@ foreach ($uzenetek as $u) {
     msg("  \"{$u['targy']}\" - {$u['nev']} ({$tipus})", 'ok');
 }
 
-// =============================================================================
-// 5. Összegzés
-// =============================================================================
 msg('');
 msg('=== Adatbázis inicializálás befejezve ===', 'ok');
 msg('');
 
-// Statisztika lekérdezése
 $tablak = [
     'felhasznalok' => 'Felhasználók',
     'filmek'       => 'Filmek',
