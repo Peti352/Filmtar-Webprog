@@ -1,12 +1,11 @@
 <?php
-// adatbazis beallitasok
+
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'filmtar');
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
-// PDO kapcsolat
 try {
     $dsn = 'mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=' . DB_CHARSET;
     $dbh = new PDO($dsn, DB_USER, DB_PASS);

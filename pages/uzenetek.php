@@ -20,7 +20,7 @@
                 <table class="messages-table">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>
                             <th>Küldő neve</th>
                             <th>E-mail</th>
                             <th>Tárgy</th>

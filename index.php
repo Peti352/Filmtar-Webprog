@@ -2,7 +2,6 @@
 session_start();
 require __DIR__ . '/config.php';
 
-// flash uzenet
 function flash($tipus, $uzenet) {
     $_SESSION['flash'] = ['tipus' => $tipus, 'uzenet' => $uzenet];
 }
@@ -25,11 +24,9 @@ function redirect($url) {
     exit;
 }
 
-// POST muveletek
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $action = $_POST['action'];
 
-    // belepes
     if ($action === 'login') {
         $felhasznalonev = trim($_POST['login_nev'] ?? '');
         $jelszo = $_POST['jelszo'] ?? '';
@@ -58,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
     }
 
-    // regisztracio
     if ($action === 'register') {
         $csaladi_nev = trim($_POST['csaladi_nev'] ?? '');
         $utonev = trim($_POST['utonev'] ?? '');
@@ -109,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         redirect('index.php?page=belepes');
     }
 
-    // kapcsolat urlap
     if ($action === 'contact_submit') {
         $nev = trim($_POST['nev'] ?? '');
         $email = trim($_POST['email'] ?? '');
@@ -136,7 +131,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         redirect('index.php?page=kapcsolat');
     }
 
-    // CRUD - uj film
     if ($action === 'crud_create') {
         $cim = trim($_POST['cim'] ?? '');
         $rendezo = trim($_POST['rendezo'] ?? '');
@@ -157,7 +151,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         redirect('index.php?page=crud');
     }
 
-    // CRUD - film frissites
     if ($action === 'crud_update') {
         $id = (int)($_POST['id'] ?? 0);
         $cim = trim($_POST['cim'] ?? '');
@@ -179,7 +172,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         redirect('index.php?page=crud');
     }
 
-    // CRUD - film torles
     if ($action === 'crud_delete') {
         $id = (int)($_POST['id'] ?? 0);
         if ($id > 0) {
@@ -192,7 +184,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         redirect('index.php?page=crud');
     }
 
-    // kep feltoltes
     if ($action === 'image_upload') {
         if (!bejelentkezveVan()) {
             flash('error', 'Képfeltöltéshez be kell jelentkezned!');
@@ -230,7 +221,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     }
 }
 
-// oldal valasztas
 $page = $_GET['page'] ?? 'fooldal';
 $engedelyezett_oldalak = ['fooldal', 'kepek', 'kapcsolat', 'uzenetek', 'crud', 'belepes', 'regisztracio', 'kijelentkezes'];
 

@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    // hamburger menu
     const hamburgerBtn = document.getElementById('hamburger-btn');
     const mainNav = document.getElementById('main-nav');
 
@@ -19,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    // flash messages auto hide
     const flashMessages = document.querySelectorAll('.flash-message');
     flashMessages.forEach(function (flash) {
         const closeBtn = flash.querySelector('.flash-close');
@@ -47,7 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }, 5000);
     });
 
-    // gallery lightbox
     const galleryItems = document.querySelectorAll('.gallery-item img');
 
     if (galleryItems.length > 0) {

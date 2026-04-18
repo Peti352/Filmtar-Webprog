@@ -19,7 +19,7 @@ switch ($action) {
                 <table class="crud-table">
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th>
                             <th>Cím</th>
                             <th>Rendező</th>
                             <th>Év</th>
