@@ -1,23 +1,16 @@
-# Filmtár - Apache konfiguráció
-# Rövid PHP tag engedélyezése
 php_flag short_open_tag on
 
-# Karakter kódolás beállítása
 AddDefaultCharset UTF-8
 
-# Feltöltési limit emelése (képfeltöltéshez)
 php_value upload_max_filesize 10M
 php_value post_max_size 12M
 
-# Könyvtárlistázás tiltása
 Options -Indexes
 
-# Érzékeny fájlok védelme
 <FilesMatch "\.(sql|md|log)$">
     Require all denied
 </FilesMatch>
 
-# uploads mappa védelme PHP futtatástól
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteRule ^uploads/.*\.php$ - [F,L]
