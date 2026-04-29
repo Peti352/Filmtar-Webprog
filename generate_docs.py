@@ -160,8 +160,56 @@ def create_styled_table(doc, headers, rows, col_widths=None):
     return table
 
 
+SCREENSHOT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs", "screenshots")
+
+SCREENSHOT_MAP = {
+    "5.1.a": ["1. Főoldal — hero.png"],
+    "5.1.b": ["1. Főoldal — videok.png"],
+    "5.1.c": ["1. Főoldal — terkep.png"],
+    "5.2.a": ["2. Regisztráció.png"],
+    "5.2.b": ["2. Bejelentkezés.png"],
+    "5.3":   ["3. Képek menü.png"],
+    "5.4":   ["4. Kapcsolat.png"],
+    "5.5":   ["5. Üzenetek táblázat.png"],
+    "5.6.a": ["6. CRUD lista.png"],
+    "5.6.b": ["5.6.b uresurlap.png"],
+    "5.6.c": ["5.6.cszerkesztes.png"],
+    "5.6.d": ["5.6.d torles.png"],
+    "7":     ["7. zarthamburger.PNG", "7. nyitotthamb.PNG", "7. képfügg.PNG"],
+}
+
+
+def add_screenshot(doc, key, caption=""):
+    files = SCREENSHOT_MAP.get(key, [])
+    inserted = False
+    for fname in files:
+        full = os.path.join(SCREENSHOT_DIR, fname)
+        if os.path.exists(full):
+            para = doc.add_paragraph()
+            para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            para.paragraph_format.space_before = Pt(12)
+            para.paragraph_format.space_after = Pt(4)
+            run = para.add_run()
+            try:
+                run.add_picture(full, width=Cm(14))
+            except Exception:
+                run.add_text(f"[KEPHIBA: {fname}]")
+            inserted = True
+
+    if not inserted:
+        add_screenshot_placeholder(doc, caption)
+        return
+
+    if caption:
+        cap_para = doc.add_paragraph()
+        cap_para.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        cap_para.paragraph_format.space_after = Pt(12)
+        run2 = cap_para.add_run(caption)
+        set_run_font(run2, size=10, italic=True, color=(100, 100, 100))
+
+
 def add_screenshot_placeholder(doc, caption=""):
-    
+
     para = doc.add_paragraph()
     para.alignment = WD_ALIGN_PARAGRAPH.CENTER
     para.paragraph_format.space_before = Pt(12)
@@ -292,7 +340,16 @@ def generate_documentation():
         ("6.", "Biztonsag", "16"),
         ("7.", "Reszponziv dizajn", "17"),
         ("8.", "Osszefoglalas", "18"),
-        ("9.", "Irodalomjegyzek", "18"),
+        ("9.", "Munkafelosztas", "19"),
+        ("9.1.", "Gaal Peter felelossegi terulete", "19"),
+        ("9.2.", "Molnar Adam felelossegi terulete", "19"),
+        ("9.3.", "Kozos munka", "20"),
+        ("10.", "Beadasi es belepesi adatok", "21"),
+        ("10.1.", "Internetes elerhetoseg", "21"),
+        ("10.2.", "Tarhely (FTP) belepesi adatok", "21"),
+        ("10.3.", "MySQL adatbazis belepesi adatok", "21"),
+        ("10.4.", "Teszt-felhasznalok", "22"),
+        ("11.", "Irodalomjegyzek", "23"),
     ]
 
     for num, title, page in toc_items:
@@ -734,7 +791,7 @@ def generate_documentation():
         "egy 'Rolunk' szekci reszletesebben bemutatja a projekt celjat "
         "es lehetosegeit.")
 
-    add_screenshot_placeholder(doc, "5.1.a. abra: Fooldal - Hero szekio es Rolunk szoveg")
+    add_screenshot(doc, "5.1.a", "5.1.a. abra: Fooldal - Hero szekio es Rolunk szoveg")
 
     add_heading_styled(doc, "Videok szekio", level=3)
     add_paragraph_styled(doc,
@@ -743,7 +800,7 @@ def generate_documentation():
         "beagyazott videot (<iframe>). Mindketto reszponzivan alkalmazkodik "
         "a kepernyomerthez.")
 
-    add_screenshot_placeholder(doc, "5.1.b. abra: Fooldal - Videok szekio")
+    add_screenshot(doc, "5.1.b", "5.1.b. abra: Fooldal - Videok szekio")
 
     add_heading_styled(doc, "Google Maps szekio", level=3)
     add_paragraph_styled(doc,
@@ -751,7 +808,7 @@ def generate_documentation():
         "egy budapesti cimet (1052 Budapest, Vaci utca 1.) jeleniti meg. "
         "A terkep iframe-ként van beagyazva, lazy loading tamogatassal.")
 
-    add_screenshot_placeholder(doc, "5.1.c. abra: Fooldal - Google Maps beagyazas")
+    add_screenshot(doc, "5.1.c", "5.1.c. abra: Fooldal - Google Maps beagyazas")
 
     add_heading_styled(doc, "5.2. Regisztracio es bejelentkezes", level=2)
 
@@ -773,7 +830,7 @@ def generate_documentation():
     for v in reg_validations:
         add_bullet_point(doc, v)
 
-    add_screenshot_placeholder(doc, "5.2.a. abra: Regisztracios urlap")
+    add_screenshot(doc, "5.2.a", "5.2.a. abra: Regisztracios urlap")
 
     add_heading_styled(doc, "Bejelentkezes", level=3)
     add_paragraph_styled(doc,
@@ -788,7 +845,7 @@ def generate_documentation():
         "Ha a felhasznalo mar be van jelentkezve, az oldal errol tajekoztatja "
         "es nem jelenitit meg az urlapot.")
 
-    add_screenshot_placeholder(doc, "5.2.b. abra: Bejelentkezesi urlap")
+    add_screenshot(doc, "5.2.b", "5.2.b. abra: Bejelentkezesi urlap")
 
     add_heading_styled(doc, "Kijelentkezes", level=3)
     add_paragraph_styled(doc,
@@ -832,7 +889,7 @@ def generate_documentation():
     for c in upload_checks:
         add_bullet_point(doc, c)
 
-    add_screenshot_placeholder(doc, "5.3. abra: Kepgaleria CSS Grid elrendezesben")
+    add_screenshot(doc, "5.3", "5.3. abra: Kepgaleria CSS Grid elrendezesben")
 
     add_page_break(doc)
 
@@ -873,7 +930,7 @@ def generate_documentation():
         "Bejelentkezett felhasznalo eseten a nev es az e-mail mezo "
         "automatikusan kitoltodik a session adataival.")
 
-    add_screenshot_placeholder(doc, "5.4. abra: Kapcsolati urlap validacios hibauzenetekkel")
+    add_screenshot(doc, "5.4", "5.4. abra: Kapcsolati urlap validacios hibauzenetekkel")
 
     add_heading_styled(doc, "5.5. Uzenetek oldal", level=2)
 
@@ -889,7 +946,7 @@ def generate_documentation():
         "'Vendeg' felirat jelenik meg. Az uzenetek a kuldes datuma szerint "
         "csokkenosorrendben jelennek meg (legujabb elol).")
 
-    add_screenshot_placeholder(doc, "5.5. abra: Uzenetek oldal tablazatos nezetben")
+    add_screenshot(doc, "5.5", "5.5. abra: Uzenetek oldal tablazatos nezetben")
 
     add_heading_styled(doc, "5.6. CRUD muveletek (filmek kezelese)", level=2)
 
@@ -907,7 +964,7 @@ def generate_documentation():
         "jelennek meg (legujabb elol). Az oldal tetejen egy 'Uj film "
         "hozzaadasa' gomb talalhato.")
 
-    add_screenshot_placeholder(doc, "5.6.a. abra: Filmek listazasa tablazatban")
+    add_screenshot(doc, "5.6.a", "5.6.a. abra: Filmek listazasa tablazatban")
 
     add_heading_styled(doc, "Letrehozas (Create)", level=3)
     add_paragraph_styled(doc,
@@ -924,7 +981,7 @@ def generate_documentation():
         "segitsegevel, majd flash uzenettel tajekoztatja a felhasznalot "
         "es atiranyit a listara.")
 
-    add_screenshot_placeholder(doc, "5.6.b. abra: Uj film hozzaadasa urlap")
+    add_screenshot(doc, "5.6.b", "5.6.b. abra: Uj film hozzaadasa urlap")
 
     add_heading_styled(doc, "Szerkesztes (Update)", level=3)
     add_paragraph_styled(doc,
@@ -935,7 +992,7 @@ def generate_documentation():
         "talalhato, hibauzenet jelenik meg. A modositas a crud_update "
         "action-on keresztul tortenik UPDATE SQL utasitassal.")
 
-    add_screenshot_placeholder(doc, "5.6.c. abra: Film szerkesztese")
+    add_screenshot(doc, "5.6.c", "5.6.c. abra: Film szerkesztese")
 
     add_heading_styled(doc, "Torles (Delete)", level=3)
     add_paragraph_styled(doc,
@@ -946,7 +1003,7 @@ def generate_documentation():
         "a crud_delete action-on keresztul torli a filmet a filmek tablabol. "
         "A 'Megsem' gomb visszairanyit a listara.")
 
-    add_screenshot_placeholder(doc, "5.6.d. abra: Film torlesenek megerositese")
+    add_screenshot(doc, "5.6.d", "5.6.d. abra: Film torlesenek megerositese")
 
     add_page_break(doc)
 
@@ -1096,7 +1153,7 @@ def generate_documentation():
     for rf in responsive_features:
         add_bullet_point(doc, rf)
 
-    add_screenshot_placeholder(doc, "7. abra: Az alkalmazas mobil nezetben (hamburger menu es 1 oszlopos galeria)")
+    add_screenshot(doc, "7", "7. abra: Az alkalmazas mobil nezetben (hamburger menu es 1 oszlopos galeria)")
 
     add_page_break(doc)
 
@@ -1129,7 +1186,116 @@ def generate_documentation():
         "valamint RESTful API kialakitasa. A jelenlegi verzio stabil "
         "alapot biztosit ezekhez a bovitesekhez.")
 
-    add_heading_styled(doc, "9. Irodalomjegyzek", level=1)
+    add_page_break(doc)
+
+    add_heading_styled(doc, "9. Munkafelosztas", level=1)
+
+    add_paragraph_styled(doc,
+        "A projektet ket fos csoportmunkaban keszitettuk el. Az alabbi tablazat "
+        "rogziti, hogy a ket hallgato kozul ki melyik feladatreszt valositotta meg.")
+
+    munkafelosztas = [
+        ["Hallgato",        "Neptun", "Felelossegi terulet"],
+        ["Gaal Peter",      "GULX05", "Backend, adatbazis, autentikacio, CRUD, deploy"],
+        ["Molnar Adam",     "MFG82Z", "Frontend, reszponziv CSS, JavaScript, multimedia"],
+    ]
+    create_styled_table(doc, munkafelosztas[0], munkafelosztas[1:], col_widths=[4, 3, 9])
+    doc.add_paragraph()
+
+    add_heading_styled(doc, "Gaal Peter (GULX05) - Backend es infrastruktura", level=2)
+    gp_items = [
+        "Adatbazis-sema tervezese: g_felhasznalok, g_filmek, g_uzenetek, g_kepek tablak es kulso kulcs kapcsolatok",
+        "sql/database.sql es sql/seed.php adatbazis-inicializacios szkriptek",
+        "Front-controller tervezesi minta megvalositasa (index.php) - routing, POST feldolgozas, PRG minta",
+        "Autentikacio: regisztracio, bejelentkezes, kijelentkezes, session-kezeles",
+        "CRUD muveletek a filmek tablahoz (pages/crud.php) - lista, uj, szerkesztes, torles utvonalakkal",
+        "Bejelentkezesi es regisztracios oldalak (pages/belepes.php, pages/regisztracio.php)",
+        "Apache .htaccess es config.php (PDO prepared statements) konfiguracio",
+        "Internetes tarhelyre valo telepites - Nethely.hu, FTP feltoltes, MySQL import",
+        "Megosztott tarhelyhez g_ tabla-prefix bevezetese az utkozesek elkerulesere",
+    ]
+    for it in gp_items:
+        add_bullet_point(doc, it)
+
+    add_heading_styled(doc, "Molnar Adam (MFG82Z) - Frontend, multimedia, deploy-csomag", level=2)
+    ma_items = [
+        "HTML5 sablonok: templates/header.php (navigacio, felhasznaloi info), templates/footer.php",
+        "Teljes reszponziv CSS3 stiluslap (css/style.css) - Flexbox, Grid, ket breakpoint media query",
+        "JavaScript funkciok (js/main.js): hamburger menu, lightbox kepgaleria, flash uzenet animacio",
+        "Kapcsolati urlap kliens oldali validacioja (js/validation.js) - regex, hossz-ellenorzes",
+        "Tartalmi oldalak: fooldal, kepgaleria + feltoltes, kapcsolati urlap, uzenetek listazasa",
+        "Multimedia: 5 masodperces sajat intro video, YouTube beagyazas (Saul fia hivatalos elozetes), Google terkep",
+        "Nethely deployment csomag es utmutato (NETHELY_DEPLOY.md, config.nethely.php, sql/database_nethely.sql)",
+        "Kepgaleria es uzenetek SQL-lekerdezesek prefix-atirasa",
+    ]
+    for it in ma_items:
+        add_bullet_point(doc, it)
+
+    add_heading_styled(doc, "Kozos munka", level=2)
+    kozos_items = [
+        "Tema-valasztas (magyar filmadatbazis), tervezes, kovetelmeny-elemzes",
+        "Kod-attekintes, hibajavitas, refaktoralas",
+        "Dokumentacio osszeallitasa, kepernyokepek keszitese",
+        "Tesztelek a hostolt alkalmazason",
+    ]
+    for it in kozos_items:
+        add_bullet_point(doc, it)
+
+    add_page_break(doc)
+
+    add_heading_styled(doc, "10. Beadasi es belepesi adatok", level=1)
+
+    add_paragraph_styled(doc,
+        "Az alabbi adatok szuksegesek az alkalmazas elerheteseghez es ellenorzesehez. "
+        "A jelszavakat csak az oktato szamara, a megoldas javitasahoz adjuk meg.")
+
+    add_heading_styled(doc, "10.1. Internetes elerhetoseg", level=2)
+    elerheto_rows = [
+        ["Weboldal URL",   "http://filmtar.nhely.hu/"],
+        ["GitHub repo",    "https://github.com/Peti352/Filmtar-Webprog"],
+    ]
+    create_styled_table(doc, ["Megnevezes", "Cim"], elerheto_rows, col_widths=[5, 11])
+    doc.add_paragraph()
+
+    add_heading_styled(doc, "10.2. Tarhely (FTP) belepesi adatok", level=2)
+    ftp_rows = [
+        ["FTP host",       "ftp.nethely.hu"],
+        ["FTP felhasznalo","filmtar"],
+        ["FTP jelszo",     "Webprog-1!"],
+        ["FTP port",       "21"],
+    ]
+    create_styled_table(doc, ["Megnevezes", "Ertek"], ftp_rows, col_widths=[5, 11])
+    doc.add_paragraph()
+
+    add_heading_styled(doc, "10.3. MySQL adatbazis belepesi adatok", level=2)
+    db_rows = [
+        ["DB host",        "localhost"],
+        ["DB nev",         "filmtar"],
+        ["DB felhasznalo", "filmtar"],
+        ["DB jelszo",      "Webprog-1!"],
+        ["phpMyAdmin",     "https://www.nethely.hu/  (Adatbazis menu -> phpMyAdmin)"],
+    ]
+    create_styled_table(doc, ["Megnevezes", "Ertek"], db_rows, col_widths=[5, 11])
+    doc.add_paragraph()
+
+    add_heading_styled(doc, "10.4. Teszt-felhasznalok", level=2)
+    add_paragraph_styled(doc, "A seed-adatokban harom teszt-felhasznalo van letrehozva, amelyekkel az alkalmazas funkcioi azonnal kiprobalhatok:")
+    user_rows = [
+        ["admin", "admin123",  "Adminisztrator (alapertelmezett)"],
+        ["teszt", "teszt123",  "Teszt-felhasznalo"],
+        ["user1", "jelszo123", "Normal felhasznalo"],
+    ]
+    create_styled_table(doc, ["Felhasznalonev", "Jelszo", "Szerepkor"], user_rows, col_widths=[4, 4, 8])
+    doc.add_paragraph()
+
+    add_paragraph_styled(doc,
+        "Megjegyzes: Az alkalmazas reszponziv, igy mobil bongeszobol is megfeleloen "
+        "megtekitheto. A bejelentkezes utan az 'Uzenetek' menupont es a CRUD muveletek "
+        "is elerhetove valnak.")
+
+    add_page_break(doc)
+
+    add_heading_styled(doc, "11. Irodalomjegyzek", level=1)
 
     references = [
         [
