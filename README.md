@@ -146,8 +146,15 @@ A részletes dokumentáció a `Filmtar_Dokumentacio.docx` fájlban található.
 ## 👥 Készítők
 
 **Webprogramozás 1 - Gyakorlat Beadandó**
-- Készítette: Gaál Péter (Neptun: GULX05) és Molnár Ádám (Neptun: MFG82Z)
-- Dátum: 2026
+
+| Név | Neptun | Terület |
+|---|---|---|
+| Gaál Péter | GULX05 | Backend, adatbázis, autentikáció, CRUD |
+| Molnár Ádám | MFG82Z | Frontend, reszponzív CSS, JavaScript, multimédia, deploy |
+
+A részletes munkafelosztásért lásd a [CONTRIBUTORS.md](CONTRIBUTORS.md) fájlt.
+
+Dátum: 2026
 
 ## 📄 Licenc
 
