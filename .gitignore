@@ -15,6 +15,14 @@ deploy.zip
 Kritériumok/
 kriteriumok_raw_dump.txt
 
+.deploy_tmp/
+.deploy_tmp_imgs/
+
+Filmtar_Dokumentacio.docx
+docs/screenshots/*.png
+docs/screenshots/*.PNG
+!docs/screenshots/README.md
+
 .vscode/
 .idea/
 *.swp
