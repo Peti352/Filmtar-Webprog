@@ -6,7 +6,7 @@
 
     <?php
     try {
-        $stmt = $dbh->prepare("SELECT u.id, u.kuldo_id, u.nev, u.email, u.targy, u.uzenet, u.kuldve FROM uzenetek u ORDER BY u.kuldve DESC");
+        $stmt = $dbh->prepare("SELECT u.id, u.kuldo_id, u.nev, u.email, u.targy, u.uzenet, u.kuldve FROM g_uzenetek u ORDER BY u.kuldve DESC");
         $stmt->execute();
         $uzenetek = $stmt->fetchAll();
     } catch (PDOException $e) {

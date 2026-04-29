@@ -23,7 +23,7 @@
 
     <?php
     try {
-        $stmt = $dbh->prepare("SELECT k.id, k.fajlnev, k.feltoltve, f.csaladi_nev, f.utonev FROM kepek k LEFT JOIN felhasznalok f ON k.feltolto_id = f.id ORDER BY k.feltoltve DESC");
+        $stmt = $dbh->prepare("SELECT k.id, k.fajlnev, k.feltoltve, f.csaladi_nev, f.utonev FROM g_kepek k LEFT JOIN g_felhasznalok f ON k.feltolto_id = f.id ORDER BY k.feltoltve DESC");
         $stmt->execute();
         $kepek = $stmt->fetchAll();
     } catch (PDOException $e) {
