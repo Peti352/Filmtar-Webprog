@@ -168,13 +168,13 @@ SCREENSHOT_MAP = {
     "5.1.c": ["1. Főoldal — terkép.png"],
     "5.2.a": ["2. Regisztráció.png"],
     "5.2.b": ["2. Bejelentkezés.png"],
-    "5.3":   ["3. Képek menü.png"],
+    "5.3":   ["3. Képék menü.png"],
     "5.4":   ["4. Kapcsolat.png"],
     "5.5":   ["5. Üzenetek táblázat.png"],
     "5.6.a": ["6. CRUD lista.png"],
-    "5.6.b": ["5.6.b uresűrlap.png"],
+    "5.6.b": ["5.6.b üresűrlap.png"],
     "5.6.c": ["5.6.cszerkesztes.png"],
-    "5.6.d": ["5.6.d torles.png"],
+    "5.6.d": ["5.6.d törlés.png"],
     "7":     ["7. zarthamburger.PNG", "7. nyitotthamb.PNG", "7. képfügg.PNG"],
 }
 
@@ -283,7 +283,7 @@ def generate_documentation():
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = p.add_run("Gaál Péter")
+    run = p.add_run("Gaál Pétér")
     set_run_font(run, size=18, bold=True, color=(26, 26, 46))
 
     p = doc.add_paragraph()
@@ -322,18 +322,18 @@ def generate_documentation():
         ("2.1.", "Szerver oldali követelmények", "5"),
         ("2.2.", "Kliens oldali követelmények", "5"),
         ("3.", "Adatbázis tervezés", "6"),
-        ("3.1.", "ER diagram", "6"),
+        ("3.1.", "ÉR diagram", "6"),
         ("3.2.", "Táblák részletes leírása", "6"),
         ("3.3.", "Kapcsolatok (külső kulcsok)", "8"),
         ("4.", "Alkalmazás felépítése", "9"),
-        ("4.1.", "Mappastruktúra", "9"),
+        ("4.1.", "Mappastruktúrá", "9"),
         ("4.2.", "Fájlok és szerepük", "9"),
         ("4.3.", "Front-controller minta működése", "10"),
         ("4.4.", "PRG (Post-Redirect-Get) minta", "10"),
         ("5.", "Funkciók bemutatása", "11"),
         ("5.1.", "Főoldal", "11"),
         ("5.2.", "Regisztráció és bejelentkezés", "11"),
-        ("5.3.", "Képgaléria és feltöltés", "12"),
+        ("5.3.", "Képgaléria és féltöltés", "12"),
         ("5.4.", "Kapcsolati űrlap", "13"),
         ("5.5.", "Üzenetek oldal", "14"),
         ("5.6.", "CRUD műveletek", "14"),
@@ -341,8 +341,8 @@ def generate_documentation():
         ("7.", "Reszponzív dizájn", "17"),
         ("8.", "Összefoglalás", "18"),
         ("9.", "Munkafelosztás", "19"),
-        ("9.1.", "Gaál Péter felelősségi területe", "19"),
-        ("9.2.", "Molnár Ádám felelősségi területe", "19"),
+        ("9.1.", "Gaál Pétér felelősségi térülete", "19"),
+        ("9.2.", "Molnár Ádám felelősségi térülete", "19"),
         ("9.3.", "Közös munka", "20"),
         ("10.", "Beadási és belépési adatok", "21"),
         ("10.1.", "Internetes elérhetőség", "21"),
@@ -377,22 +377,22 @@ def generate_documentation():
     add_paragraph_styled(doc,
         "A Filmtár egy teljes értékű webalkalmazás, amely egy filmadatbázis "
         "kezelését teszi lehetővé. Az alkalmazás célja, hogy a felhasználók "
-        "kényelmesen tallózhatnak a magyar filmek között, uj filmeket "
+        "kényelmesen tallózhatnak a magyar filmek között, új filmeket "
         "vehetnek fel az adatbázisba, szerkeszthetik és torolhetik azokat. "
         "Az alkalmazás emellett közösségi funkciókal is rendelkezik: "
         "felhasználói regisztráció, bejelentkezés, képfeltöltés és "
-        "kapcsolati űrlap reven.")
+        "kapcsolati űrlap révén.")
 
     add_paragraph_styled(doc, "Az alkalmazás fő funkciói:")
 
     features = [
         "Felhasználói regisztráció és bejelentkezés (session alapú autentikáció)",
-        "Filmek teljes koru kezelese (CRUD: létrehozas, olvasás, módosítás, törlés)",
+        "Filmek teljes körű kezelése (CRUD: létrehozas, olvasás, módosítás, törlés)",
         "Képgaléria képfeltöltési lehetőséggel (csak bejelentkezett felhasználóknak)",
         "Kapcsolati űrlap ketszintu (kliens + szerver oldali) validációval",
         "Üzenetek megtekintese (bejelentkezett felhasználóknak)",
         "Főoldal hero szekcióval, videó beágyazással és Google Maps térképpel",
-        "Reszponzív (mobilbarat) megjelenes hamburger menüvel",
+        "Reszponzív (mobilbarat) megjelenés hamburger menüvel",
     ]
     for f in features:
         add_bullet_point(doc, f)
@@ -400,32 +400,32 @@ def generate_documentation():
     add_heading_styled(doc, "1.2. Témaválasztás indoklása", level=2)
 
     add_paragraph_styled(doc,
-        "A Filmtár témaválasztás mellett több szempont is szolt. A filmadatbázis "
+        "A Filmtár témaválasztás mellett több szempont is szólt. A filmadatbázis "
         "egy kozelitheto és koennyen ertelmezheto téma, amely lehetőséget ad "
-        "a CRUD műveletek termeszetes bemutatasa. A filmeknek jol definialt "
-        "tulajdonsagai vannak (cim, rendező, ev, műfaj, értékelés, leírás), "
-        "amelyek kivaloan illusztraljak az adatbázis-tervezés és az "
+        "a CRUD műveletek természetes bemutatasa. A filmeknek jól definialt "
+        "tulajdonságai vannak (cím, rendező, év, műfáj, értékelés, leírás), "
+        "amelyek kiválóan illusztraljak az adatbázis-tervezés és az "
         "űrlapkezeles elveit.")
 
     add_paragraph_styled(doc,
-        "A magyar filmek választása kulonleges jelleget ad a projektnek, "
-        "és egyben kulturalis értéket is kozvetit. Az adatbázisban 12 ismert "
-        "magyar film szerepel, koztuk Oscar-dijas alkotasok (Saul fia, Mindenki) "
-        "és ikonikus klasszikusok (A tanu, Macskafogó).")
+        "A magyar filmek választása különleges jelleget ad a projektnek, "
+        "és egyben kulturális értékét is közvetít. Az adatbázisban 12 ismert "
+        "magyar film szerepel, köztük Oscar-dijas alkotasok (Saul fia, Mindenki) "
+        "és ikonikus klasszikusok (A tanú, Macskafogó).")
 
     add_heading_styled(doc, "1.3. Használt technológiák", level=2)
 
     tech_data = [
-        ["PHP 8+", "Szerver oldali programozasi nyelv", "Üzleti logika, adatbázis műveletek, session kezeles"],
-        ["MySQL 5.7+", "Relacios adatbázis-kezelő rendszer", "Adattárolas (felhasználók, filmek, üzenetek, képek)"],
+        ["PHP 8+", "Szerver oldali programozasi nyelv", "Üzleti logika, adatbázis műveletek, session kezelés"],
+        ["MySQL 5.7+", "Relacios adatbázis-kezelő rendszer", "Adattárolas (felhasználók, filmek, üzenetek, képék)"],
         ["HTML5", "Jelolonyelv", "Oldal strukturaja, szemantikus elemek"],
-        ["CSS3", "Stíluslapnyelv", "Megjelenes, reszponzív design, animációk"],
+        ["CSS3", "Stíluslapnyelv", "Megjelenés, reszponzív design, animációk"],
         ["JavaScript", "Kliens oldali programozasi nyelv", "Form validáció, hamburger menü, lightbox galéria"],
-        ["PDO", "PHP Data Objects", "Adatbázis absztrakcios reteg (prepared statements)"],
+        ["PDO", "PHP Data Objects", "Adatbázis absztrakcios réteg (prepared statements)"],
     ]
 
     create_styled_table(doc,
-        ["Technologia", "Típus", "Felhasználasi terület"],
+        ["Technológia", "Típus", "Felhasználasi térület"],
         tech_data,
         col_widths=[4, 5, 8])
 
@@ -436,16 +436,16 @@ def generate_documentation():
     add_paragraph_styled(doc,
         "Az alkalmazás a front-controller tervezési mintát valósítja meg. "
         "Ez azt jelenti, hogy minden HTTP kérés egyetlen belépési ponton, "
-        "az index.php fájlon keresztül erkezik. Az index.php a $_GET['page'] "
-        "paraméter alapján donti el, mely oldal tartalom jelenjen meg. "
-        "Ez a megoldasnak szamos elonye van:")
+        "az index.php fájlon keresztül érkezik. Az index.php a $_GET['page'] "
+        "paramétér alapján dönti el, mely oldal tartalom jelenjen meg. "
+        "Ez a megoldásnak számos előnye van:")
 
     fc_advantages = [
-        "Központi hozzaferes-kezelest biztosít (pl. session ellenőrzés)",
+        "Központi hozzáférés-kezelést biztosít (pl. session ellenőrzés)",
         "A POST kérésesek feldolgozása egységes helyen történik (PRG minta)",
         "A navigáció és a sablonok (header/footer) automatikusan betoltodnek",
         "Biztonsági ellenőrzés: csak az engedélyezett oldalak érhetők el",
-        "Konnyebb karbantartas: egyetlen fájlban látszik a teljes routing logika",
+        "Könnyebb karbantartás: egyetlen fájlban látszik a teljes routing logika",
     ]
     for adv in fc_advantages:
         add_bullet_point(doc, adv)
@@ -457,43 +457,43 @@ def generate_documentation():
     add_heading_styled(doc, "2.1. Szerver oldali követelmények", level=2)
 
     server_reqs = [
-        ["Apache", "2.4+", "Webszerver, mod_rewrite tamogatassal"],
+        ["Apache", "2.4+", "Webszerver, mód_rewrite tamogatassal"],
         ["PHP", "8.0+", "Szerver oldali szkriptnyelv"],
         ["MySQL", "5.7+ / MariaDB 10.3+", "Relacios adatbázis-kezelő"],
-        ["PDO MySQL", "Beepitett", "PHP adatbázis driver (php-mysql csomag)"],
+        ["PDO MySQL", "Beépített", "PHP adatbázis driver (php-mysql csomag)"],
     ]
 
     create_styled_table(doc,
-        ["Szoftver", "Minimum verzio", "Megjegyzés"],
+        ["Szoftver", "Minimum verzió", "Megjegyzés"],
         server_reqs,
         col_widths=[4, 4.5, 8.5])
 
     doc.add_paragraph()
 
     add_paragraph_styled(doc,
-        "Ajánlott fejlesztoi kornyezet: XAMPP, WAMP, MAMP vagy Laragon, "
+        "Ajánlott fejlesztoi környezet: XAMPP, WAMP, MAMP vagy Laragon, "
         "amelyek az összes szükséges szoftvert tartalmazzak.")
 
     add_heading_styled(doc, "2.2. Kliens oldali követelmények", level=2)
 
     client_reqs = [
-        ["Google Chrome", "90+", "Teljes tamogatas"],
-        ["Mozilla Firefox", "88+", "Teljes tamogatas"],
-        ["Microsoft Edge", "90+", "Teljes tamogatas (Chromium alapú)"],
-        ["Safari", "14+", "Teljes tamogatas"],
+        ["Google Chrome", "90+", "Teljes támogatás"],
+        ["Mozilla Firefox", "88+", "Teljes támogatás"],
+        ["Microsoft Edge", "90+", "Teljes támogatás (Chromium alapú)"],
+        ["Safari", "14+", "Teljes támogatás"],
     ]
 
     create_styled_table(doc,
-        ["Bongeszo", "Minimum verzio", "Tamogatottsag"],
+        ["Bongeszo", "Minimum verzió", "Tamogatottsag"],
         client_reqs,
         col_widths=[5, 4, 8])
 
     doc.add_paragraph()
 
     add_paragraph_styled(doc,
-        "Az alkalmazás modern CSS3 technikat (CSS Grid, Flexbox, CSS változók, "
+        "Az alkalmazás modern CSS3 technikát (CSS Grid, Flexbox, CSS változók, "
         "média queries) és HTML5 elemeket használ, ezért modern bongeszo "
-        "szükséges a helyes megjeleniteshtez. JavaScript engedélyezése szükséges "
+        "szükséges a helyes megjelenítéséhez. JavaScript engedélyezése szükséges "
         "a kliens oldali űrlapvalidációhoz, a hamburger menühoz és a lightbox "
         "galériahoz.")
 
@@ -502,12 +502,12 @@ def generate_documentation():
     add_heading_styled(doc, "3. Adatbázis tervezés", level=1)
 
     add_paragraph_styled(doc,
-        "Az alkalmazás egy 'filmtar' nevu MySQL adatbázist használ, amely négy "
+        "Az alkalmazás egy 'filmtar' nevű MySQL adatbázist használ, amely négy "
         "táblát tartalmaz. Az adatbázis utf8mb4 karakterkészlettel és "
         "utf8mb4_hungarian_ci rendezéssel működik, biztosítva a magyar "
         "karakterek helyes kezelését.")
 
-    add_heading_styled(doc, "3.1. ER diagram (szöveges ábrazolas)", level=2)
+    add_heading_styled(doc, "3.1. ÉR diagram (szövéges ábrazolas)", level=2)
 
     er_text = (
         "+------------------+          +------------------+\n"
@@ -516,8 +516,8 @@ def generate_documentation():
         "| PK id            |          | PK id            |\n"
         "|    felhasználónév |          |    cím           |\n"
         "|    jelszó         |          |    rendező       |\n"
-        "|    családi_nev    |          |    ev            |\n"
-        "|    utónév         |          |    műfaj         |\n"
+        "|    családi_név    |          |    év            |\n"
+        "|    útónév         |          |    műfáj         |\n"
         "|    email          |          |    értékelés     |\n"
         "|    létrehozva     |          |    leírás        |\n"
         "+--------+---------+          +------------------+\n"
@@ -527,13 +527,13 @@ def generate_documentation():
         "         |                                       |\n"
         "         v                                       v\n"
         "+------------------+          +------------------+\n"
-        "|    üzenetek      |          |      képek       |\n"
+        "|    üzenetek      |          |      képék       |\n"
         "+------------------+          +------------------+\n"
         "| PK id            |          | PK id            |\n"
-        "|    nev            |          |    fájlnév       |\n"
-        "|    email          |          |    eredeti_nev   |\n"
-        "|    tárgy          |          | FK feltöltő_id   |\n"
-        "|    üzenet         |          |    feltoltve     |\n"
+        "|    név            |          |    fájlnév       |\n"
+        "|    email          |          |    eredeti_név   |\n"
+        "|    tárgy          |          | FK féltöltő_id   |\n"
+        "|    üzenét         |          |    feltöltve     |\n"
         "| FK küldő_id      |          +------------------+\n"
         "|    küldve         |\n"
         "+------------------+\n"
@@ -542,23 +542,23 @@ def generate_documentation():
 
     add_paragraph_styled(doc,
         "A felhasználók tábla a központi entitás, amelyhez az üzenetek "
-        "és a képek táblák kapcsolódnak külső kulcsokon keresztül. A filmek "
+        "és a képék táblák kapcsolódnak külső kulcsokon keresztül. A filmek "
         "tábla önálló entitás, nem kapcsolódik más táblákhoz.")
 
     add_heading_styled(doc, "3.2. Táblák részletes leírása", level=2)
 
     add_heading_styled(doc, "felhasználók tábla", level=3)
     add_paragraph_styled(doc,
-        "A rendszer regisztralt felhasználóit tárolja. A jelszó mező "
+        "A rendszer regisztrált felhasználóit tárolja. A jelszó méző "
         "PHP password_hash() függvény által generalt bcrypt hash-t tartalmaz.")
 
     felh_rows = [
-        ["id", "INT", "PK, AUTO_INCREMENT", "Egyedi azonosító"],
-        ["felhasználónév", "VARCHAR(50)", "NOT NULL, UNIQUE", "Bejelentkezési nev"],
-        ["jelszó", "VARCHAR(255)", "NOT NULL", "Bcrypt hash (password_hash)"],
-        ["családi_nev", "VARCHAR(100)", "NOT NULL", "Családi név"],
-        ["utónév", "VARCHAR(100)", "NOT NULL", "Utónév"],
-        ["email", "VARCHAR(100)", "NOT NULL", "E-mail cim"],
+        ["id", "INT", "PK, AUTÓ_INCREMENT", "Egyedi azonosító"],
+        ["felhasználónév", "VARCHAR(50)", "NŐT NULL, UNIQUE", "Bejelentkezési név"],
+        ["jelszó", "VARCHAR(255)", "NŐT NULL", "Bcrypt hash (password_hash)"],
+        ["családi_nev", "VARCHAR(100)", "NŐT NULL", "Családi név"],
+        ["útónév", "VARCHAR(100)", "NŐT NULL", "Útónév"],
+        ["email", "VARCHAR(100)", "NŐT NULL", "E-mail cím"],
         ["létrehozva", "DATETIME", "DEFAULT CURRENT_TIMESTAMP", "Regisztráció időpontja"],
     ]
     create_styled_table(doc,
@@ -575,11 +575,11 @@ def generate_documentation():
         "törlés műveletek történnek.")
 
     filmek_rows = [
-        ["id", "INT", "PK, AUTO_INCREMENT", "Egyedi azonosító"],
-        ["cim", "VARCHAR(200)", "NOT NULL", "Film cime"],
-        ["rendező", "VARCHAR(100)", "NOT NULL", "Rendező neve"],
-        ["ev", "INT", "NOT NULL", "Megjelenes eve"],
-        ["műfaj", "VARCHAR(100)", "NOT NULL", "Műfaj megnevezése"],
+        ["id", "INT", "PK, AUTÓ_INCREMENT", "Egyedi azonosító"],
+        ["cim", "VARCHAR(200)", "NŐT NULL", "Film címe"],
+        ["rendező", "VARCHAR(100)", "NŐT NULL", "Rendező neve"],
+        ["ev", "INT", "NŐT NULL", "Megjelenés éve"],
+        ["műfáj", "VARCHAR(100)", "NŐT NULL", "Műfáj megnevezése"],
         ["értékelés", "DECIMAL(3,1)", "DEFAULT NULL", "Értékelés (0.0-10.0)"],
         ["leírás", "TEXT", "DEFAULT NULL", "Film rövid leírása"],
     ]
@@ -593,15 +593,15 @@ def generate_documentation():
     add_heading_styled(doc, "üzenetek tábla", level=3)
     add_paragraph_styled(doc,
         "A kapcsolatfelveteli űrlapon keresztül küldőtt üzeneteket tárolja. "
-        "A küldő_id mező NULL értéket vesz fel, ha vendég (nem bejelentkezett "
+        "A küldő_id méző NULL értékét vesz fel, ha vendég (nem bejelentkezett "
         "felhasználó) küldte az üzenetet.")
 
     üzenetek_rows = [
-        ["id", "INT", "PK, AUTO_INCREMENT", "Egyedi azonosító"],
-        ["nev", "VARCHAR(100)", "NOT NULL", "Küldő neve"],
-        ["email", "VARCHAR(100)", "NOT NULL", "Küldő e-mail cime"],
-        ["tárgy", "VARCHAR(200)", "NOT NULL", "Üzenet tárgya"],
-        ["üzenet", "TEXT", "NOT NULL", "Üzenet szövege"],
+        ["id", "INT", "PK, AUTÓ_INCREMENT", "Egyedi azonosító"],
+        ["nev", "VARCHAR(100)", "NŐT NULL", "Küldő neve"],
+        ["email", "VARCHAR(100)", "NŐT NULL", "Küldő e-mail címe"],
+        ["tárgy", "VARCHAR(200)", "NŐT NULL", "Üzenét tárgya"],
+        ["üzenét", "TEXT", "NŐT NULL", "Üzenét szövége"],
         ["küldő_id", "INT", "DEFAULT NULL, FK", "Küldő felhasználó ID-ja"],
         ["küldve", "DATETIME", "DEFAULT CURRENT_TIMESTAMP", "Küldés időpontja"],
     ]
@@ -612,18 +612,18 @@ def generate_documentation():
 
     doc.add_paragraph()
 
-    add_heading_styled(doc, "képek tábla", level=3)
+    add_heading_styled(doc, "képék tábla", level=3)
     add_paragraph_styled(doc,
-        "A felhasználók által feltöltött galéria képek nyilvantartasa. "
+        "A felhasználók által féltöltött galéria képék nyilvantartasa. "
         "Csak bejelentkezett felhasználók tölthetnek fel képet, ezért a "
-        "feltöltő_id mező kötelező (NOT NULL).")
+        "féltöltő_id méző kötelező (NŐT NULL).")
 
     képek_rows = [
-        ["id", "INT", "PK, AUTO_INCREMENT", "Egyedi azonosító"],
-        ["fájlnév", "VARCHAR(255)", "NOT NULL", "Tarolt fájlnév (szerveren)"],
-        ["eredeti_nev", "VARCHAR(255)", "NOT NULL", "Eredeti fájlnév (feltöltéskor)"],
-        ["feltöltő_id", "INT", "NOT NULL, FK", "Feltöltő felhasználó ID-ja"],
-        ["feltoltve", "DATETIME", "DEFAULT CURRENT_TIMESTAMP", "Feltöltés időpontja"],
+        ["id", "INT", "PK, AUTÓ_INCREMENT", "Egyedi azonosító"],
+        ["fájlnév", "VARCHAR(255)", "NŐT NULL", "Tárolt fájlnév (szerveren)"],
+        ["eredeti_nev", "VARCHAR(255)", "NŐT NULL", "Eredeti fájlnév (féltöltéskor)"],
+        ["feltöltő_id", "INT", "NŐT NULL, FK", "Féltöltő felhasználó ID-ja"],
+        ["feltöltve", "DATETIME", "DEFAULT CURRENT_TIMESTAMP", "Féltöltés időpontja"],
     ]
     create_styled_table(doc,
         ["Oszlop", "Típus", "Megszorítas", "Leírás"],
@@ -635,18 +635,18 @@ def generate_documentation():
     add_paragraph_styled(doc, "Az adatbázisban két külső kulcs (Foreign Key) kapcsolat található:")
 
     fk_rows = [
-        ["üzenetek.küldő_id", "felhasználók.id", "ON DELETE SET NULL", "Felhasználó törlése esetén az üzenet megmarad, de a küldő_id NULL-ra valt"],
-        ["képek.feltöltő_id", "felhasználók.id", "ON DELETE CASCADE", "Felhasználó törlése esetén a felhasználó által feltöltött képek is torlodnek"],
+        ["üzenetek.küldő_id", "felhasználók.id", "ÖN DELETE SET NULL", "Felhasználó törlése esetén az üzenét megmarad, de a küldő_id NULL-rá vált"],
+        ["képék.féltöltő_id", "felhasználók.id", "ÖN DELETE CASCADE", "Felhasználó törlése esetén a felhasználó által féltöltött képék is torlodnek"],
     ]
     create_styled_table(doc,
-        ["Külső kulcs", "Hivatközött mezo", "Törlési szabály", "Magyarazat"],
+        ["Külső kulcs", "Hivatközött mező", "Törlési szabály", "Magyarázat"],
         fk_rows,
         col_widths=[3.5, 3.5, 3.5, 6.5])
 
     doc.add_paragraph()
 
     add_paragraph_styled(doc,
-        "Mindkét kapcsolat ON UPDATE CASCADE szabályt alkalmaz, ami azt jelenti, "
+        "Mindkét kapcsolat ÖN UPDATE CASCADE szabályt alkalmaz, ami azt jelenti, "
         "hogy ha a felhasználók táblában egy id érték módosul, a kapcsolódó "
         "táblák automatikusan frissülnek.")
 
@@ -654,14 +654,14 @@ def generate_documentation():
 
     add_heading_styled(doc, "4. Alkalmazás felépítése", level=1)
 
-    add_heading_styled(doc, "4.1. Mappastruktúra", level=2)
+    add_heading_styled(doc, "4.1. Mappastruktúrá", level=2)
 
     add_paragraph_styled(doc,
         "Az alkalmazás következő mappastrukturaba szervezodo:")
 
     tree = (
         "WebProg/\n"
-        "|-- index.php              # Front controller (fő vezerlo)\n"
+        "|-- index.php              # Front controller (fő vezérlő)\n"
         "|-- config.php             # Adatbázis konfiguráció (PDO)\n"
         "|\n"
         "|-- css/\n"
@@ -676,10 +676,10 @@ def generate_documentation():
         "|   |-- belépés.php        # Bejelentkezési űrlap\n"
         "|   |-- regisztráció.php   # Regisztrációs űrlap\n"
         "|   |-- kijelentkezés.php  # Kijelentkezési oldal\n"
-        "|   |-- képek.php          # Képgaléria + feltöltés\n"
+        "|   |-- képék.php          # Képgaléria + féltöltés\n"
         "|   |-- kapcsolat.php      # Kapcsolati űrlap\n"
         "|   |-- üzenetek.php       # Üzenetek listázása\n"
-        "|   |-- crud.php           # Filmek CRUD kezelese\n"
+        "|   |-- crud.php           # Filmek CRUD kezelése\n"
         "|\n"
         "|-- templates/\n"
         "|   |-- header.php         # Fejlec sablon (navigáció)\n"
@@ -687,10 +687,10 @@ def generate_documentation():
         "|\n"
         "|-- sql/\n"
         "|   |-- database.sql       # Adatbázis létrehozo szkript\n"
-        "|   |-- seed.php           # Mintaadatok beszurasa PHP-bol\n"
+        "|   |-- seed.php           # Mintaadatok beszurasa PHP-ból\n"
         "|\n"
-        "|-- uploads/               # Feltöltőtt képek könyvtára\n"
-        "|-- videós/                # Videó fájlok könyvtára\n"
+        "|-- uploads/               # Féltöltőtt képék könyvtárá\n"
+        "|-- videós/                # Videó fájlok könyvtárá\n"
     )
     add_code_block(doc, tree)
 
@@ -699,21 +699,21 @@ def generate_documentation():
     files_data = [
         ["index.php", "Front controller - egyetlen belépési pont, routing, POST feldolgozás"],
         ["config.php", "PDO adatbázis kapcsolat létrehozása, hibakezeles beállítása"],
-        ["css/style.css", "Teljes stíluslap: layout, szinek, reszponzív média queries"],
-        ["js/main.js", "Hamburger menü, flash üzenet animáció, lightbox galéria"],
+        ["css/style.css", "Teljes stíluslap: layout, színek, reszponzív média queries"],
+        ["js/main.js", "Hamburger menü, flash üzenét animáció, lightbox galéria"],
         ["js/validation.js", "Kapcsolati űrlap kliens oldali validációja (JS)"],
-        ["pages/főoldal.php", "Főoldal: hero szekci, videók, Google Maps"],
+        ["pages/főoldal.php", "Főoldal: hero szekció, videók, Google Maps"],
         ["pages/belépés.php", "Bejelentkezési űrlap megjelenítése"],
-        ["pages/regisztráció.php", "Regisztrációs űrlap (6 mezo)"],
+        ["pages/regisztráció.php", "Regisztrációs űrlap (6 mező)"],
         ["pages/kijelentkezés.php", "Kijelentkezési visszajelzes oldal"],
-        ["pages/képek.php", "Képgaléria + feltöltési űrlap"],
+        ["pages/képék.php", "Képgaléria + féltöltési űrlap"],
         ["pages/kapcsolat.php", "Kapcsolati űrlap (szerver+kliens validáció)"],
         ["pages/üzenetek.php", "Üzenetek listázása táblázatban"],
         ["pages/crud.php", "Filmek CRUD: listázás, létrehozas, szerkesztés, törlés"],
-        ["templates/header.php", "HTML fejlec, navigáció, felhasználói informacio"],
+        ["templates/header.php", "HTML fejlec, navigáció, felhasználói információ"],
         ["templates/footer.php", "HTML lablec, JS betoltese"],
         ["sql/database.sql", "Adatbázis és táblák létrehozása, mintaadatok (SQL)"],
-        ["sql/seed.php", "Adatbázis inicializalas PHP-bol (password_hash)"],
+        ["sql/seed.php", "Adatbázis inicializalas PHP-ból (password_hash)"],
     ]
     create_styled_table(doc,
         ["Fájl", "Szerep / Leírás"],
@@ -729,7 +729,7 @@ def generate_documentation():
         "kérést ez a fájl fogad és dolgoz fel. A működése a következő:")
 
     fc_steps = [
-        "1. Munkamenet (session) inditasa: session_start()",
+        "1. Munkamenet (session) indítása: session_start()",
         "2. Konfiguráció betoltese: config.php (adatbázis kapcsolat)",
         "3. Segefüggvények definialasa: flash(), getFlash(), bejelentkezveVan(), redirect()",
         "4. POST kérések feldolgozása (ha van $_POST['action']):",
@@ -741,7 +741,7 @@ def generate_documentation():
         "5. Útvonalválasztás (routing): $_GET['page'] alapján",
         "6. Engedélyezett oldalak ellenőrzése (whitelist)",
         "7. Header sablon betoltese (templates/header.php)",
-        "8. Flash üzenet megjelenítése (ha van)",
+        "8. Flash üzenét megjelenítése (ha van)",
         "9. Oldal tartalom betoltese (pages/*.php)",
         "10. Footer sablon betoltese (templates/footer.php)",
     ]
@@ -755,20 +755,20 @@ def generate_documentation():
 
     add_paragraph_styled(doc,
         "Az alkalmazás következetesen alkalmazza a PRG (Post-Redirect-Get) "
-        "mintát. Ennek lenyege, hogy a POST kérések feldolgozása után az "
-        "alkalmazás HTTP 302 átirányítast hajt vegre. Ez megakadályozza, "
-        "hogy az oldal ujratoltesevel (F5) a felhasználó vetelenul ujra "
+        "mintát. Ennek lényege, hogy a POST kérések feldolgozása útán az "
+        "alkalmazás HTTP 302 átirányítast hajt végre. Ez megakadályozza, "
+        "hogy az oldal ujratoltesevel (F5) a felhasználó vetelenul újra "
         "elküldje az űrlapadatokat.")
 
     add_paragraph_styled(doc, "A PRG minta folyamata:")
 
     prg_steps = [
-        "1. A felhasználó kitolti az űrlapot és megnyomja a Küldés gombot (POST keres)",
+        "1. A felhasználó kitölti az űrlapot és megnyomja a Küldés gombot (POST keres)",
         "2. Az index.php feldolgozza a POST adatokat (pl. adatbázisba ment)",
-        "3. Flash üzenetet tárol a session-ben (siker vagy hiba)",
-        "4. HTTP 302 átirányítast hajt vegre a redirect() függvénnyel",
+        "3. Flash üzenetet táról a session-ben (siker vagy hiba)",
+        "4. HTTP 302 átirányítast hajt végre a redirect() függvénnyel",
         "5. A bongeszo automatikusan GET kérést küld az új URL-re",
-        "6. Az oldal betoltodik, a flash üzenet megjelenik, majd torlodik a session-bol",
+        "6. Az oldal betoltodik, a flash üzenét megjelenik, majd torlodik a session-ból",
     ]
     for step in prg_steps:
         add_bullet_point(doc, step)
@@ -785,13 +785,13 @@ def generate_documentation():
 
     add_heading_styled(doc, "Hero szekció", level=3)
     add_paragraph_styled(doc,
-        "Az oldal tetején egy látványos hero szekci fogadja a látogatót. "
+        "Az oldal tetején egy látványos hero szekció fogadja a látogatót. "
         "A 'Filmtár - A kedvenc filmjeid egy helyen' címsort egy bemutató "
-        "szöveg követi, amely röviden ismerteti az alkalmazást. Ez alatt "
-        "egy 'Rólunk' szekci reszletesebben bemutatja a projekt céljat "
+        "szövég követi, amely röviden ismerteti az alkalmazást. Ez alatt "
+        "egy 'Rólunk' szekció részletesebben bemutatja a projekt célját "
         "és lehetőségeit.")
 
-    add_screenshot(doc, "5.1.a", "5.1.a. ábra: Főoldal - Hero szekció és Rólunk szöveg")
+    add_screenshot(doc, "5.1.a", "5.1.a. ábra: Főoldal - Hero szekció és Rólunk szövég")
 
     add_heading_styled(doc, "Videók szekció", level=3)
     add_paragraph_styled(doc,
@@ -804,8 +804,8 @@ def generate_documentation():
 
     add_heading_styled(doc, "Google Maps szekció", level=3)
     add_paragraph_styled(doc,
-        "Az oldal aljan egy Google Maps térkép beágyazás lathatoott, amely "
-        "egy budapesti cimet (1052 Budapest, Vaci utca 1.) jeleníti meg. "
+        "Az oldal alján egy Google Maps térkép beágyazás lathatoott, amely "
+        "egy budapesti címet (1052 Budapest, Vaci utca 1.) jeleníti meg. "
         "A térkép iframe-ként van beagyazva, lazy loading tamogatassal.")
 
     add_screenshot(doc, "5.1.c", "5.1.c. ábra: Főoldal - Google Maps beágyazás")
@@ -815,14 +815,14 @@ def generate_documentation():
     add_heading_styled(doc, "Regisztráció", level=3)
     add_paragraph_styled(doc,
         "A regisztrációs oldal (regisztráció.php) egy űrlapot jeleníti meg "
-        "hat mezeovel: családi név, utónév, felhasználónév, e-mail, "
-        "jelszó és jelszó megerosites. A validáció szerver oldalon történik "
+        "hát mezeovel: családi név, útónév, felhasználónév, e-mail, "
+        "jelszó és jelszó megerősítés. A validáció szerver oldalon történik "
         "az index.php-ban:")
 
     reg_validations = [
-        "Minden mező kitöltése kötelező",
-        "E-mail cím formatum ellenőrzése (filter_var, FILTER_VALIDATE_EMAIL)",
-        "Jelszavak egyezosenek vizsgalata",
+        "Minden méző kitöltése kötelező",
+        "E-mail cím formatum ellenőrzése (filter_vár, FILTER_VALIDATE_EMAIL)",
+        "Jelszavak egyezosenek vizsgálata",
         "Jelszó minimum hossz: 6 karakter",
         "Felhasználónév egyedisegenek ellenőrzése az adatbázisban",
         "Jelszó hashelese: password_hash($jelszó, PASSWORD_DEFAULT)",
@@ -834,57 +834,57 @@ def generate_documentation():
 
     add_heading_styled(doc, "Bejelentkezés", level=3)
     add_paragraph_styled(doc,
-        "A bejelentkezési oldal (belépés.php) két mezobol all: felhasználónév "
+        "A bejelentkezési oldal (belépés.php) két mezobol áll: felhasználónév "
         "és jelszó. A feldolgozás során a rendszer a felhasználónév alapján "
         "keresi ki a felhasználót az adatbázisbol (prepared statement), majd "
         "a password_verify() függvénnyel ellenőrzi a jelszót. Sikérés "
-        "bejelentkezés után a felhasználó adatai a $_SESSION['user'] tömbben "
-        "tárolódnak (jelszó nélkül!).")
+        "bejelentkezés útán a felhasználó adatai a $_SESSION['user'] tömbben "
+        "tárólódnak (jelszó nélkül!).")
 
     add_paragraph_styled(doc,
-        "Ha a felhasználó mar be van jelentkezve, az oldal errol tájékoztatja "
+        "Ha a felhasználó már be van jelentkezve, az oldal erről tájékoztatja "
         "és nem jelenítit meg az űrlapot.")
 
     add_screenshot(doc, "5.2.b", "5.2.b. ábra: Bejelentkezési űrlap")
 
     add_heading_styled(doc, "Kijelentkezés", level=3)
     add_paragraph_styled(doc,
-        "A kijelentkezés (kijelentkezés) nem kulon oldal, hanem az index.php "
-        "kezeli. A session törlése ($_SESSION = []; session_destroy();) után "
-        "uj session indul a flash üzenethez, majd átirányítas történik a "
+        "A kijelentkezés (kijelentkezés) nem külön oldal, hanem az index.php "
+        "kezeli. A session törlése ($_SESSION = []; session_destroy();) útán "
+        "új session indul a flash üzenethez, majd átirányítas történik a "
         "főoldalra. A kijelentkezés.php csak egy visszajelzo oldal, amelyre "
-        "normalis esetben nem jutunk el (az átirányítas korabban megtörténik).")
+        "normális esetben nem jutunk el (az átirányítas korábban megtörténik).")
 
-    add_heading_styled(doc, "5.3. Képgaléria és feltöltés", level=2)
+    add_heading_styled(doc, "5.3. Képgaléria és féltöltés", level=2)
 
     add_paragraph_styled(doc,
-        "A képgaléria oldal (képek.php) két fő funkciót lat el: "
-        "a feltöltött képek megjelenítéset galéria nézetben és "
-        "uj képek feltöltéseteteaet.")
+        "A képgaléria oldal (képék.php) két fő funkciót lát el: "
+        "a féltöltött képék megjelenítéset galéria nézetben és "
+        "új képék féltöltéseteteaet.")
 
     add_heading_styled(doc, "Galéria nézet", level=3)
     add_paragraph_styled(doc,
-        "A képek CSS Grid elrendezésben jelennek meg (3 oszlop asztalon, "
+        "A képék CSS Grid elrendezésben jelennek meg (3 oszlop asztalon, "
         "2 oszlop tableten, 1 oszlop mobilon). Minden kép alatt látszik "
-        "a feltöltő neve és a feltöltés dátuma. A képekre kattintva egy "
-        "lightbox overlay nyilik meg a nagyitott keptel (JavaScript által "
-        "vezerelt). Az ESC billentyuvel vagy az overlay-re kattintassal "
+        "a féltöltő neve és a féltöltés dátuma. A képekre kattintva egy "
+        "lightbox overlay nyílik meg a nagyitott keptel (JavaScript által "
+        "vezérelt). Az ESC billentyuvel vagy az overlay-re kattintassal "
         "bezarhato.")
 
     add_heading_styled(doc, "Képfeltöltés", level=3)
     add_paragraph_styled(doc,
         "Csak bejelentkezett felhasználók tölthetnek fel képet. "
-        "A feltöltési űrlap enctype='multipart/form-data' attributummal "
-        "rendelkezik. A feltöltés során a következő ellenőrzések történnek:")
+        "A féltöltési űrlap enctype='multipart/form-data' attributummal "
+        "rendelkezik. A féltöltés során a következő ellenőrzések történnek:")
 
     upload_checks = [
         "Bejelentkezés ellenőrzése (session)",
-        "Fájl erkezesenek ellenőrzése ($_FILES['kep'])",
+        "Fájl erkezesenek ellenőrzése ($_FILES['kép'])",
         "MIME típus ellenőrzése (mime_content_type): image/jpeg, image/png, image/gif, image/webp",
         "Kiterjesztes ellenőrzése: jpg, jpeg, png, gif, webp",
         "Egyedi fájlnév generalasa (uniqid) az ütközések elkerülésére",
         "Fájl athelyezese az uploads/ könyvtárba (move_uploaded_file)",
-        "Adatbázisba mentés (képek tábla)",
+        "Adatbázisba mentés (képék tábla)",
     ]
     for c in upload_checks:
         add_bullet_point(doc, c)
@@ -897,22 +897,22 @@ def generate_documentation():
 
     add_paragraph_styled(doc,
         "A kapcsolati oldal (kapcsolat.php) egy űrlapot tartalmaz négy "
-        "mezővel: nev, e-mail, tárgy és üzenet. Az űrlap kettoa validáción "
-        "esik at: kliens oldali (JavaScript) és szerver oldali (PHP).")
+        "mézővel: név, e-mail, tárgy és üzenét. Az űrlap kettoa validáción "
+        "esik át: kliens oldali (JavaScript) és szerver oldali (PHP).")
 
     add_heading_styled(doc, "Kliens oldali validáció (validation.js)", level=3)
     add_paragraph_styled(doc,
-        "A JavaScript validáció az űrlap submit esemenyre reagal. "
-        "A validateContactForm() függvény ellenőrzi az összes mezot, és "
-        "hibaüzenetet jelenita meg a mező mellett (span.error elemben). "
+        "A JavaScript validáció az űrlap submit eseményre reagál. "
+        "A validateContactForm() függvény ellenőrzi az összes mezőt, és "
+        "hibaüzenetet jelenita meg a méző mellett (span.error elemben). "
         "Nem használ HTML5 validációs attributumokat (required, pattern), "
-        "a validáció teljes egeszeben JavaScript-ben történik.")
+        "a validáció teljes egészében JavaScript-ben történik.")
 
     js_validations = [
-        "Nev: ne legyen ures, minimum 2 karakter",
-        "E-mail: ne legyen ures, regex minta: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/",
-        "Tárgy: ne legyen ures, minimum 3 karakter",
-        "Üzenet: ne legyen ures, minimum 10 karakter",
+        "Név: ne legyen üres, minimum 2 karakter",
+        "E-mail: ne legyen üres, regex minta: /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/",
+        "Tárgy: ne legyen üres, minimum 3 karakter",
+        "Üzenét: ne legyen üres, minimum 10 karakter",
     ]
     for jv in js_validations:
         add_bullet_point(doc, jv)
@@ -920,14 +920,14 @@ def generate_documentation():
     add_heading_styled(doc, "Szerver oldali validáció (index.php)", level=3)
     add_paragraph_styled(doc,
         "A szerver oldali validáció a POST kérés feldolgozásakor fut le. "
-        "Ellenorzi a kötelezőe mezőkat és az e-mail formatumot "
-        "(filter_var, FILTER_VALIDATE_EMAIL). Hiba esetén a hibaüzenetek "
-        "és az űrlapadatok a session-ben tárolódnak, majd átirányítas "
+        "Ellenőrzi a kötelezőe mézőkat és az e-mail formatumot "
+        "(filter_vár, FILTER_VALIDATE_EMAIL). Hiba esetén a hibaüzenetek "
+        "és az űrlapadatok a session-ben tárólódnak, majd átirányítas "
         "történik. Az adatok megorzese lehetővé teszi, hogy a felhasználó "
-        "ne veszitse el a mar kitöltött mezők tartalmat.")
+        "ne veszítse el a már kitöltött mézők tartalmát.")
 
     add_paragraph_styled(doc,
-        "Bejelentkezett felhasználó esetén a nev és az e-mail mező "
+        "Bejelentkezett felhasználó esetén a név és az e-mail méző "
         "automatikusan kitoltodik a session adataival.")
 
     add_screenshot(doc, "5.4", "5.4. ábra: Kapcsolati űrlap validációs hibaüzenetekkel")
@@ -936,15 +936,15 @@ def generate_documentation():
 
     add_paragraph_styled(doc,
         "Az üzenetek oldal (üzenetek.php) a kapcsolati űrlapon küldőtt "
-        "üzenetek listajat jelenítia meg táblázatos formatumban. Csak "
-        "bejelentkezett felhasználók szamara elérhető - nem bejelentkezett "
-        "felhasználók hibaüzenet kapnak.")
+        "üzenetek listáját jelenítia meg táblázatos formatumban. Csak "
+        "bejelentkezett felhasználók számára elérhető - nem bejelentkezett "
+        "felhasználók hibaüzenét kapnak.")
 
     add_paragraph_styled(doc,
-        "A táblázat oszlopai: sorszam, küldő neve, e-mail, tárgy, üzenet "
-        "szövege és a küldés ideje. A vendég (nem bejelentkezett) küldőnel "
+        "A táblázat oszlopai: sorszam, küldő neve, e-mail, tárgy, üzenét "
+        "szövége és a küldés ideje. A vendég (nem bejelentkezett) küldőnél "
         "'Vendég' felirat jelenik meg. Az üzenetek a küldés dátuma szerint "
-        "csokkenosorrendben jelennek meg (legujabb elol).")
+        "csokkenosorrendben jelennek meg (legújabb elől).")
 
     add_screenshot(doc, "5.5", "5.5. ábra: Üzenetek oldal táblázatos nézetben")
 
@@ -952,56 +952,56 @@ def generate_documentation():
 
     add_paragraph_styled(doc,
         "A CRUD (Create, Read, Update, Delete) funkciónalitas a filmek "
-        "kezelesere szolgal. Egyetlen fájl (crud.php) kezeli mind a négy "
-        "műveletet a $_GET['action'] paraméter alapján.")
+        "kezelésére szolgál. Egyetlen fájl (crud.php) kezeli mind a négy "
+        "műveletet a $_GET['action'] paramétér alapján.")
 
     add_heading_styled(doc, "Listazas (Read)", level=3)
     add_paragraph_styled(doc,
         "Az alapértelmezett nézet (action=list) az összes filmet egy "
         "táblázatban jelenítia meg. A táblázat oszlopai: #, Cím, Rendező, "
-        "Ev, Műfaj, Értékelés, Muveletek. Minden sorban Szerkesztés és "
+        "Év, Műfáj, Értékelés, Műveletek. Minden sorban Szerkesztés és "
         "Törlés gombok találhatóok. A filmek id szerint csokkeno sorrendben "
-        "jelennek meg (legujabb elol). Az oldal tetején egy 'Uj film "
+        "jelennek meg (legújabb elől). Az oldal tetején egy 'Új film "
         "hozzáadása' gomb található.")
 
     add_screenshot(doc, "5.6.a", "5.6.a. ábra: Filmek listázása táblázatban")
 
     add_heading_styled(doc, "Létrehozas (Create)", level=3)
     add_paragraph_styled(doc,
-        "Az 'Uj film hozzáadása' gombra kattintva (action=uj) egy űrlap "
-        "jelenik meg hat mezővel: cim, rendező, ev, műfaj, értékelés és "
-        "leírás. A cim, rendező és ev kitöltése kötelező. Az ev mező "
-        "number típusu, 1888 és az aktualis ev + 5 között fogad el "
-        "értékeket. Az értékelés 0.0 és 10.0 közötti DECIMAL érték "
+        "Az 'Új film hozzáadása' gombra kattintva (action=új) egy űrlap "
+        "jelenik meg hát mézővel: cím, rendező, év, műfáj, értékelés és "
+        "leírás. A cím, rendező és év kitöltése kötelező. Az év méző "
+        "number típusu, 1888 és az aktuális év + 5 között fogad el "
+        "értékéket. Az értékelés 0.0 és 10.0 közötti DECIMAL érték "
         "(0.1 lepeskozzel).")
 
     add_paragraph_styled(doc,
-        "A mentés után a rendszer a crud_create action-on keresztül "
-        "szurja be az adatokat a filmek táblába prepared statement "
-        "segitsegevel, majd flash üzenettel tájékoztatja a felhasználót "
-        "és átirányít a listara.")
+        "A mentés útán a rendszer a crud_create action-ön keresztül "
+        "szúrja be az adatokat a filmek táblába prepared statement "
+        "segítségével, majd flash üzenettel tájékoztatja a felhasználót "
+        "és átirányít a listára.")
 
-    add_screenshot(doc, "5.6.b", "5.6.b. ábra: Uj film hozzáadása űrlap")
+    add_screenshot(doc, "5.6.b", "5.6.b. ábra: Új film hozzáadása űrlap")
 
     add_heading_styled(doc, "Szerkesztés (Update)", level=3)
     add_paragraph_styled(doc,
         "A Szerkesztés gombra kattintva (action=szerkeszt&id=X) ugyanaz "
-        "az űrlap jelenik meg, mint a létrehozasnal, de a mezők a film "
-        "aktualis adataival vannak kitoltve. Az id paraméter alapján a "
+        "az űrlap jelenik meg, mint a létrehozasnal, de a mézők a film "
+        "aktuális adataival vannak kitoltve. Az id paramétér alapján a "
         "rendszer lekérdezi a filmet az adatbázisbol. Ha a film nem "
-        "található, hibaüzenet jelenik meg. A módosítás a crud_update "
-        "action-on keresztül történik UPDATE SQL utasitassal.")
+        "található, hibaüzenét jelenik meg. A módosítás a crud_update "
+        "action-ön keresztül történik UPDATE SQL utasitassal.")
 
     add_screenshot(doc, "5.6.c", "5.6.c. ábra: Film szerkesztése")
 
     add_heading_styled(doc, "Törlés (Delete)", level=3)
     add_paragraph_styled(doc,
         "A Törlés gombra kattintva (action=torol&id=X) egy megerosito "
-        "oldal jelenik meg, amely megjelenítia a film adatait (cim, rendező, "
-        "ev, műfaj, értékelés) és megkerdezi a felhasználót, biztosan "
-        "torolni kivanja-e. Az 'Igen, törlés' gombra kattintva a rendszer "
-        "a crud_delete action-on keresztül torli a filmet a filmek táblabol. "
-        "A 'Megsem' gomb visszairanyit a listara.")
+        "oldal jelenik meg, amely megjelenítia a film adatait (cím, rendező, "
+        "év, műfáj, értékelés) és megkérdezi a felhasználót, biztosan "
+        "törölni kívánja-e. Az 'Igen, törlés' gombra kattintva a rendszer "
+        "a crud_delete action-ön keresztül törli a filmet a filmek táblabol. "
+        "A 'Mégsem' gomb visszairanyit a listára.")
 
     add_screenshot(doc, "5.6.d", "5.6.d. ábra: Film törlésenek megerositese")
 
@@ -1010,8 +1010,8 @@ def generate_documentation():
     add_heading_styled(doc, "6. Biztonság", level=1)
 
     add_paragraph_styled(doc,
-        "Az alkalmazás több retuert biztonsagi megoldast alkalmaz a "
-        "leggyakoribb webes tamadasok ellen. Az alábbiakban reszletezzuk "
+        "Az alkalmazás több retuert biztonsági megoldást alkalmaz a "
+        "leggyakoribb webes támadások ellen. Az alábbiakban reszletezzuk "
         "az egyes vedelmeket.")
 
     add_heading_styled(doc, "Jelszó hasheles (Password Hashing)", level=2)
@@ -1019,58 +1019,58 @@ def generate_documentation():
         "A felhasználók jelszavait soha nem tároljuk nyers szövegként. "
         "A regisztráció során a password_hash() függvény bcrypt "
         "algoritmussalhaseli a jelszót (PASSWORD_DEFAULT). A bejelentkezés "
-        "során a password_verify() függvény hasonlitja ossze a megadott "
+        "során a password_verify() függvény hasonlitja össze a megadott "
         "jelszót a tárolt hash-sel. Ez biztosítja, hogy meg adatbázis "
         "kompromittalas esetén sem fejthetok meg a jelszavak.")
 
     add_code_block(doc, "// Regisztráció:\n$hashelt_jelszó = password_hash($jelszó, PASSWORD_DEFAULT);\n\n// Bejelentkezés:\nif (password_verify($jelszó, $user['jelszó'])) { ... }")
 
-    add_heading_styled(doc, "Prepared Statements (SQL Injection vedelem)", level=2)
+    add_heading_styled(doc, "Prepared Statements (SQL Injection védelem)", level=2)
     add_paragraph_styled(doc,
-        "Minden adatbázis-lekérdezés PDO prepared statement-eket használ "
-        "nevesitett paraméterekkel (:param). Ez teljes vedelmet nyujt "
-        "az SQL injection tamadasok ellen, mivel a paraméterek értékei "
-        "soha nem epulnek be kozvetlenul az SQL utasitasba. A PDO "
-        "ATTR_EMULATE_PREPARES beállítás false-ra van állítva, igy "
+        "Minden adatbázis-lekérdezés PDO prepared statement-éket használ "
+        "nevesitett paraméterekkel (:param). Ez teljes védelmet nyújt "
+        "az SQL injection támadások ellen, mivel a paramétérek értékei "
+        "soha nem epulnek be közvetlenül az SQL utasitasba. A PDO "
+        "ATTR_EMULATE_PREPARES beállítás false-rá van állítva, így "
         "a szerver oldali prepared statement-ek használodnak.")
 
     add_code_block(doc, "$stmt = $dbh->prepare(\n    'SELECT id FROM felhasználók WHERE felhasználónév = :fnev'\n);\n$stmt->execute([':fnev' => $felhasználónév]);")
 
-    add_heading_styled(doc, "XSS (Cross-Site Scripting) vedelem", level=2)
+    add_heading_styled(doc, "XSS (Cross-Site Scripting) védelem", level=2)
     add_paragraph_styled(doc,
         "Minden felhasználói bemenet, amely a HTML kimeneten megjelenik, "
         "az htmlspecialchars() függvényen megy keresztül. Ez a függvény "
-        "a <, >, &, \" és ' karaktereket HTML entitásokka alakitja, "
-        "megakadályozva a rosszindulatu JavaScript kodok futasat a "
+        "a <, >, &, \" és ' karaktereket HTML entitásokka alakítja, "
+        "megakadályozva a rosszindulatú JavaScript kódok futasat a "
         "felhasználók bongeszojeben.")
 
-    add_code_block(doc, "<?= htmlspecialchars($film['cim']) ?>\n<?= htmlspecialchars($flash['üzenet']) ?>")
+    add_code_block(doc, "<?= htmlspecialchars($film['cím']) ?>\n<?= htmlspecialchars($flash['üzenét']) ?>")
 
     add_heading_styled(doc, "MIME típus ellenőrzés (képfeltöltés)", level=2)
     add_paragraph_styled(doc,
         "A képfeltöltés során a rendszer nem csak a kiterjesztest, hanem "
-        "a fájl tenyleg MIME típusat is ellenőrzi a mime_content_type() "
-        "függvénnyel. Ez megakadályozza, hogy rosszindulatu fájlokat "
+        "a fájl tényleg MIME típusat is ellenőrzi a mime_content_type() "
+        "függvénnyel. Ez megakadályozza, hogy rosszindulatú fájlokat "
         "(pl. PHP szkripteket) tolthessenek fel kép mezzoben. Csak a "
         "következő típusok engedetyezettek: image/jpeg, image/png, "
         "image/gif, image/webp.")
 
-    add_heading_styled(doc, "Session kezeles", level=2)
+    add_heading_styled(doc, "Session kezelés", level=2)
     add_paragraph_styled(doc,
-        "Az alkalmazás PHP session-oket használ a felhasználói állapot "
-        "követesere. A bejelentkezés után a felhasználó adatai "
-        "(jelszó nélkül!) a $_SESSION['user'] tömbben tárolódnak. "
-        "A kijelentkezéskor a session teljesen megsemmisul "
+        "Az alkalmazás PHP session-őket használ a felhasználói állapot "
+        "követesere. A bejelentkezés útán a felhasználó adatai "
+        "(jelszó nélkül!) a $_SESSION['user'] tömbben tárólódnak. "
+        "A kijelentkezéskor a session teljesen megsemmisül "
         "($_SESSION = []; session_destroy();). A flash üzenetek szinten "
-        "a session-ben tárolódnak, és automatikusan torlodnek az "
-        "elso megjelenitest követoen (egyszeri megjelenites).")
+        "a session-ben tárólódnak, és automatikusan torlodnek az "
+        "első megjelenitest követoen (egyszeri megjelenites).")
 
     add_heading_styled(doc, "Engedélyezett oldalak whitelist", level=2)
     add_paragraph_styled(doc,
-        "Az index.php egy engedélyezett oldalak listat ($engedélyezett_oldalak) "
+        "Az index.php egy engedélyezett oldalak listát ($engedélyezett_oldalak) "
         "tart fenn. Csak azok az oldalak érhetők el, amelyek ebben a listaban "
         "szerepelnek. Ha a felhasználó nem letezoeleo oldalt kér, flash "
-        "hibaüzenet jelenik meg és átirányítas történik a főoldalra. "
+        "hibaüzenét jelenik meg és átirányítas történik a főoldalra. "
         "Ez megakadályozza a tetszoleges fájl betolteset (Path Traversal).")
 
     add_page_break(doc)
@@ -1079,7 +1079,7 @@ def generate_documentation():
 
     add_paragraph_styled(doc,
         "Az alkalmazás teljes mértékben reszponzív, vagyis alkalmazkodik "
-        "a különböző képernyőmeretekhez (asztali gepek, tabletek, mobiltelefonok). "
+        "a különböző képernyőmeretekhez (asztali gépek, tabletek, mobiltelefonok). "
         "A reszponzív megjelenites három fő technikan alapúl: CSS média queries, "
         "Flexbox layout és CSS Grid.")
 
@@ -1094,7 +1094,7 @@ def generate_documentation():
         ["max-width: 480px", "Mobil", "1 oszlopos galéria, kisebb betumeret (14px), kompakt layout"],
     ]
     create_styled_table(doc,
-        ["Breakpoint", "Eszkoz", "Valtozasok"],
+        ["Breakpoint", "Eszköz", "Változások"],
         bp_data,
         col_widths=[4.5, 3, 9.5])
 
@@ -1106,9 +1106,9 @@ def generate_documentation():
         "768px alatti képernyőn a navigáció rejtett állapotban van "
         "(max-height: 0; overflow: hidden;) és egy három vonalu hamburger "
         "gomb jelenik meg. A gombra kattintva a JavaScript toggle-eli "
-        "az 'active' osztalyt, amely megnyitja a navigációt fuggoleges "
-        "elrendezésben. A hamburger gomb animalt X-alakra valtozik "
-        "(CSS transform). A menüpont kattintasra automatikusan bezarul "
+        "az 'active' osztályt, amely megnyitja a navigációt függőleges "
+        "elrendezésben. A hamburger gomb animalt X-alakra változik "
+        "(CSS transform). A menüpont kattintasra automatikusan bezárul "
         "a mobil menü.")
 
     add_code_block(doc,
@@ -1116,16 +1116,16 @@ def generate_documentation():
         ".hamburger { display: flex; }\n\n"
         "/* Navigáció elrejtese */\n"
         "nav { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }\n\n"
-        "/* Navigáció megjelenítése aktiv állapotban */\n"
+        "/* Navigáció megjelenítése aktív állapotban */\n"
         "nav.active { max-height: 500px; }")
 
     add_heading_styled(doc, "CSS Grid galéria", level=2)
 
     add_paragraph_styled(doc,
         "A képgaléria CSS Grid-et használ a reszponzív elrendezéshez. "
-        "Asztali gepen 3 oszlopos, tableten 2 oszlopos, mobilon 1 oszlopos "
+        "Asztali gépen 3 oszlopos, tableten 2 oszlopos, mobilon 1 oszlopos "
         "elrendezést alkalmaz. A galéria elemek hover állapotban enyheon "
-        "felskalazodasat (scale(1.03)) és arnyek-melyulest mutatnak, ami "
+        "felskalazodasat (scale(1.03)) és árnyék-melyulest mutatnak, ami "
         "kelolemest ad az interakciohoz.")
 
     add_code_block(doc,
@@ -1140,15 +1140,15 @@ def generate_documentation():
         "    .gallery { grid-template-columns: 1fr; }\n"
         "}")
 
-    add_heading_styled(doc, "Egyeb reszponzív megoldasok", level=2)
+    add_heading_styled(doc, "Egyéb reszponzív megoldások", level=2)
 
     responsive_features = [
         "A Flexbox layout biztosítja a header és navigáció rugalmas elrendezéset",
-        "A táblázatok .table-responsive wrapper-ben vannak, igy vizszintesen gorgethetokke valnak kis képernyőn",
-        "A képek max-width: 100%-ra vannak állítva, igy soha nem lognak ki a szulo elembol",
-        "A videók és térképek szelessege 100%-ra állítva, magassaguk állítodik",
-        "A betumeret mobilon 14px-re csokken (html font-size), az összes rem érték aranyosan csokken",
-        "A gombok és űrlapmezők merete szinten alkalmazkodik a képernyőmerethez",
+        "A táblázatok .table-responsive wrapper-ben vannak, így vizszintesen gorgethetokke válnak kis képernyőn",
+        "A képék max-width: 100%-rá vannak állítva, így soha nem lógnak ki a szülő elembol",
+        "A videók és térképék szelessege 100%-rá állítva, magassaguk állítodik",
+        "A betumeret mobilon 14px-re csökken (html font-size), az összes rem érték aranyosan csökken",
+        "A gombok és űrlapmezők mérete szinten alkalmazkodik a képernyőmerethez",
     ]
     for rf in responsive_features:
         add_bullet_point(doc, rf)
@@ -1170,20 +1170,20 @@ def generate_documentation():
         "Felhasználói autentikáció (regisztráció, bejelentkezés, kijelentkezés) biztonkagos session kezelestel",
         "Front-controller tervezési minta alkalmazása központi routing-gal",
         "PRG (Post-Redirect-Get) minta következetes használata",
-        "Többretegu biztonsag: jelszóhasheles, prepared statements, XSS vedelem, MIME ellenőrzés",
+        "Többretegu biztonság: jelszóhasheles, prepared statements, XSS védelem, MIME ellenőrzés",
         "Ketszintu űrlapvalidáció (kliens oldali JavaScript + szerver oldali PHP)",
         "Teljes mértékben reszponzív dizajn három breakpointtal",
         "Interaktiv elemek: lightbox galéria, hamburger menü, flash üzenetek",
-        "Letisztuolt, jol szervezett kodstruktura (sablonok, oldalak, statikus erofforrasok szeparalasa)",
+        "Letisztuolt, jól szervezett kodstruktura (sablonok, oldalak, statikus erofforrasok szeparalasa)",
     ]
     for sp in summary_points:
         add_bullet_point(doc, sp)
 
     add_paragraph_styled(doc,
-        "Az alkalmazás továbbfejlesztesi lehetőségei koze tartozik a "
+        "Az alkalmazás továbbfejlesztesi lehetőségei köze tartozik a "
         "filmek kéréseese és szurese, lapozas (paginacio), felhasználói "
         "jogosultsagi szintek (admin/user), filmekhez fuzott kommentek, "
-        "valamint RESTful API kialakitasa. A jelenlegi verzio stabil "
+        "valamint RESTful API kialakitasa. A jelenlegi verzió stabil "
         "alapot biztosít ezekhez a bovitesekhez.")
 
     add_page_break(doc)
@@ -1191,27 +1191,27 @@ def generate_documentation():
     add_heading_styled(doc, "9. Munkafelosztás", level=1)
 
     add_paragraph_styled(doc,
-        "A projektet két fős csoportmunkaban keszitettuk el. Az alábbi táblázat "
-        "rögzíti, hogy a két hallgato kozul ki melyik feladatreszt valósította meg.")
+        "A projektet két fős csoportmunkaban készítettük el. Az alábbi táblázat "
+        "rögzíti, hogy a két hallgató közül ki melyik feladatreszt valósította meg.")
 
     munkafelosztas = [
-        ["Hallgató",        "Neptun", "Felelősségi terület"],
-        ["Gaál Péter",      "GULX05", "Backend, adatbázis, autentikáció, CRUD, deploy"],
+        ["Hallgató",        "Neptun", "Felelősségi térület"],
+        ["Gaál Pétér",      "GULX05", "Backend, adatbázis, autentikáció, CRUD, deploy"],
         ["Molnár Ádám",     "MFG82Z", "Frontend, reszponzív CSS, JavaScript, multimédia"],
     ]
     create_styled_table(doc, munkafelosztas[0], munkafelosztas[1:], col_widths=[4, 3, 9])
     doc.add_paragraph()
 
-    add_heading_styled(doc, "Gaál Péter (GULX05) - Backend és infrastruktúra", level=2)
+    add_heading_styled(doc, "Gaál Pétér (GULX05) - Backend és infrastruktúrá", level=2)
     gp_items = [
-        "Adatbázis-sema tervezése: g_felhasználók, g_filmek, g_üzenetek, g_képek táblák és külső kulcs kapcsolatok",
+        "Adatbázis-sema tervezése: g_felhasználók, g_filmek, g_üzenetek, g_képék táblák és külső kulcs kapcsolatok",
         "sql/database.sql és sql/seed.php adatbázis-inicializációs szkriptek",
         "Front-controller tervezési minta megvalósítása (index.php) - routing, POST feldolgozás, PRG minta",
         "Autentikáció: regisztráció, bejelentkezés, kijelentkezés, session-kezelés",
-        "CRUD műveletek a filmek táblához (pages/crud.php) - lista, uj, szerkesztés, törlés útvonalakkal",
+        "CRUD műveletek a filmek táblához (pages/crud.php) - lista, új, szerkesztés, törlés útvonalakkal",
         "Bejelentkezési és regisztrációs oldalak (pages/belépés.php, pages/regisztráció.php)",
         "Apache .htaccess és config.php (PDO prepared statements) konfiguráció",
-        "Internetes tárhelyre valo telepítés - Nethely.hu, FTP feltöltés, MySQL import",
+        "Internetes tárhelyre való telepítés - Nethely.hű, FTP féltöltés, MySQL import",
         "Megosztott tárhelyhez g_ tábla-prefix bevezetése az ütközések elkerülésére",
     ]
     for it in gp_items:
@@ -1221,9 +1221,9 @@ def generate_documentation():
     ma_items = [
         "HTML5 sablonok: templates/header.php (navigáció, felhasználói info), templates/footer.php",
         "Teljes reszponzív CSS3 stíluslap (css/style.css) - Flexbox, Grid, két breakpoint média query",
-        "JavaScript funkciók (js/main.js): hamburger menü, lightbox képgaléria, flash üzenet animáció",
+        "JavaScript funkciók (js/main.js): hamburger menü, lightbox képgaléria, flash üzenét animáció",
         "Kapcsolati űrlap kliens oldali validációja (js/validation.js) - regex, hossz-ellenőrzés",
-        "Tartalmi oldalak: főoldal, képgaléria + feltöltés, kapcsolati űrlap, üzenetek listázása",
+        "Tartalmi oldalak: főoldal, képgaléria + féltöltés, kapcsolati űrlap, üzenetek listázása",
         "Multimédia: 5 másodperces saját intró videó, YouTube beágyazás (Saul fia hivatalos előzetes), Google térkép",
         "Nethely deployment csomag és útmutató (NETHELY_DEPLOY.md, config.nethely.php, sql/database_nethely.sql)",
         "Képgaléria és üzenetek SQL-lekérdezések prefix-átírása",
@@ -1235,7 +1235,7 @@ def generate_documentation():
     kozos_items = [
         "Téma-választás (magyar filmadatbázis), tervezés, követelmény-elemzés",
         "Kód-áttekintés, hibajavítás, refaktorálás",
-        "Dokumentacio összeállítása, képernyőképek készítése",
+        "Dokumentacio összeállítása, képernyőképék készítése",
         "Tesztelés a hostolt alkalmazáson",
     ]
     for it in kozos_items:
@@ -1247,11 +1247,11 @@ def generate_documentation():
 
     add_paragraph_styled(doc,
         "Az alábbi adatok szükségesek az alkalmazás elérhetőséghez és ellenőrzésehez. "
-        "A jelszavakat csak az oktató szamara, a megoldas javításához adjuk meg.")
+        "A jelszavakat csak az oktató számára, a megoldás javításához adjuk meg.")
 
     add_heading_styled(doc, "10.1. Internetes elérhetőség", level=2)
     elérhető_rows = [
-        ["Weboldal URL",   "http://filmtar.nhely.hu/"],
+        ["Weboldal URL",   "http://filmtar.nhely.hű/"],
         ["GitHub repo",    "https://github.com/Peti352/Filmtár-Webprog"],
     ]
     create_styled_table(doc, ["Megnevezés", "Cím"], elérhető_rows, col_widths=[5, 11])
@@ -1259,7 +1259,7 @@ def generate_documentation():
 
     add_heading_styled(doc, "10.2. Tárhely (FTP) belépési adatok", level=2)
     ftp_rows = [
-        ["FTP host",       "ftp.nethely.hu"],
+        ["FTP hőst",       "ftp.nethely.hű"],
         ["FTP felhasználó","filmtar"],
         ["FTP jelszó",     "Webprog-1!"],
         ["FTP port",       "21"],
@@ -1269,11 +1269,11 @@ def generate_documentation():
 
     add_heading_styled(doc, "10.3. MySQL adatbázis belépési adatok", level=2)
     db_rows = [
-        ["DB host",        "localhost"],
-        ["DB nev",         "filmtar"],
+        ["DB hőst",        "localhost"],
+        ["DB név",         "filmtar"],
         ["DB felhasználó", "filmtar"],
         ["DB jelszó",      "Webprog-1!"],
-        ["phpMyAdmin",     "https://www.nethely.hu/  (Adatbázis menü -> phpMyAdmin)"],
+        ["phpMyAdmin",     "https://www.nethely.hű/  (Adatbázis menü -> phpMyAdmin)"],
     ]
     create_styled_table(doc, ["Megnevezés", "Érték"], db_rows, col_widths=[5, 11])
     doc.add_paragraph()
@@ -1281,7 +1281,7 @@ def generate_documentation():
     add_heading_styled(doc, "10.4. Teszt-felhasználók", level=2)
     add_paragraph_styled(doc, "A seed-adatokban három teszt-felhasználó van létrehozva, amelyekkel az alkalmazás funkciói azonnal kiprobalhatok:")
     user_rows = [
-        ["admin", "admin123",  "Adminisztrátor (alapértelmezett)"],
+        ["admin", "admin123",  "Adminisztrátör (alapértelmezett)"],
         ["teszt", "teszt123",  "Teszt-felhasználó"],
         ["user1", "jelszó123", "Normál felhasználó"],
     ]
@@ -1289,8 +1289,8 @@ def generate_documentation():
     doc.add_paragraph()
 
     add_paragraph_styled(doc,
-        "Megjegyzés: Az alkalmazás reszponzív, igy mobil böngészőből is megfelelően "
-        "megtekinthető. A bejelentkezés után az 'Üzenetek' menüpont és a CRUD műveletek "
+        "Megjegyzés: Az alkalmazás reszponzív, így mobil böngészőből is megfelelőén "
+        "megtekinthető. A bejelentkezés útán az 'Üzenetek' menüpont és a CRUD műveletek "
         "is elérhetővé válnak.")
 
     add_page_break(doc)
@@ -1300,17 +1300,17 @@ def generate_documentation():
     references = [
         [
             "PHP Official Documentation",
-            "https://www.php.net/manual/en/",
+            "https://www.php.net/manual/én/",
             "A PHP nyelv hivatalos dokumentacioja. Használva: PDO, password_hash(), "
-            "password_verify(), session_start(), htmlspecialchars(), filter_var(), "
+            "password_verify(), session_start(), htmlspecialchars(), filter_vár(), "
             "mime_content_type(), move_uploaded_file() függvények referenciakent.",
         ],
         [
             "MDN Web Docs - Mozilla Developer Network",
             "https://developer.mozilla.org/",
-            "A webes technologiak (HTML, CSS, JavaScript) atfogo referenciaja. "
+            "A webes technologiak (HTML, CSS, JavaScript) átfogó referenciaja. "
             "Használva: CSS Grid, Flexbox, Media Queries, addEventListener(), "
-            "classList, DOM manipulacio dokumentaciokent.",
+            "classList, DOM manipuláció dokumentaciokent.",
         ],
         [
             "W3Schools Online Web Tutorials",
@@ -1320,15 +1320,15 @@ def generate_documentation():
         ],
         [
             "MySQL 8.0 Reference Manual",
-            "https://dev.mysql.com/doc/refman/8.0/en/",
+            "https://dev.mysql.com/doc/refman/8.0/én/",
             "A MySQL adatbázis-kezelő rendszer hivatalos dokumentacioja. "
             "Használva: CREATE TABLE, INSERT, UPDATE, DELETE, FOREIGN KEY, "
-            "AUTO_INCREMENT szintaxis referenciakent.",
+            "AUTÓ_INCREMENT szintaxis referenciakent.",
         ],
         [
             "OWASP - Open Web Application Security Project",
             "https://owasp.org/",
-            "Webalkalmazás biztonsagi irányelvek és ajánlások. "
+            "Webalkalmazás biztonsági írányelvek és ajánlások. "
             "Használva: SQL Injection, XSS, Password Storage "
             "legjobb gyakorlatok forrasakent.",
         ],

@@ -33,3 +33,4 @@ docs/screenshots/*.PNG
 
 *.tmp
 *.bak
+__pycache__/
