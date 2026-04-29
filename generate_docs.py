@@ -230,13 +230,28 @@ def generate_documentation():
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = p.add_run("Keszitette:")
+    run = p.add_run("Keszitettek:")
     set_run_font(run, size=14, color=(100, 100, 100))
 
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
-    run = p.add_run("[Hallgato neve]")
+    run = p.add_run("Gaál Péter")
     set_run_font(run, size=18, bold=True, color=(26, 26, 46))
+
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    run = p.add_run("Neptun: GULX05")
+    set_run_font(run, size=12, color=(100, 100, 100))
+
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    run = p.add_run("Molnár Ádám")
+    set_run_font(run, size=18, bold=True, color=(26, 26, 46))
+
+    p = doc.add_paragraph()
+    p.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    run = p.add_run("Neptun: MFG82Z")
+    set_run_font(run, size=12, color=(100, 100, 100))
 
     doc.add_paragraph()
 

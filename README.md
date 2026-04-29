@@ -146,8 +146,7 @@ A részletes dokumentáció a `Filmtar_Dokumentacio.docx` fájlban található.
 ## 👥 Készítők
 
 **Webprogramozás 1 - Gyakorlat Beadandó**
-- Készítette: [Hallgató neve]
-- Neptun kód: [ABC123]
+- Készítette: Gaál Péter (Neptun: GULX05) és Molnár Ádám (Neptun: MFG82Z)
 - Dátum: 2026
 
 ## 📄 Licenc
