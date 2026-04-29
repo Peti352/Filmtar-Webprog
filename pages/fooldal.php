@@ -39,8 +39,8 @@
         </div>
 
         <div class="video-item">
-            <iframe width="100%" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="YouTube videó lejátszó" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            <p class="video-caption">Kedvenc mozis pillanatok (YouTube)</p>
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/q2kzIn8nuvI" title="Saul fia - hivatalos előzetes" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <p class="video-caption">Saul fia (2015) – Nemes Jeles László Oscar-díjas filmjének hivatalos előzetese</p>
         </div>
     </div>
 </section>
