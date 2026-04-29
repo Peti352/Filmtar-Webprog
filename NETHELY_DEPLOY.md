@@ -1,52 +1,69 @@
 # Filmtár Gyakorlat — Nethely deploy útmutató
 
-Cél: a projekt feltöltése a `peti352.nhely.hu/filmtar-webprog/` URL alá, az **előadás-projekt mellé**.
+Cél: a projekt feltöltése egy **új, külön Nethely-fiókba**, hogy ne keveredjen az előadás-projekttel. Az alkalmazás a saját subdomain gyökerén fog futni.
 
-## Előkészítve neked
+## Áttekintés
 
-A repó gyökerében van a deploy-csomag és minden szükséges fájl:
-
-| Fájl | Mire való |
+| Mit | Hol |
 |---|---|
-| `deploy.zip` | Mindent tartalmaz, amit FTP-vel fel kell tölteni. A benne lévő `config.php` még nem érvényes adatbázis-adatokkal van kitöltve. |
-| `sql/database_nethely.sql` | Ezt fogod a phpMyAdmin-ban lefuttatni. CREATE DATABASE / USE nélkül van — egyszerűen csak létrehozza a 4 új táblát és beszúrja a teszt-adatokat. |
-| `config.nethely.php` | A `deploy.zip` ebből készült. Ha valamit később módosítasz, ezt szerkeszd, ne a zip-en belüli `config.php`-t. |
+| Új tárhely-fiók (külön email) | https://www.nethely.hu/ regisztráció |
+| Subdomain | pl. `filmtar.nhely.hu`, `gaalpeter2.nhely.hu` — amit szabadon választasz |
+| Teljes URL | `http://<az_új_subdomained>/` (gyökér, semmi almappa) |
+| Adatbázis | saját, üres → ide jön a `g_*` 4 tábla |
 
-A 4 új tábla, ami létre fog jönni a meglévő adatbázisodban: `g_felhasznalok`, `g_filmek`, `g_uzenetek`, `g_kepek` — a `g_` prefix védi az előadás-projekt tábláit az ütközéstől.
-
----
-
-## 1. Adatbázis adatok lekérése a Nethely paneljéből
-
-1. Lépj be: https://www.nethely.hu/  → Belépés
-2. Bal oldali menü: **Adatbázis** szekció
-3. A meglévő (előadás-projekthez használt) adatbázisnál **jegyezd fel** a következőket:
-   - **Adatbázis név** (pl. `peti352_db1`)
-   - **Felhasználónév** (általában ugyanaz, mint a DB-név vagy hasonló)
-   - **Jelszó** (ezt te állítottad be — ha nem emlékszel, lehet jelszót újraállítani)
-   - **Host**: a Nethely-en `localhost` szokott lenni — a `config.nethely.php`-ben már ez van beírva.
+A `deploy.zip`, `sql/database_nethely.sql`, `config.nethely.php` ugyanaz mint korábban — csak most az új fiókba kerül.
 
 ---
 
-## 2. Új táblák létrehozása phpMyAdmin-ban
+## 1. Új Nethely-fiók regisztráció
 
-1. Adatbázis szekció → kattints a meglévő DB-d melletti **phpMyAdmin** ikonra → bejelentkezés.
-2. Bal oldali listában jelöld ki a **meglévő adatbázisodat**.
-3. Felül: **SQL** fül.
-4. Nyisd meg helyi gépeden a `sql/database_nethely.sql` fájlt egy szövegszerkesztővel, **másold ki a teljes tartalmát**, és illeszd be a phpMyAdmin SQL-mezőjébe.
-5. Kattints **Go** / **Végrehajtás**.
-6. Ellenőrzés: a bal oldalon a DB alatt megjelenik a 4 új tábla:
-   - `g_felhasznalok`
-   - `g_filmek`
-   - `g_uzenetek`
-   - `g_kepek`
-7. **Ne aggódj** az előadás-projekt meglévő tábláiért — azokat semmilyen módon nem érintettük.
+1. Nyisd meg: https://www.nethely.hu/
+2. **Regisztráció** — egy email cím, ami **MÁS, mint amit az előadás-projekthez használtál**.
+   - Lehet: a társad (Molnár Ádám) email-je, a te másik email-ed, vagy egy újonnan létrehozott Gmail-fiók.
+3. Aktiváld a fiókot a kapott emailben.
+4. Lépj be: https://www.nethely.hu/  → Belépés.
 
----
+## 2. Ingyenes tárhely + subdomain aktiválása
 
-## 3. config.php szerkesztése
+1. Az új fiókban: **Ingyenes tárhely beindítása** → **Bekapcsolás**.
+2. **Ingyenes domain választás** — válassz egy **szabad subdomaint**:
+   - Próbálkozz: `filmtar.nhely.hu`, `filmtarweb.nhely.hu`, `gulx05.nhely.hu`, `mfg82z.nhely.hu`, vagy bármi szabad.
+   - Az aktiválás 5–10 percet vehet igénybe.
+3. **Domain csatolás**: Az Ön tárhelyei → Új domain csatolás → válaszd a most létrehozott subdomaint → Mentés.
+4. **Webcím létrehozása**: Új webcím → előtag NÉLKÜL maradjon → **PHP verzió: 8** → Mentés.
 
-A `deploy.zip`-ben lévő `config.php` négy helykitöltőt tartalmaz:
+## 3. Adatbázis létrehozása
+
+1. Bal oldali menü: **Adatbázis** → **Új SQL adatbázis**.
+2. Adatbázisnév: pl. `filmtar` (vagy ami szabad).
+3. Jelszó: tetszőleges erős jelszó.
+4. Mentés. Várj ~1 percet.
+5. **Jegyezd fel** (vagy szúrd be ide a chatbe, ha azt akarod, hogy én csináljam a deploy-t):
+   - **DB név** (pl. `xxxxxx_filmtar`)
+   - **DB user** (általában a fiók-azonosító + db-suffix)
+   - **DB jelszó** (amit te állítottál)
+   - **DB host**: Nethely-en `localhost` szokott lenni
+6. **FTP-adatok** ugyanezen a panelen: bal oldali menü → **FTP**:
+   - **FTP host** (pl. `ftp.nhely.hu` vagy az új subdomained)
+   - **FTP user** (általában a fiók-azonosító)
+   - **FTP jelszó** (amit beállítottál)
+   - **Port**: 21
+
+## 4. SQL importálása phpMyAdmin-ban
+
+1. **Adatbázis** szekció → a frissen létrehozott DB melletti **phpMyAdmin** ikon.
+2. Bejelentkezés a DB user/jelszóval.
+3. Bal oldalon kattints a saját adatbázisodra (kicsit várhat, amíg betölt).
+4. Felül: **SQL** fül.
+5. Helyi gépeden nyisd meg a `sql/database_nethely.sql` fájlt szövegszerkesztővel, **másold ki a teljes tartalmát**, és illeszd be a phpMyAdmin SQL-mezőjébe.
+6. Kattints **Go** / **Végrehajtás**.
+7. Bal oldalon megjelenik a 4 új tábla:
+   - `g_felhasznalok`, `g_filmek`, `g_uzenetek`, `g_kepek`
+8. Mehetsz tovább a 3 teszt-felhasználóval (`admin`/`admin123`, `teszt`/`teszt123`, `user1`/`jelszo123`) és a 12 magyar filmmel.
+
+## 5. config.php szerkesztése
+
+A `deploy.zip`-ben lévő `config.php` még helykitöltőkkel van:
 
 ```php
 define('DB_HOST', 'localhost');
@@ -55,32 +72,32 @@ define('DB_USER', 'PASTE_NETHELY_DB_USER_HERE');
 define('DB_PASS', 'PASTE_NETHELY_DB_PASSWORD_HERE');
 ```
 
-**Két opció a kitöltésre:**
+Két opció:
 
 **A) Helyben szerkesztsd, aztán töltsd újra a zip-et:**
 1. Csomagold ki a `deploy.zip`-et egy ideiglenes mappába.
 2. Nyisd meg a `config.php`-t és írd át a 3 helykitöltőt a Nethely-es adataiddal.
-3. Tömörítsd újra (vagy egyszerűen csak ezt az egy fájlt töltsd majd fel utólag).
+3. Mentsd, majd ezt az egész mappát töltöd majd fel FTP-n.
 
 **B) FileZilla-ban, feltöltés UTÁN szerkeszd:**
-1. Tölts fel mindent (4. lépés).
+1. Tölts fel mindent (6. lépés).
 2. FileZilla-ban: jobb klikk a `config.php`-re → **View/Edit** → módosítsd → mentsd → FileZilla automatikusan visszatölti.
 
----
+## 6. FTP feltöltés a gyökérbe
 
-## 4. FTP feltöltés
+1. **FileZilla** indítása (vagy WinSCP, Total Commander).
+2. Csatlakozás az FTP-adatokkal:
+   - Host: a Control Panel-ből (pl. `ftp.nhely.hu`)
+   - User / jelszó: amit a panelben látsz
+   - Port: 21
+3. **Bal oldal (Local):** csomagold ki helyi gépen a `deploy.zip`-et egy átmeneti mappába (pl. `D:\filmtar-deploy\`), navigálj oda.
+4. **Jobb oldal (Remote):** navigálj a gyökér web-mappádba. Nethely-en ez tipikusan `/web/` vagy `/htdocs/`. Ha `/web/index.html` ott van, az a helyes hely.
+5. **Töröld** ott az alapértelmezett `index.html`-t (Nethely placeholder), ha van.
+6. **Drag & drop** a kicsomagolt deploy mappa **összes tartalmát** a remote oldalra.
 
-1. **FileZilla** indítása. Csatlakozás a Nethely FTP adataival (Control Panel → FTP).
-2. **Bal oldal (Local):** navigálj a `D:\Filmtar-Webprog\` mappába, és bontsd ki a `deploy.zip`-et lokálisan egy átmeneti mappába.
-3. **Jobb oldal (Remote):** navigálj oda, ahol az előadás-projekted is van — ez Nethely-en általában `/web/` vagy `/htdocs/` (nézd meg, melyiket látod).
-4. **Hozz létre egy új mappát** ott: jobb klikk → Új mappa → név: `filmtar-webprog`.
-5. Lépj bele a `filmtar-webprog/` mappába a remote oldalon.
-6. **Drag & Drop az összes fájlt** a kicsomagolt deploy mappából a remote `filmtar-webprog/`-ba.
-7. Várd meg, amíg minden feltöltődik (~30 másodperc, csak 164 KB).
-
-A végeredmény távoli oldalon ez a struktúra legyen:
+A végeredmény távoli oldalon ez a struktúra legyen (közvetlenül a `/web/` vagy `/htdocs/` ALATT):
 ```
-.../filmtar-webprog/
+/web/   (vagy /htdocs/)
 ├── index.php
 ├── config.php          ← itt kell helyes adatbázis-adatokkal lennie
 ├── .htaccess
@@ -93,75 +110,66 @@ A végeredmény távoli oldalon ez a struktúra legyen:
 └── uploads/             (ide fognak menni a feltöltött képek)
 ```
 
----
+## 7. uploads/ jogosultság
 
-## 5. uploads/ mappa jogosultság
-
-A képfeltöltés csak akkor fog működni, ha az `uploads/` mappa írható.
+A képfeltöltés csak akkor működik, ha az `uploads/` mappa írható.
 
 1. FileZilla-ban: jobb klikk az `uploads/` mappára (a remote oldalon).
 2. **File permissions...** / **Fájl jogosultságok...**
-3. Numerikus érték: **755** (vagy ha nem megy, **777**).
+3. Numerikus érték: **755** (vagy ha nem megy: **777**).
 4. **OK**.
 
----
-
-## 6. Tesztelés
+## 8. Tesztelés
 
 Nyisd meg böngészőben:
 ```
-http://peti352.nhely.hu/filmtar-webprog/
+http://<a_te_subdomained>/
 ```
+(pl. `http://filmtar.nhely.hu/`)
 
 Várt eredmény:
 - Betöltődik a Filmtár főoldal.
-- Látszik a hero szekció, az 5 mp-es videó, a Saul fia YouTube-ágyazás, a Google térkép.
+- Látszik a hero szekció, a saját 5 mp-es videó, a Saul fia YouTube-ágyazás, a Google térkép.
 - A navigáció működik: Főoldal / Képek / Kapcsolat / CRUD / Bejelentkezés.
 
-**Ellenőrző kör:**
-1. Próbálj **regisztrálni** egy új felhasználót — ha nem kapsz „Database connection error"-t, az adatbázis-kapcsolat rendben van.
-2. Lépj be `admin` / `admin123`-mal (a seed-ből).
-3. Menj a **CRUD**-ra — látnod kell a 12 magyar filmet a táblázatban.
-4. Próbálj egy új filmet hozzáadni → szerkeszteni → törölni.
-5. Menj a **Képek**-re → tölts fel egy kicsi képet → lásd, hogy megjelenik a galériában.
-6. Menj a **Kapcsolat**-ra → küldj egy üzenetet → menj az **Üzenetek**-re → lásd, hogy ott van.
+**Ellenőrző-kör:**
+1. **Regisztrálj** új felhasználót — ha nem kapsz „Database connection error"-t, az adatbázis-kapcsolat OK.
+2. **Lépj be** `admin` / `admin123`-mal (a seed-ből).
+3. **CRUD** — látnod kell a 12 magyar filmet a táblázatban.
+4. Új film hozzáadása → szerkesztés → törlés.
+5. **Képek** → tölts fel egy kicsi képet → galériában megjelenik.
+6. **Kapcsolat** → küldj üzenetet → **Üzenetek** → ott van.
 
-Ha mindegyik megy, a deploy kész.
+Ha mind megy, a deploy kész.
 
----
-
-## 7. Hibakeresés (gyakori esetek)
+## 9. Hibakeresés
 
 | Probléma | Megoldás |
 |---|---|
-| Üres / fehér oldal | A `config.php`-ben rosszak az adatbázis-adatok. PHP error_log megnézése. Vagy az `.htaccess` nem támogatott — próbáld átmenetileg átnevezni `_htaccess`-re. |
+| Üres / fehér oldal | A `config.php`-ben rosszak az adatbázis-adatok. Vagy az `.htaccess` nem támogatott — nevezd át átmenetileg `_htaccess`-re. |
 | `Database connection error` | DB név / user / jelszó rossz a `config.php`-ben. |
-| `Table 'xyz.g_filmek' doesn't exist` | A 2. lépést nem futtattad le. Menj phpMyAdmin → futtasd újra a `database_nethely.sql`-t. |
-| CSS nem töltődik | Az `.htaccess` nem támogatott — próbáld letörölni Nethely-ről. Vagy a CSS fájl nem töltődött fel — ellenőrizd FTP-ben. |
-| Képfeltöltés `move_uploaded_file failed` | `uploads/` jogosultság nem 755/777. Lásd 5. pont. |
-| 403 / 404 a gyökér URL-en | A `peti352.nhely.hu/` még az ELŐADÁS-projektet hozza, jó az. A gyakorlat-projekt a `/filmtar-webprog/` ALATT van. |
+| `Table 'xyz.g_filmek' doesn't exist` | A 4. lépést nem futtattad le. Menj phpMyAdmin → futtasd újra a `database_nethely.sql`-t. |
+| CSS nem töltődik | Az `.htaccess` nem támogatott — töröld le, vagy nevezd át. Vagy a CSS fájl nem töltődött fel — ellenőrizd FTP-ben. |
+| Képfeltöltés `move_uploaded_file failed` | `uploads/` jogosultság nem 755/777. Lásd 7. pont. |
+| Az alapértelmezett Nethely placeholder oldal jön fel | Az `index.html`-t nem törölted ki a 6. lépésben. Töröld a remote oldalon. |
 
----
-
-## 8. Beadáshoz szükséges adatok
-
-Ha minden megy, gyűjtsd össze a dokumentációba:
+## 10. Beadáshoz szükséges adatok
 
 ```
 === Internetes elérhetőség ===
-Weboldal URL:    http://peti352.nhely.hu/filmtar-webprog/
+Weboldal URL:    http://<a_te_új_subdomained>/
 GitHub repó:     https://github.com/Peti352/Filmtar-Webprog
 
 === Tárhely belépési adatok (oktatónak) ===
-FTP Host:        ftp.nethely.hu (vagy a panelben szereplő pontos host)
-FTP Username:    (Nethely Control Panel-ből)
+FTP Host:        (Nethely Control Panel, FTP szekció)
+FTP Username:    (uo.)
 FTP Password:    (te állítottad)
 FTP Port:        21
 
 === MySQL ===
 Host:            localhost
-Database:        (Nethely-es DB név)
-Username:        (Nethely-es DB user)
+Database:        (Nethely Adatbázis szekcióból)
+Username:        (uo.)
 Password:        (te állítottad)
 phpMyAdmin URL:  https://www.nethely.hu/   (Control Panel → Adatbázis → phpMyAdmin)
 
@@ -169,3 +177,7 @@ phpMyAdmin URL:  https://www.nethely.hu/   (Control Panel → Adatbázis → php
 Felhasználónév:  admin
 Jelszó:          admin123
 ```
+
+## Megjegyzés a `g_` prefixről
+
+A `g_` előtag a tábla-neveken (`g_filmek` stb.) eredetileg azért lett bevezetve, hogy ne ütközzön az előadás-projekt tábláival, ha **közös DB-be** kerültek volna. Ebben az új scenarióban (külön fiók, külön DB) ez nem szükséges, **de nem is zavar** — a kód már így van, és bármikor törölhető (visszaállítható sima `filmek`/`felhasznalok` névre), ha úgy akarjátok.
