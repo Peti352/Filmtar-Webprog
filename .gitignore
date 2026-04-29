@@ -9,6 +9,11 @@ uploads/*
 
 videos/*
 !videos/.gitkeep
+!videos/sample.mp4
+
+deploy.zip
+Kritériumok/
+kriteriumok_raw_dump.txt
 
 .vscode/
 .idea/
