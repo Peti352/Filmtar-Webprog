@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             redirect('index.php?page=belepes');
         }
 
-        $stmt = $dbh->prepare('SELECT id, felhasznalonev, jelszo, csaladi_nev, utonev FROM felhasznalok WHERE felhasznalonev = :fnev LIMIT 1');
+        $stmt = $dbh->prepare('SELECT id, felhasznalonev, jelszo, csaladi_nev, utonev FROM g_felhasznalok WHERE felhasznalonev = :fnev LIMIT 1');
         $stmt->execute([':fnev' => $felhasznalonev]);
         $user = $stmt->fetch();
 
@@ -83,7 +83,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             redirect('index.php?page=regisztracio');
         }
 
-        $stmt = $dbh->prepare('SELECT id FROM felhasznalok WHERE felhasznalonev = :fnev LIMIT 1');
+        $stmt = $dbh->prepare('SELECT id FROM g_felhasznalok WHERE felhasznalonev = :fnev LIMIT 1');
         $stmt->execute([':fnev' => $felhasznalonev]);
         if ($stmt->fetch()) {
             flash('error', 'Ez a felhasználónév már foglalt!');
@@ -92,7 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
         $hashelt_jelszo = password_hash($jelszo, PASSWORD_DEFAULT);
 
-        $stmt = $dbh->prepare('INSERT INTO felhasznalok (csaladi_nev, utonev, felhasznalonev, email, jelszo) VALUES (:cnev, :unev, :fnev, :email, :jelszo)');
+        $stmt = $dbh->prepare('INSERT INTO g_felhasznalok (csaladi_nev, utonev, felhasznalonev, email, jelszo) VALUES (:cnev, :unev, :fnev, :email, :jelszo)');
         $stmt->execute([
             ':cnev' => $csaladi_nev,
             ':unev' => $utonev,
@@ -124,7 +124,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         }
 
         $kuldo_id = bejelentkezveVan() ? $_SESSION['user']['id'] : null;
-        $stmt = $dbh->prepare('INSERT INTO uzenetek (nev, email, targy, uzenet, kuldo_id, kuldve) VALUES (:nev, :email, :targy, :uzenet, :kuldo_id, NOW())');
+        $stmt = $dbh->prepare('INSERT INTO g_uzenetek (nev, email, targy, uzenet, kuldo_id, kuldve) VALUES (:nev, :email, :targy, :uzenet, :kuldo_id, NOW())');
         $stmt->execute([':nev' => $nev, ':email' => $email, ':targy' => $targy, ':uzenet' => $uzenet, ':kuldo_id' => $kuldo_id]);
 
         flash('success', 'Üzeneted sikeresen elküldtük! Hamarosan válaszolunk.');
@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             redirect('index.php?page=crud&action=uj');
         }
 
-        $stmt = $dbh->prepare('INSERT INTO filmek (cim, rendezo, ev, mufaj, leiras, ertekeles) VALUES (:cim, :rendezo, :ev, :mufaj, :leiras, :ertekeles)');
+        $stmt = $dbh->prepare('INSERT INTO g_filmek (cim, rendezo, ev, mufaj, leiras, ertekeles) VALUES (:cim, :rendezo, :ev, :mufaj, :leiras, :ertekeles)');
         $stmt->execute([':cim' => $cim, ':rendezo' => $rendezo, ':ev' => $ev, ':mufaj' => $mufaj, ':leiras' => $leiras, ':ertekeles' => $ertekeles]);
 
         flash('success', 'A film sikeresen hozzáadva!');
@@ -165,7 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             redirect('index.php?page=crud&action=szerkeszt&id=' . $id);
         }
 
-        $stmt = $dbh->prepare('UPDATE filmek SET cim = :cim, rendezo = :rendezo, ev = :ev, mufaj = :mufaj, leiras = :leiras, ertekeles = :ertekeles WHERE id = :id');
+        $stmt = $dbh->prepare('UPDATE g_filmek SET cim = :cim, rendezo = :rendezo, ev = :ev, mufaj = :mufaj, leiras = :leiras, ertekeles = :ertekeles WHERE id = :id');
         $stmt->execute([':cim' => $cim, ':rendezo' => $rendezo, ':ev' => $ev, ':mufaj' => $mufaj, ':leiras' => $leiras, ':ertekeles' => $ertekeles, ':id' => $id]);
 
         flash('success', 'A film adatai sikeresen frissítve!');
@@ -175,7 +175,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     if ($action === 'crud_delete') {
         $id = (int)($_POST['id'] ?? 0);
         if ($id > 0) {
-            $stmt = $dbh->prepare('DELETE FROM filmek WHERE id = :id');
+            $stmt = $dbh->prepare('DELETE FROM g_filmek WHERE id = :id');
             $stmt->execute([':id' => $id]);
             flash('success', 'A film sikeresen törölve!');
         } else {
@@ -211,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         $cel_utvonal = __DIR__ . '/uploads/' . $uj_fajlnev;
 
         if (move_uploaded_file($fajl['tmp_name'], $cel_utvonal)) {
-            $stmt = $dbh->prepare('INSERT INTO kepek (fajlnev, eredeti_nev, feltolto_id, feltoltve) VALUES (:fajlnev, :eredeti_nev, :feltolto_id, NOW())');
+            $stmt = $dbh->prepare('INSERT INTO g_kepek (fajlnev, eredeti_nev, feltolto_id, feltoltve) VALUES (:fajlnev, :eredeti_nev, :feltolto_id, NOW())');
             $stmt->execute([':fajlnev' => $uj_fajlnev, ':eredeti_nev' => $fajl['name'], ':feltolto_id' => $_SESSION['user']['id']]);
             flash('success', 'A kép sikeresen feltöltve!');
         } else {

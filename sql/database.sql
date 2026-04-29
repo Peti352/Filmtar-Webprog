@@ -9,12 +9,12 @@ USE `filmtar`;
 SET NAMES utf8mb4;
 SET CHARACTER SET utf8mb4;
 
-DROP TABLE IF EXISTS `kepek`;
-DROP TABLE IF EXISTS `uzenetek`;
-DROP TABLE IF EXISTS `filmek`;
-DROP TABLE IF EXISTS `felhasznalok`;
+DROP TABLE IF EXISTS `g_kepek`;
+DROP TABLE IF EXISTS `g_uzenetek`;
+DROP TABLE IF EXISTS `g_filmek`;
+DROP TABLE IF EXISTS `g_felhasznalok`;
 
-CREATE TABLE `felhasznalok` (
+CREATE TABLE `g_felhasznalok` (
  `id` INT AUTO_INCREMENT PRIMARY KEY ,
  `felhasznalonev` VARCHAR(50) NOT NULL UNIQUE ,
  `jelszo` VARCHAR(255) NOT NULL ,
@@ -25,7 +25,7 @@ CREATE TABLE `felhasznalok` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
  COMMENT='Regisztrált felhasználók';
 
-CREATE TABLE `filmek` (
+CREATE TABLE `g_filmek` (
  `id` INT AUTO_INCREMENT PRIMARY KEY ,
  `cim` VARCHAR(200) NOT NULL ,
  `rendezo` VARCHAR(100) NOT NULL ,
@@ -36,7 +36,7 @@ CREATE TABLE `filmek` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
  COMMENT='Filmek adatbázisa';
 
-CREATE TABLE `uzenetek` (
+CREATE TABLE `g_uzenetek` (
  `id` INT AUTO_INCREMENT PRIMARY KEY ,
  `nev` VARCHAR(100) NOT NULL ,
  `email` VARCHAR(100) NOT NULL ,
@@ -45,32 +45,32 @@ CREATE TABLE `uzenetek` (
  `kuldo_id` INT DEFAULT NULL ,
  `kuldve` DATETIME DEFAULT CURRENT_TIMESTAMP ,
 
- FOREIGN KEY (`kuldo_id`) REFERENCES `felhasznalok`(`id`)
+ FOREIGN KEY (`kuldo_id`) REFERENCES `g_felhasznalok`(`id`)
  ON DELETE SET NULL
  ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
  COMMENT='Kapcsolatfelvételi üzenetek';
 
-CREATE TABLE `kepek` (
+CREATE TABLE `g_kepek` (
  `id` INT AUTO_INCREMENT PRIMARY KEY ,
  `fajlnev` VARCHAR(255) NOT NULL ,
  `eredeti_nev` VARCHAR(255) NOT NULL ,
  `feltolto_id` INT NOT NULL ,
  `feltoltve` DATETIME DEFAULT CURRENT_TIMESTAMP ,
 
- FOREIGN KEY (`feltolto_id`) REFERENCES `felhasznalok`(`id`)
+ FOREIGN KEY (`feltolto_id`) REFERENCES `g_felhasznalok`(`id`)
  ON DELETE CASCADE
  ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
  COMMENT='Galéria képek';
 
-INSERT INTO `felhasznalok` (`felhasznalonev`, `jelszo`, `csaladi_nev`, `utonev`, `email`, `letrehozva`) VALUES
+INSERT INTO `g_felhasznalok` (`felhasznalonev`, `jelszo`, `csaladi_nev`, `utonev`, `email`, `letrehozva`) VALUES
 
 ('admin', '$2y$10$xLRbXdEaRmMfCPn3k3VLnOQZbGjBHkfGmObaGEmMjgS3mMxGJ3dGe', 'Admin', 'Felhasználó', 'admin@filmtar.hu', '2025-01-01 10:00:00'),
 ('teszt', '$2y$10$kZpHDLeMRqMrTz3FVZaKiOYkIabHjT2M6M.GJfNxuWdYBasVkq.JG', 'Teszt', 'Elek', 'teszt@filmtar.hu', '2025-02-15 14:30:00'),
 ('user1', '$2y$10$N9qo8uLOickgx2ZMRZoMyeIjZAgcfl7p92ldGxad68LJZdL17lhWy', 'Kovács', 'János', 'kovacs.janos@example.hu', '2025-03-20 09:15:00');
 
-INSERT INTO `filmek` (`cim`, `rendezo`, `ev`, `mufaj`, `ertekeles`, `leiras`) VALUES
+INSERT INTO `g_filmek` (`cim`, `rendezo`, `ev`, `mufaj`, `ertekeles`, `leiras`) VALUES
 (
  'A Pál utcai fiúk',
  'Fábri Zoltán',
@@ -168,7 +168,7 @@ INSERT INTO `filmek` (`cim`, `rendezo`, `ev`, `mufaj`, `ertekeles`, `leiras`) VA
  'Három generáció groteszk története a 20. századi Magyarországon. A film provokatív és vizuálisan lenyűgöző módon mutatja be a test, az étkezés és az emberi lét szélsőségeit. Nem mindennapi filmes élmény a merészebb nézők számára.'
 );
 
-INSERT INTO `uzenetek` (`nev`, `email`, `targy`, `uzenet`, `kuldo_id`, `kuldve`) VALUES
+INSERT INTO `g_uzenetek` (`nev`, `email`, `targy`, `uzenet`, `kuldo_id`, `kuldve`) VALUES
 (
  'Admin Felhasználó',
  'admin@filmtar.hu',

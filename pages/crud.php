@@ -9,7 +9,7 @@ switch ($action) {
         <a href="index.php?page=crud&action=uj" class="btn btn-success">+ Új film hozzáadása</a>
 
         <?php
-        $stmt = $dbh->prepare('SELECT * FROM filmek ORDER BY id DESC');
+        $stmt = $dbh->prepare('SELECT * FROM g_filmek ORDER BY id DESC');
         $stmt->execute();
         $filmek = $stmt->fetchAll();
 
@@ -112,7 +112,7 @@ switch ($action) {
 
     case 'szerkeszt':
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        $stmt = $dbh->prepare('SELECT * FROM filmek WHERE id = :id');
+        $stmt = $dbh->prepare('SELECT * FROM g_filmek WHERE id = :id');
         $stmt->execute([':id' => $id]);
         $film = $stmt->fetch();
 
@@ -186,7 +186,7 @@ switch ($action) {
 
     case 'torol':
         $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
-        $stmt = $dbh->prepare('SELECT * FROM filmek WHERE id = :id');
+        $stmt = $dbh->prepare('SELECT * FROM g_filmek WHERE id = :id');
         $stmt->execute([':id' => $id]);
         $film = $stmt->fetch();
 

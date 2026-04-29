@@ -59,13 +59,13 @@ msg('Adatbázis kész.', 'ok');
 
 msg('Táblák létrehozása...');
 
-$pdo->exec("DROP TABLE IF EXISTS `kepek`");
-$pdo->exec("DROP TABLE IF EXISTS `uzenetek`");
-$pdo->exec("DROP TABLE IF EXISTS `filmek`");
-$pdo->exec("DROP TABLE IF EXISTS `felhasznalok`");
+$pdo->exec("DROP TABLE IF EXISTS `g_kepek`");
+$pdo->exec("DROP TABLE IF EXISTS `g_uzenetek`");
+$pdo->exec("DROP TABLE IF EXISTS `g_filmek`");
+$pdo->exec("DROP TABLE IF EXISTS `g_felhasznalok`");
 
 $pdo->exec("
-    CREATE TABLE `felhasznalok` (
+    CREATE TABLE `g_felhasznalok` (
         `id`              INT          AUTO_INCREMENT PRIMARY KEY   COMMENT 'Egyedi azonosító',
         `felhasznalonev`  VARCHAR(50)  NOT NULL UNIQUE              COMMENT 'Bejelentkezési név',
         `jelszo`          VARCHAR(255) NOT NULL                     COMMENT 'Bcrypt hash (password_hash)',
@@ -79,7 +79,7 @@ $pdo->exec("
 msg('  felhasznalok tábla létrehozva.', 'ok');
 
 $pdo->exec("
-    CREATE TABLE `filmek` (
+    CREATE TABLE `g_filmek` (
         `id`         INT           AUTO_INCREMENT PRIMARY KEY   COMMENT 'Egyedi azonosító',
         `cim`        VARCHAR(200)  NOT NULL                     COMMENT 'Film címe',
         `rendezo`    VARCHAR(100)  NOT NULL                     COMMENT 'Rendező neve',
@@ -93,7 +93,7 @@ $pdo->exec("
 msg('  filmek tábla létrehozva.', 'ok');
 
 $pdo->exec("
-    CREATE TABLE `uzenetek` (
+    CREATE TABLE `g_uzenetek` (
         `id`        INT          AUTO_INCREMENT PRIMARY KEY   COMMENT 'Egyedi azonosító',
         `nev`       VARCHAR(100) NOT NULL                     COMMENT 'Küldő neve',
         `email`     VARCHAR(100) NOT NULL                     COMMENT 'Küldő e-mail címe',
@@ -102,7 +102,7 @@ $pdo->exec("
         `kuldo_id`  INT          DEFAULT NULL                 COMMENT 'Küldő felhasználó ID-ja (NULL = vendég)',
         `kuldve`    DATETIME     DEFAULT CURRENT_TIMESTAMP    COMMENT 'Küldés időpontja',
 
-        FOREIGN KEY (`kuldo_id`) REFERENCES `felhasznalok`(`id`)
+        FOREIGN KEY (`kuldo_id`) REFERENCES `g_felhasznalok`(`id`)
             ON DELETE SET NULL
             ON UPDATE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
@@ -111,14 +111,14 @@ $pdo->exec("
 msg('  uzenetek tábla létrehozva.', 'ok');
 
 $pdo->exec("
-    CREATE TABLE `kepek` (
+    CREATE TABLE `g_kepek` (
         `id`            INT          AUTO_INCREMENT PRIMARY KEY   COMMENT 'Egyedi azonosító',
         `fajlnev`       VARCHAR(255) NOT NULL                     COMMENT 'Tárolt fájlnév (szerveren)',
         `eredeti_nev`   VARCHAR(255) NOT NULL                     COMMENT 'Eredeti fájlnév (feltöltéskor)',
         `feltolto_id`   INT          NOT NULL                     COMMENT 'Feltöltő felhasználó ID-ja',
         `feltoltve`     DATETIME     DEFAULT CURRENT_TIMESTAMP    COMMENT 'Feltöltés időpontja',
 
-        FOREIGN KEY (`feltolto_id`) REFERENCES `felhasznalok`(`id`)
+        FOREIGN KEY (`feltolto_id`) REFERENCES `g_felhasznalok`(`id`)
             ON DELETE CASCADE
             ON UPDATE CASCADE
     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
@@ -158,7 +158,7 @@ $felhasznalok = [
 ];
 
 $stmt = $pdo->prepare("
-    INSERT INTO `felhasznalok`
+    INSERT INTO `g_felhasznalok`
         (`felhasznalonev`, `jelszo`, `csaladi_nev`, `utonev`, `email`, `letrehozva`)
     VALUES
         (:felhasznalonev, :jelszo, :csaladi_nev, :utonev, :email, :letrehozva)
@@ -234,7 +234,7 @@ $filmek = [
 ];
 
 $stmt = $pdo->prepare("
-    INSERT INTO `filmek` (`cim`, `rendezo`, `ev`, `mufaj`, `ertekeles`, `leiras`)
+    INSERT INTO `g_filmek` (`cim`, `rendezo`, `ev`, `mufaj`, `ertekeles`, `leiras`)
     VALUES (:cim, :rendezo, :ev, :mufaj, :ertekeles, :leiras)
 ");
 
@@ -296,7 +296,7 @@ $uzenetek = [
 ];
 
 $stmt = $pdo->prepare("
-    INSERT INTO `uzenetek` (`nev`, `email`, `targy`, `uzenet`, `kuldo_id`, `kuldve`)
+    INSERT INTO `g_uzenetek` (`nev`, `email`, `targy`, `uzenet`, `kuldo_id`, `kuldve`)
     VALUES (:nev, :email, :targy, :uzenet, :kuldo_id, :kuldve)
 ");
 
@@ -318,10 +318,10 @@ msg('=== Adatbázis inicializálás befejezve ===', 'ok');
 msg('');
 
 $tablak = [
-    'felhasznalok' => 'Felhasználók',
-    'filmek'       => 'Filmek',
-    'uzenetek'     => 'Üzenetek',
-    'kepek'        => 'Képek',
+    'g_felhasznalok' => 'Felhasználók',
+    'g_filmek'       => 'Filmek',
+    'g_uzenetek'     => 'Üzenetek',
+    'g_kepek'        => 'Képek',
 ];
 
 foreach ($tablak as $tabla => $nev) {
