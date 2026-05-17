@@ -162,20 +162,44 @@ def create_styled_table(doc, headers, rows, col_widths=None):
 
 SCREENSHOT_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "docs", "screenshots")
 
+_NAMED_FILES = {"hero.png", "videok.png", "googlemaps.png", "főoldalmobil.PNG", "hamburgernyitott.PNG", "README.md"}
+_DATED = sorted(
+    [f for f in os.listdir(SCREENSHOT_DIR)
+     if f.endswith(".png") and f not in _NAMED_FILES]
+    if os.path.isdir(SCREENSHOT_DIR) else [],
+)
+# _DATED sorrend (legrégebbi először):
+#  0 = régi főoldal (nem használjuk)
+#  1 = főoldal mobil        2 = hamburger menü
+#  3 = bejelentkezés        4 = regisztráció
+#  5 = bejelentkezett       6 = képgaléria
+#  7 = kapcsolat            8 = JS validáció
+#  9 = üzenetek            10 = CRUD lista
+# 11 = CRUD új             12 = CRUD szerkesztés
+# 13 = CRUD törlés
+
 SCREENSHOT_MAP = {
-    "5.1.a": ["1. Főoldal — hero.png"],
-    "5.1.b": ["1. Főoldal — videók.png"],
-    "5.1.c": ["1. Főoldal — terkép.png"],
-    "5.2.a": ["2. Regisztráció.png"],
-    "5.2.b": ["2. Bejelentkezés.png"],
-    "5.3":   ["3. Képék menü.png"],
-    "5.4":   ["4. Kapcsolat.png"],
-    "5.5":   ["5. Üzenetek táblázat.png"],
-    "5.6.a": ["6. CRUD lista.png"],
-    "5.6.b": ["5.6.b üresűrlap.png"],
-    "5.6.c": ["5.6.cszerkesztes.png"],
-    "5.6.d": ["5.6.d törlés.png"],
-    "7":     ["7. zarthamburger.PNG", "7. nyitotthamb.PNG", "7. képfügg.PNG"],
+    # Főoldal — nevesített fájlok
+    "5.1.a": ["hero.png"],
+    "5.1.b": ["videok.png"],
+    "5.1.c": ["googlemaps.png"],
+    # Regisztráció, bejelentkezés
+    "5.2.a": [_DATED[4]] if len(_DATED) > 4 else [],    # Regisztráció
+    "5.2.b": [_DATED[3]] if len(_DATED) > 3 else [],    # Bejelentkezés
+    "5.2.c": [_DATED[5]] if len(_DATED) > 5 else [],    # Bejelentkezett fejléc
+    # Képgaléria, kapcsolat, üzenetek
+    "5.3":   [_DATED[6]] if len(_DATED) > 6 else [],    # Képgaléria + feltöltés
+    "5.4":   [_DATED[7]] if len(_DATED) > 7 else [],    # Kapcsolat űrlap
+    "5.4.b": [_DATED[8]] if len(_DATED) > 8 else [],    # JS validáció
+    "5.5":   [_DATED[9]] if len(_DATED) > 9 else [],    # Üzenetek
+    # CRUD
+    "5.6.a": [_DATED[10]] if len(_DATED) > 10 else [],  # CRUD lista
+    "5.6.b": [_DATED[11]] if len(_DATED) > 11 else [],  # Új film űrlap
+    "5.6.c": [_DATED[12]] if len(_DATED) > 12 else [],  # Szerkesztés
+    "5.6.d": [_DATED[13]] if len(_DATED) > 13 else [],  # Törlés
+    # Reszponzív
+    "7.a":   ["főoldalmobil.PNG"],                       # Főoldal mobil nézet
+    "7.b":   ["hamburgernyitott.PNG"],                   # Hamburger menü kinyitva
 }
 
 
@@ -434,11 +458,12 @@ def generate_documentation():
     add_heading_styled(doc, "1.4. Front-controller tervezési minta", level=2)
 
     add_paragraph_styled(doc,
-        "Az alkalmazás a front-controller tervezési mintát valósítja meg. "
-        "Ez azt jelenti, hogy minden HTTP kérés egyetlen belépési ponton, "
-        "az index.php fájlon keresztül érkezik. Az index.php a $_GET['page'] "
-        "paramétér alapján dönti el, mely oldal tartalom jelenjen meg. "
-        "Ez a megoldásnak számos előnye van:")
+        "Az alkalmazás a 7a - PHP Front-controller tervezési minta 2. Megoldását "
+        "valósítja meg. Minden HTTP kérés az .htaccess URL rewrite szabályain "
+        "keresztül az index.php-ra érkezik. Az index.php a QUERY_STRING alapján "
+        "dönti el, melyik oldal tartalom jelenjen meg, a POST feldolgozást "
+        "a logicals/ mappába delegálja, a megjelenítést pedig a templates/ "
+        "mappába. Ennek a megoldásnak számos előnye van:")
 
     fc_advantages = [
         "Központi hozzáférés-kezelést biztosít (pl. session ellenőrzés)",
@@ -661,36 +686,43 @@ def generate_documentation():
 
     tree = (
         "WebProg/\n"
-        "|-- index.php              # Front controller (fő vezérlő)\n"
-        "|-- config.php             # Adatbázis konfiguráció (PDO)\n"
+        "|-- index.php                        # Front controller (fő belépési pont)\n"
+        "|-- .htaccess                        # URL rewrite szabályok\n"
         "|\n"
-        "|-- css/\n"
-        "|   |-- style.css          # Fő stíluslap (reszponzív)\n"
+        "|-- includes/\n"
+        "|   |-- config.inc.php               # $oldalak tömb, DB kapcsolat, segédfüggvények\n"
         "|\n"
-        "|-- js/\n"
-        "|   |-- main.js            # Hamburger menü, flash, lightbox\n"
-        "|   |-- validation.js      # Kapcsolati űrlap validáció\n"
-        "|\n"
-        "|-- pages/\n"
-        "|   |-- főoldal.php        # Főoldal (hero, videók, térkép)\n"
-        "|   |-- belépés.php        # Bejelentkezési űrlap\n"
-        "|   |-- regisztráció.php   # Regisztrációs űrlap\n"
-        "|   |-- kijelentkezés.php  # Kijelentkezési oldal\n"
-        "|   |-- képék.php          # Képgaléria + féltöltés\n"
-        "|   |-- kapcsolat.php      # Kapcsolati űrlap\n"
-        "|   |-- üzenetek.php       # Üzenetek listázása\n"
-        "|   |-- crud.php           # Filmek CRUD kezelése\n"
+        "|-- logicals/\n"
+        "|   |-- belep.php                    # Bejelentkezés feldolgozás\n"
+        "|   |-- kilepes.php                  # Kijelentkezés\n"
+        "|   |-- regisztral.php               # Regisztráció feldolgozás\n"
+        "|   |-- kapcsolat.php                # Üzenetküldés feldolgozás\n"
+        "|   |-- crud.php                     # Film CRUD műveletek\n"
+        "|   |-- kepfeltoltes.php             # Képfeltöltés feldolgozás\n"
         "|\n"
         "|-- templates/\n"
-        "|   |-- header.php         # Fejlec sablon (navigáció)\n"
-        "|   |-- footer.php         # Lablec sablon\n"
+        "|   |-- index.tpl.php                # Fő layout sablon (fejléc, menü, lábléc)\n"
+        "|   |-- pages/\n"
+        "|       |-- fooldal.tpl.php          # Főoldal\n"
+        "|       |-- belepes.tpl.php          # Bejelentkezés\n"
+        "|       |-- regisztracio.tpl.php     # Regisztráció\n"
+        "|       |-- kepek.tpl.php            # Képgaléria + feltöltés\n"
+        "|       |-- kapcsolat.tpl.php        # Kapcsolat űrlap\n"
+        "|       |-- uzenetek.tpl.php         # Üzenetek listája\n"
+        "|       |-- crud.tpl.php             # Filmek CRUD kezelése\n"
+        "|\n"
+        "|-- css/\n"
+        "|   |-- style.css                    # Stíluslap (reszponzív, media queries)\n"
+        "|\n"
+        "|-- js/\n"
+        "|   |-- main.js                      # Hamburger menü, lightbox\n"
+        "|   |-- validation.js                # Kapcsolati űrlap validáció\n"
         "|\n"
         "|-- sql/\n"
-        "|   |-- database.sql       # Adatbázis létrehozo szkript\n"
-        "|   |-- seed.php           # Mintaadatok beszurasa PHP-ból\n"
+        "|   |-- database.sql                 # Adatbázis séma + mintaadatok\n"
         "|\n"
-        "|-- uploads/               # Féltöltőtt képék könyvtárá\n"
-        "|-- videós/                # Videó fájlok könyvtárá\n"
+        "|-- uploads/                         # Feltöltött képek\n"
+        "|-- videos/                          # Videó fájlok\n"
     )
     add_code_block(doc, tree)
 
@@ -698,22 +730,26 @@ def generate_documentation():
 
     files_data = [
         ["index.php", "Front controller - egyetlen belépési pont, routing, POST feldolgozás"],
-        ["config.php", "PDO adatbázis kapcsolat létrehozása, hibakezeles beállítása"],
+        [".htaccess", "URL rewrite szabályok (szép URL-ek: /kepek, /crud stb.)"],
+        ["includes/config.inc.php", "$oldalak tömb definíció, PDO adatbázis kapcsolat, segédfüggvények"],
+        ["logicals/belep.php", "Bejelentkezés POST feldolgozás (password_verify)"],
+        ["logicals/kilepes.php", "Kijelentkezés: session törlés és átirányítás"],
+        ["logicals/regisztral.php", "Regisztráció POST feldolgozás (password_hash)"],
+        ["logicals/kapcsolat.php", "Kapcsolati űrlap POST feldolgozás, adatbázisba mentés"],
+        ["logicals/crud.php", "Film CRUD műveletek (create, update, delete)"],
+        ["logicals/kepfeltoltes.php", "Képfeltöltés feldolgozás (MIME ellenőrzés)"],
+        ["templates/index.tpl.php", "Fő layout sablon: fejléc, dinamikus menü, lábléc"],
+        ["templates/pages/fooldal.tpl.php", "Főoldal: hero szekció, videók, Google Maps"],
+        ["templates/pages/belepes.tpl.php", "Bejelentkezési űrlap"],
+        ["templates/pages/regisztracio.tpl.php", "Regisztrációs űrlap (6 mező)"],
+        ["templates/pages/kepek.tpl.php", "Képgaléria + feltöltési űrlap"],
+        ["templates/pages/kapcsolat.tpl.php", "Kapcsolati űrlap (szerver+kliens validáció)"],
+        ["templates/pages/uzenetek.tpl.php", "Üzenetek listázása táblázatban"],
+        ["templates/pages/crud.tpl.php", "Filmek CRUD: listázás, létrehozás, szerkesztés, törlés"],
         ["css/style.css", "Teljes stíluslap: layout, színek, reszponzív média queries"],
-        ["js/main.js", "Hamburger menü, flash üzenét animáció, lightbox galéria"],
+        ["js/main.js", "Hamburger menü, flash üzenet animáció, lightbox galéria"],
         ["js/validation.js", "Kapcsolati űrlap kliens oldali validációja (JS)"],
-        ["pages/főoldal.php", "Főoldal: hero szekció, videók, Google Maps"],
-        ["pages/belépés.php", "Bejelentkezési űrlap megjelenítése"],
-        ["pages/regisztráció.php", "Regisztrációs űrlap (6 mező)"],
-        ["pages/kijelentkezés.php", "Kijelentkezési visszajelzes oldal"],
-        ["pages/képék.php", "Képgaléria + féltöltési űrlap"],
-        ["pages/kapcsolat.php", "Kapcsolati űrlap (szerver+kliens validáció)"],
-        ["pages/üzenetek.php", "Üzenetek listázása táblázatban"],
-        ["pages/crud.php", "Filmek CRUD: listázás, létrehozas, szerkesztés, törlés"],
-        ["templates/header.php", "HTML fejlec, navigáció, felhasználói információ"],
-        ["templates/footer.php", "HTML lablec, JS betoltese"],
-        ["sql/database.sql", "Adatbázis és táblák létrehozása, mintaadatok (SQL)"],
-        ["sql/seed.php", "Adatbázis inicializalas PHP-ból (password_hash)"],
+        ["sql/database.sql", "Adatbázis séma és mintaadatok (SQL)"],
     ]
     create_styled_table(doc,
         ["Fájl", "Szerep / Leírás"],
@@ -725,25 +761,25 @@ def generate_documentation():
     add_heading_styled(doc, "4.3. Front-controller minta működése", level=2)
 
     add_paragraph_styled(doc,
-        "Az index.php az alkalmazás egyetlen belépési pontja. Minden HTTP "
-        "kérést ez a fájl fogad és dolgoz fel. A működése a következő:")
+        "Az index.php az alkalmazás egyetlen belépési pontja. Az .htaccess "
+        "URL rewrite szabályai minden kérést ide irányítanak. A működése "
+        "a következő:")
 
     fc_steps = [
         "1. Munkamenet (session) indítása: session_start()",
-        "2. Konfiguráció betoltese: config.php (adatbázis kapcsolat)",
-        "3. Segefüggvények definialasa: flash(), getFlash(), bejelentkezveVan(), redirect()",
-        "4. POST kérések feldolgozása (ha van $_POST['action']):",
-        "   - login: Bejelentkezés feldolgozás",
-        "   - register: Regisztráció feldolgozás",
-        "   - contact_submit: Kapcsolati űrlap feldolgozás",
-        "   - crud_create / crud_update / crud_delete: Film CRUD műveletek",
-        "   - image_upload: Képfeltöltés feldolgozás",
-        "5. Útvonalválasztás (routing): $_GET['page'] alapján",
-        "6. Engedélyezett oldalak ellenőrzése (whitelist)",
-        "7. Header sablon betoltese (templates/header.php)",
-        "8. Flash üzenét megjelenítése (ha van)",
-        "9. Oldal tartalom betoltese (pages/*.php)",
-        "10. Footer sablon betoltese (templates/footer.php)",
+        "2. Konfiguráció betöltése: includes/config.inc.php ($oldalak tömb, DB kapcsolat, segédfüggvények)",
+        "3. Oldal-kulcs kinyerése a $_SERVER['QUERY_STRING'] változóból",
+        "4. Ha üres → 'fooldal' (alapértelmezett oldal)",
+        "5. Ha nem létezik az $oldalak tömbben → 'fooldal' (érvénytelen oldal)",
+        "6. POST kérések feldolgozása $_POST['action'] alapján:",
+        "   - login → logicals/belep.php",
+        "   - register → logicals/regisztral.php",
+        "   - contact_submit → logicals/kapcsolat.php",
+        "   - crud_create / crud_update / crud_delete → logicals/crud.php",
+        "   - image_upload → logicals/kepfeltoltes.php",
+        "7. Kijelentkezés kezelése: ha $page === 'kijelentkezes' → logicals/kilepes.php",
+        "8. Fő layout sablon betöltése: templates/index.tpl.php",
+        "9. A layout sablonon belül az oldal tartalom betöltése: templates/pages/{$page}.tpl.php",
     ]
     for step in fc_steps:
         if step.startswith("   "):
@@ -847,6 +883,15 @@ def generate_documentation():
 
     add_screenshot(doc, "5.2.b", "5.2.b. ábra: Bejelentkezési űrlap")
 
+    add_heading_styled(doc, "Bejelentkezett állapot", level=3)
+    add_paragraph_styled(doc,
+        "Sikeres bejelentkezés után a fejlécben megjelenik a felhasználó "
+        "neve: \"Bejelentkezett: Családi_név Utónév (Login_név)\". "
+        "A menüben a Bejelentkezés menüpont eltűnik, helyette megjelenik "
+        "az Üzenetek és a Kijelentkezés menüpont.")
+
+    add_screenshot(doc, "5.2.c", "5.2.c. ábra: Bejelentkezett felhasználó fejléce")
+
     add_heading_styled(doc, "Kijelentkezés", level=3)
     add_paragraph_styled(doc,
         "A kijelentkezés (kijelentkezés) nem külön oldal, hanem az index.php "
@@ -930,7 +975,9 @@ def generate_documentation():
         "Bejelentkezett felhasználó esetén a név és az e-mail méző "
         "automatikusan kitoltodik a session adataival.")
 
-    add_screenshot(doc, "5.4", "5.4. ábra: Kapcsolati űrlap validációs hibaüzenetekkel")
+    add_screenshot(doc, "5.4", "5.4.a. ábra: Kapcsolati űrlap")
+
+    add_screenshot(doc, "5.4.b", "5.4.b. ábra: JavaScript kliens oldali validációs hibaüzenetek")
 
     add_heading_styled(doc, "5.5. Üzenetek oldal", level=2)
 
@@ -1153,7 +1200,9 @@ def generate_documentation():
     for rf in responsive_features:
         add_bullet_point(doc, rf)
 
-    add_screenshot(doc, "7", "7. ábra: Az alkalmazás mobil nézetben (hamburger menü és 1 oszlopos galéria)")
+    add_screenshot(doc, "7.a", "7.a. ábra: Főoldal mobil nézetben")
+
+    add_screenshot(doc, "7.b", "7.b. ábra: Hamburger menü kinyitva mobil nézetben")
 
     add_page_break(doc)
 
@@ -1204,14 +1253,13 @@ def generate_documentation():
 
     add_heading_styled(doc, "Gaál Pétér (GULX05) - Backend és infrastruktúrá", level=2)
     gp_items = [
-        "Adatbázis-sema tervezése: g_felhasználók, g_filmek, g_üzenetek, g_képék táblák és külső kulcs kapcsolatok",
-        "sql/database.sql és sql/seed.php adatbázis-inicializációs szkriptek",
-        "Front-controller tervezési minta megvalósítása (index.php) - routing, POST feldolgozás, PRG minta",
+        "Adatbázis-séma tervezése: g_felhasznalok, g_filmek, g_uzenetek, g_kepek táblák és külső kulcs kapcsolatok",
+        "sql/database.sql adatbázis-inicializációs szkript (séma + mintaadatok)",
+        "Front-controller 2. Megoldás megvalósítása: index.php routing, .htaccess URL rewrite, includes/config.inc.php",
+        "POST feldolgozó logika szétválasztása a logicals/ mappába (belep, regisztral, kapcsolat, crud, kepfeltoltes, kilepes)",
         "Autentikáció: regisztráció, bejelentkezés, kijelentkezés, session-kezelés",
-        "CRUD műveletek a filmek táblához (pages/crud.php) - lista, új, szerkesztés, törlés útvonalakkal",
-        "Bejelentkezési és regisztrációs oldalak (pages/belépés.php, pages/regisztráció.php)",
-        "Apache .htaccess és config.php (PDO prepared statements) konfiguráció",
-        "Internetes tárhelyre való telepítés - Nethely.hű, FTP féltöltés, MySQL import",
+        "CRUD műveletek a filmek táblához (templates/pages/crud.tpl.php + logicals/crud.php)",
+        "Internetes tárhelyre való telepítés - Nethely.hu, FTP feltöltés, MySQL import",
         "Megosztott tárhelyhez g_ tábla-prefix bevezetése az ütközések elkerülésére",
     ]
     for it in gp_items:
@@ -1219,13 +1267,13 @@ def generate_documentation():
 
     add_heading_styled(doc, "Molnár Ádám (MFG82Z) - Frontend, multimédia, deploy-csomag", level=2)
     ma_items = [
-        "HTML5 sablonok: templates/header.php (navigáció, felhasználói info), templates/footer.php",
+        "Fő layout sablon: templates/index.tpl.php (dinamikus menü, fejléc, lábléc egyben)",
         "Teljes reszponzív CSS3 stíluslap (css/style.css) - Flexbox, Grid, két breakpoint média query",
-        "JavaScript funkciók (js/main.js): hamburger menü, lightbox képgaléria, flash üzenét animáció",
+        "JavaScript funkciók (js/main.js): hamburger menü, lightbox képgaléria, flash üzenet animáció",
         "Kapcsolati űrlap kliens oldali validációja (js/validation.js) - regex, hossz-ellenőrzés",
-        "Tartalmi oldalak: főoldal, képgaléria + féltöltés, kapcsolati űrlap, üzenetek listázása",
-        "Multimédia: 5 másodperces saját intró videó, YouTube beágyazás (Saul fia hivatalos előzetes), Google térkép",
-        "Nethely deployment csomag és útmutató (NETHELY_DEPLOY.md, config.nethely.php, sql/database_nethely.sql)",
+        "Tartalmi oldalak (templates/pages/): főoldal, képgaléria, kapcsolat, üzenetek",
+        "Multimédia: saját videó, YouTube beágyazás (Saul fia előzetes), Google térkép",
+        "Nethely deployment: config.nethely.php, sql/database_nethely.sql (utf8 charset)",
         "Képgaléria és üzenetek SQL-lekérdezések prefix-átírása",
     ]
     for it in ma_items:
@@ -1251,29 +1299,29 @@ def generate_documentation():
 
     add_heading_styled(doc, "10.1. Internetes elérhetőség", level=2)
     elérhető_rows = [
-        ["Weboldal URL",   "http://filmtar.nhely.hű/"],
-        ["GitHub repo",    "https://github.com/Peti352/Filmtár-Webprog"],
+        ["Weboldal URL",   "http://peti352.nhely.hu/"],
+        ["GitHub repo",    "https://github.com/Peti352/Filmtar-Webprog"],
     ]
     create_styled_table(doc, ["Megnevezés", "Cím"], elérhető_rows, col_widths=[5, 11])
     doc.add_paragraph()
 
     add_heading_styled(doc, "10.2. Tárhely (FTP) belépési adatok", level=2)
     ftp_rows = [
-        ["FTP hőst",       "ftp.nethely.hű"],
-        ["FTP felhasználó","filmtar"],
-        ["FTP jelszó",     "Webprog-1!"],
-        ["FTP port",       "21"],
+        ["FTP hoszt",       "ftp.nethely.hu"],
+        ["FTP felhasználó", "peti352"],
+        ["FTP jelszó",      "Filmtar123"],
+        ["FTP port",        "21"],
     ]
     create_styled_table(doc, ["Megnevezés", "Érték"], ftp_rows, col_widths=[5, 11])
     doc.add_paragraph()
 
     add_heading_styled(doc, "10.3. MySQL adatbázis belépési adatok", level=2)
     db_rows = [
-        ["DB hőst",        "localhost"],
-        ["DB név",         "filmtar"],
-        ["DB felhasználó", "filmtar"],
-        ["DB jelszó",      "Webprog-1!"],
-        ["phpMyAdmin",     "https://www.nethely.hű/  (Adatbázis menü -> phpMyAdmin)"],
+        ["DB hoszt",        "localhost"],
+        ["DB név",          "adatb352"],
+        ["DB felhasználó",  "adatb352"],
+        ["DB jelszó",       "Peti3522004!"],
+        ["phpMyAdmin",      "https://www.nethely.hu/ (Adatbázis menü -> phpMyAdmin)"],
     ]
     create_styled_table(doc, ["Megnevezés", "Érték"], db_rows, col_widths=[5, 11])
     doc.add_paragraph()
@@ -1356,10 +1404,10 @@ def generate_documentation():
         run_desc = p3.add_run(ref[2])
         set_run_font(run_desc, size=10)
 
-    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "Filmtar_Dokumentacio.docx")
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "GaalPeter-GULX05.docx")
     doc.save(output_path)
-    print("Dokumentacio sikérésen generalva: {}".format(output_path))
-    print("A fájl megnyithato Microsoft Word-ben és PDF-be mentheto.")
+    print("Dokumentáció sikeresen generálva: {}".format(output_path))
+    print("A fájl megnyitható Microsoft Word-ben és PDF-be menthető.")
 
 
 if __name__ == "__main__":

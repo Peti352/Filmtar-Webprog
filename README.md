@@ -1,87 +1,96 @@
 # Filmtár - Magyar Filmadatbázis Webalkalmazás
 
-## 📝 Projekt leírás
+## Projekt leírás
 
-A Filmtár egy PHP-alapú webalkalmazás, amely magyar filmek adatbázisának kezelését teszi lehetővé. Az alkalmazás a **Webprogramozás 1** tantárgy gyakorlati beadandó feladataként készült.
+A Filmtár egy PHP-alapú webalkalmazás, amely magyar filmek adatbázisának kezelését teszi lehetővé. Az alkalmazás a Webprogramozás 1 tantárgy gyakorlati beadandó feladataként készült, a 7a - PHP Front-controller tervezési minta (2. Megoldás) alapján.
 
-## 🎯 Funkciók
+Elérhető: http://peti352.nhely.hu/
 
-### Felhasználói funkciók
-- ✅ Regisztráció és bejelentkezés (session alapú)
-- ✅ Filmek böngészése és keresése
-- ✅ Képgaléria megtekintése
-- ✅ Kapcsolatfelvétel űrlapon keresztül
+## Funkciók
+
+### Bárki számára elérhető
+- Regisztráció és bejelentkezés (session alapú)
+- Filmek böngészése
+- Képgaléria megtekintése
+- Kapcsolatfelvétel űrlapon keresztül
 
 ### Bejelentkezett felhasználóknak
-- ✅ Képfeltöltés a galériába
-- ✅ Üzenetek megtekintése
-- ✅ CRUD műveletek filmekkel (létrehozás, szerkesztés, törlés)
+- Képfeltöltés a galériába
+- Üzenetek megtekintése
+- CRUD műveletek filmekkel (létrehozás, szerkesztés, törlés)
 
 ### Főoldal
-- ✅ Hero szekció a projekt bemutatásával
-- ✅ 2 videó (helyi + YouTube beágyazás)
-- ✅ Google Maps integráció
+- Hero szekció a projekt bemutatásával
+- 2 videó (helyi mp4 + YouTube beágyazás)
+- Google Maps beágyazás
 
-## 🛠️ Technológiák
+## Technológiák
 
 - **Backend:** PHP 8.0+ (PDO, session kezelés)
 - **Frontend:** HTML5, CSS3 (Flexbox, Grid, Media Queries)
-- **JavaScript:** Kliens oldali validáció, interaktivitás
+- **JavaScript:** Kliens oldali validáció, hamburger menü, lightbox
 - **Adatbázis:** MySQL / MariaDB
-- **Tervezési minták:** Front-controller, PRG (Post-Redirect-Get)
+- **Minta:** Front-controller (2. Megoldás), Post-Redirect-Get (PRG)
 
-## 📁 Projekt struktúra
+## Projekt struktúra
 
 ```
 WebProg/
-├── index.php              # Front controller (fő belépési pont)
-├── config.php             # Adatbázis konfiguráció
-├── .htaccess              # Apache beállítások
+├── index.php                        # Front controller (fő belépési pont)
+├── .htaccess                        # URL rewrite szabályok
 │
-├── css/
-│   └── style.css          # Fő stíluslap (reszponzív)
+├── includes/
+│   └── config.inc.php               # $oldalak tömb, DB kapcsolat, segédfüggvények
 │
-├── js/
-│   ├── main.js            # Hamburger menü, lightbox
-│   └── validation.js      # Kapcsolati űrlap validáció
-│
-├── pages/
-│   ├── fooldal.php        # Főoldal
-│   ├── belepes.php        # Bejelentkezés
-│   ├── regisztracio.php   # Regisztráció
-│   ├── kepek.php          # Képgaléria
-│   ├── kapcsolat.php      # Kapcsolat űrlap
-│   ├── uzenetek.php       # Üzenetek listája
-│   └── crud.php           # Filmek CRUD kezelése
+├── logicals/
+│   ├── belep.php                    # Bejelentkezés feldolgozás
+│   ├── kilepes.php                  # Kijelentkezés
+│   ├── regisztral.php               # Regisztráció feldolgozás
+│   ├── kapcsolat.php                # Üzenetküldés feldolgozás
+│   ├── crud.php                     # Film CRUD műveletek
+│   └── kepfeltoltes.php             # Képfeltöltés feldolgozás
 │
 ├── templates/
-│   ├── header.php         # Fejléc sablon
-│   └── footer.php         # Lablec sablon
+│   ├── index.tpl.php                # Fő layout sablon (fejléc, menü, lábléc)
+│   └── pages/
+│       ├── fooldal.tpl.php          # Főoldal
+│       ├── belepes.tpl.php          # Bejelentkezés
+│       ├── regisztracio.tpl.php     # Regisztráció
+│       ├── kepek.tpl.php            # Képgaléria + feltöltés
+│       ├── kapcsolat.tpl.php        # Kapcsolat űrlap
+│       ├── uzenetek.tpl.php         # Üzenetek listája
+│       └── crud.tpl.php             # Filmek CRUD kezelése
+│
+├── css/
+│   └── style.css                    # Stíluslap (reszponzív, media queries)
+│
+├── js/
+│   ├── main.js                      # Hamburger menü, lightbox
+│   └── validation.js                # Kapcsolati űrlap validáció
 │
 ├── sql/
-│   ├── database.sql       # Adatbázis séma
-│   └── seed.php           # Mintaadatok
+│   └── database.sql                 # Adatbázis séma + mintaadatok
 │
-├── uploads/               # Feltöltött képek
-└── videos/                # Videó fájlok
+├── uploads/                         # Feltöltött képek
+└── videos/                          # Videó fájlok
 ```
 
-## 🚀 Telepítés
+## Telepítés
 
-### 1. Előfeltételek
+### Előfeltételek
 - PHP 8.0 vagy újabb
 - MySQL 5.7+ vagy MariaDB 10.3+
 - Apache webszerver (mod_rewrite engedélyezve)
 
-### 2. Adatbázis létrehozása
+### Adatbázis létrehozása
 ```bash
 mysql -u root -p < sql/database.sql
 ```
 
 Vagy importáld phpMyAdmin-on keresztül a `sql/database.sql` fájlt.
 
-### 3. Konfiguráció
-Szerkeszd a `config.php` fájlt az adatbázis adataiddal:
+### Konfiguráció
+Szerkeszd az `includes/config.inc.php` fájlt az adatbázis adataiddal:
 ```php
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'filmtar');
@@ -89,63 +98,47 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 ```
 
-### 4. Mintaadatok betöltése (opcionális)
-```bash
-php sql/seed.php
-```
+### Webszerver indítása
+XAMPP/WAMP/MAMP esetén helyezd a projekt mappát a `htdocs/` könyvtárba, majd nyisd meg: `http://localhost/WebProg/`
 
-### 5. Webszerver indítása
-**XAMPP/WAMP/MAMP:**
-Helyezd a projekt mappát a `htdocs/` könyvtárba és nyisd meg: `http://localhost/WebProg/`
-
-**PHP beépített szerver:**
-```bash
-php -S localhost:8000
-```
-
-## 👤 Teszt felhasználók
+## Teszt felhasználók
 
 A `database.sql` tartalmaz 3 teszt felhasználót:
 
-| Felhasználónév | Jelszó | Szerepkör |
-|----------------|--------|-----------|
-| `admin` | `admin123` | Adminisztrátor |
-| `teszt` | `teszt123` | Teszt felhasználó |
-| `user1` | `jelszo123` | Normál felhasználó |
+| Felhasználónév | Jelszó | Leírás |
+|----------------|--------|--------|
+| admin | admin123 | Adminisztrátor |
+| teszt | teszt123 | Teszt felhasználó |
+| user1 | jelszo123 | Normál felhasználó |
 
-## 📊 Adatbázis séma
+## Adatbázis séma
 
 ```
-felhasznalok (id, felhasznalonev, jelszo, csaladi_nev, utonev, email, letrehozva)
+g_felhasznalok (id, felhasznalonev, jelszo, csaladi_nev, utonev, email, letrehozva)
     |
-    ├── uzenetek (id, kuldo_id, nev, email, targy, uzenet, kuldve)
-    └── kepek (id, feltolto_id, fajlnev, eredeti_nev, feltoltve)
+    ├── g_uzenetek (id, kuldo_id, nev, email, targy, uzenet, kuldve)
+    ├── g_kepek (id, feltolto_id, fajlnev, eredeti_nev, feltoltve)
 
-filmek (id, cim, rendezo, ev, mufaj, ertekeles, leiras)
+g_filmek (id, cim, rendezo, ev, mufaj, ertekeles, leiras)
 ```
 
-## 🔒 Biztonsági funkciók
+## Biztonság
 
-- ✅ Jelszavak bcrypt hash-eléssel tárolva (`password_hash()`)
-- ✅ Paraméterezett SQL lekérdezések (SQL injection védelem)
-- ✅ XSS védelem (`htmlspecialchars()`)
-- ✅ CSRF védelem session alapú autentikációval
-- ✅ Fájlfeltöltés validáció (típus, méret ellenőrzés)
+- Jelszavak bcrypt hash-eléssel tárolva (password_hash / password_verify)
+- Paraméterezett SQL lekérdezések (SQL injection védelem)
+- XSS védelem (htmlspecialchars)
+- Fájlfeltöltés validáció (MIME type + kiterjesztés ellenőrzés)
 
-## 📱 Reszponzív tervezés
+## Reszponzív design
 
-Az alkalmazás teljes mértékben reszponzív:
-- 📱 Mobil nézet: Hamburger menü
-- 💻 Tablet nézet: Adaptív táblázatok
-- 🖥️ Desktop nézet: Teljes navigáció
+Az alkalmazás három töréspontra van optimalizálva:
+- Mobil (480px alatt): hamburger menü, 1 oszlopos elrendezés
+- Tablet (768px alatt): adaptív elrendezés, 2 oszlopos galéria
+- Desktop: teljes vízszintes navigáció, 3 oszlopos galéria
 
-## 📚 Dokumentáció
+## Készítők
 
-A részletes dokumentáció a `Filmtar_Dokumentacio.docx` fájlban található.
-
-## 👥 Készítők
-
-**Webprogramozás 1 - Gyakorlat Beadandó**
+Webprogramozás 1 - Gyakorlat Beadandó
 
 | Név | Neptun | Terület |
 |---|---|---|
@@ -153,9 +146,3 @@ A részletes dokumentáció a `Filmtar_Dokumentacio.docx` fájlban található.
 | Molnár Ádám | MFG82Z | Frontend, reszponzív CSS, JavaScript, multimédia, deploy |
 
 A részletes munkafelosztásért lásd a [CONTRIBUTORS.md](CONTRIBUTORS.md) fájlt.
-
-Dátum: 2026
-
-## 📄 Licenc
-
-Ez a projekt oktatási célból készült.
