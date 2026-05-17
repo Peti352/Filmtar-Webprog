@@ -19,7 +19,7 @@ switch ($action) {
                 <table class="crud-table">
                     <thead>
                         <tr>
-                            <th>
+                            <th>#</th>
                             <th>Cím</th>
                             <th>Rendező</th>
                             <th>Év</th>
@@ -74,27 +74,27 @@ switch ($action) {
 
             <div class="form-group">
                 <label for="cim">Cím <span class="required">*</span></label>
-                <input type="text" id="cim" name="cim" required value="<?= htmlspecialchars($formData['cim'] ?? '') ?>" placeholder="Pl. A keresztapa">
+                <input type="text" id="cim" name="cim" value="<?= htmlspecialchars($formData['cim'] ?? '') ?>" placeholder="Pl. A keresztapa">
             </div>
 
             <div class="form-group">
                 <label for="rendezo">Rendező <span class="required">*</span></label>
-                <input type="text" id="rendezo" name="rendezo" required value="<?= htmlspecialchars($formData['rendezo'] ?? '') ?>" placeholder="Pl. Francis Ford Coppola">
+                <input type="text" id="rendezo" name="rendezo" value="<?= htmlspecialchars($formData['rendezo'] ?? '') ?>" placeholder="Pl. Francis Ford Coppola">
             </div>
 
             <div class="form-group">
                 <label for="ev">Év <span class="required">*</span></label>
-                <input type="number" id="ev" name="ev" required min="1888" max="<?= date('Y') + 5 ?>" value="<?= htmlspecialchars($formData['ev'] ?? '') ?>" placeholder="Pl. 1972">
+                <input type="text" id="ev" name="ev" value="<?= htmlspecialchars($formData['ev'] ?? '') ?>" placeholder="Pl. 1972">
             </div>
 
             <div class="form-group">
                 <label for="mufaj">Műfaj <span class="required">*</span></label>
-                <input type="text" id="mufaj" name="mufaj" required value="<?= htmlspecialchars($formData['mufaj'] ?? '') ?>" placeholder="Pl. Dráma">
+                <input type="text" id="mufaj" name="mufaj" value="<?= htmlspecialchars($formData['mufaj'] ?? '') ?>" placeholder="Pl. Dráma">
             </div>
 
             <div class="form-group">
                 <label for="ertekeles">Értékelés (0–10)</label>
-                <input type="number" id="ertekeles" name="ertekeles" step="0.1" min="0" max="10" value="<?= htmlspecialchars($formData['ertekeles'] ?? '') ?>" placeholder="Pl. 9.2">
+                <input type="text" id="ertekeles" name="ertekeles" value="<?= htmlspecialchars($formData['ertekeles'] ?? '') ?>" placeholder="Pl. 9.2">
             </div>
 
             <div class="form-group">
@@ -148,27 +148,27 @@ switch ($action) {
 
             <div class="form-group">
                 <label for="cim">Cím <span class="required">*</span></label>
-                <input type="text" id="cim" name="cim" required value="<?= htmlspecialchars($formData['cim'] ?? '') ?>" placeholder="Pl. A keresztapa">
+                <input type="text" id="cim" name="cim" value="<?= htmlspecialchars($formData['cim'] ?? '') ?>" placeholder="Pl. A keresztapa">
             </div>
 
             <div class="form-group">
                 <label for="rendezo">Rendező <span class="required">*</span></label>
-                <input type="text" id="rendezo" name="rendezo" required value="<?= htmlspecialchars($formData['rendezo'] ?? '') ?>" placeholder="Pl. Francis Ford Coppola">
+                <input type="text" id="rendezo" name="rendezo" value="<?= htmlspecialchars($formData['rendezo'] ?? '') ?>" placeholder="Pl. Francis Ford Coppola">
             </div>
 
             <div class="form-group">
                 <label for="ev">Év <span class="required">*</span></label>
-                <input type="number" id="ev" name="ev" required min="1888" max="<?= date('Y') + 5 ?>" value="<?= htmlspecialchars($formData['ev'] ?? '') ?>" placeholder="Pl. 1972">
+                <input type="text" id="ev" name="ev" value="<?= htmlspecialchars($formData['ev'] ?? '') ?>" placeholder="Pl. 1972">
             </div>
 
             <div class="form-group">
                 <label for="mufaj">Műfaj <span class="required">*</span></label>
-                <input type="text" id="mufaj" name="mufaj" required value="<?= htmlspecialchars($formData['mufaj'] ?? '') ?>" placeholder="Pl. Dráma">
+                <input type="text" id="mufaj" name="mufaj" value="<?= htmlspecialchars($formData['mufaj'] ?? '') ?>" placeholder="Pl. Dráma">
             </div>
 
             <div class="form-group">
                 <label for="ertekeles">Értékelés (0–10)</label>
-                <input type="number" id="ertekeles" name="ertekeles" step="0.1" min="0" max="10" value="<?= htmlspecialchars($formData['ertekeles'] ?? '') ?>" placeholder="Pl. 9.2">
+                <input type="text" id="ertekeles" name="ertekeles" value="<?= htmlspecialchars($formData['ertekeles'] ?? '') ?>" placeholder="Pl. 9.2">
             </div>
 
             <div class="form-group">

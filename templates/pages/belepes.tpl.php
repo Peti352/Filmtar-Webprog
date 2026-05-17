@@ -6,12 +6,12 @@
 
         <div class="form-group">
             <label for="login_nev">Felhasználónév:</label>
-            <input type="text" id="login_nev" name="login_nev" required>
+            <input type="text" id="login_nev" name="login_nev">
         </div>
 
         <div class="form-group">
             <label for="jelszo">Jelszó:</label>
-            <input type="password" id="jelszo" name="jelszo" required>
+            <input type="password" id="jelszo" name="jelszo">
         </div>
 
         <div class="form-group">

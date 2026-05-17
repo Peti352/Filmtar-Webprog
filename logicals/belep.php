@@ -11,7 +11,7 @@ if ($felhasznalonev === '' || $jelszo === '') {
     redirect('belepes');
 }
 
-$stmt = $dbh->prepare('SELECT id, felhasznalonev, jelszo, csaladi_nev, utonev FROM g_felhasznalok WHERE felhasznalonev = :fnev LIMIT 1');
+$stmt = $dbh->prepare('SELECT id, felhasznalonev, jelszo, csaladi_nev, utonev, email FROM g_felhasznalok WHERE felhasznalonev = :fnev LIMIT 1');
 $stmt->execute([':fnev' => $felhasznalonev]);
 $user = $stmt->fetch();
 
@@ -21,6 +21,7 @@ if ($user && password_verify($jelszo, $user['jelszo'])) {
         'felhasznalonev' => $user['felhasznalonev'],
         'csaladi_nev' => $user['csaladi_nev'],
         'utonev' => $user['utonev'],
+        'email' => $user['email'],
     ];
     flash('success', 'Sikeres bejelentkezés! Üdvözlünk, ' . htmlspecialchars($user['utonev']) . '!');
     redirect('fooldal');

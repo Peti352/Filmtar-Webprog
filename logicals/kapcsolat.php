@@ -9,10 +9,28 @@ $targy = trim($_POST['targy'] ?? '');
 $uzenet = trim($_POST['uzenet'] ?? '');
 
 $hibak = [];
-if ($nev === '') $hibak[] = 'A név megadása kötelező!';
-if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) $hibak[] = 'Érvényes e-mail cím megadása kötelező!';
-if ($targy === '') $hibak[] = 'A tárgy megadása kötelező!';
-if ($uzenet === '') $hibak[] = 'Az üzenet megadása kötelező!';
+
+if ($nev === '') {
+    $hibak[] = 'A név megadása kötelező!';
+} elseif (strlen($nev) < 2) {
+    $hibak[] = 'A név legalább 2 karakter hosszú legyen!';
+}
+
+if ($email === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    $hibak[] = 'Érvényes e-mail cím megadása kötelező!';
+}
+
+if ($targy === '') {
+    $hibak[] = 'A tárgy megadása kötelező!';
+} elseif (strlen($targy) < 3) {
+    $hibak[] = 'A tárgy legalább 3 karakter hosszú legyen!';
+}
+
+if ($uzenet === '') {
+    $hibak[] = 'Az üzenet megadása kötelező!';
+} elseif (strlen($uzenet) < 10) {
+    $hibak[] = 'Az üzenet legalább 10 karakter hosszú legyen!';
+}
 
 if (!empty($hibak)) {
     $_SESSION['form_errors'] = $hibak;

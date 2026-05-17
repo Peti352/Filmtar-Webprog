@@ -14,8 +14,14 @@ $qs = $_SERVER['QUERY_STRING'] ?? '';
 // Ha van & jel, csak az első részt vesszük (pl. "crud&action=uj" → "crud")
 $page = explode('&', $qs)[0];
 // Ha üres, alapértelmezett a főoldal
-if ($page === '' || !isset($oldalak[$page])) {
+if ($page === '') {
     $page = 'fooldal';
+}
+
+// Ha nem létező oldal, 404-es hibaoldal
+if (!isset($oldalak[$page]) && $page !== '404') {
+    $page = '404';
+    http_response_code(404);
 }
 
 // === POST kérések feldolgozása (logicals/) ===

@@ -6,32 +6,32 @@
 
         <div class="form-group">
             <label for="csaladi_nev">Családi név:</label>
-            <input type="text" id="csaladi_nev" name="csaladi_nev" required>
+            <input type="text" id="csaladi_nev" name="csaladi_nev">
         </div>
 
         <div class="form-group">
             <label for="utonev">Utónév:</label>
-            <input type="text" id="utonev" name="utonev" required>
+            <input type="text" id="utonev" name="utonev">
         </div>
 
         <div class="form-group">
             <label for="login_nev">Felhasználónév:</label>
-            <input type="text" id="login_nev" name="login_nev" required>
+            <input type="text" id="login_nev" name="login_nev">
         </div>
 
         <div class="form-group">
             <label for="email">E-mail cím:</label>
-            <input type="email" id="email" name="email" required>
+            <input type="text" id="email" name="email">
         </div>
 
         <div class="form-group">
             <label for="jelszo">Jelszó:</label>
-            <input type="password" id="jelszo" name="jelszo" required minlength="6">
+            <input type="password" id="jelszo" name="jelszo">
         </div>
 
         <div class="form-group">
             <label for="jelszo_ujra">Jelszó megerősítése:</label>
-            <input type="password" id="jelszo_ujra" name="jelszo_ujra" required minlength="6">
+            <input type="password" id="jelszo_ujra" name="jelszo_ujra">
         </div>
 
         <div class="form-group">
