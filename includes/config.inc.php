@@ -1,10 +1,11 @@
 <?php
 /**
- * Nethely tárhely konfiguráció
- * Telepítéskor másold át: includes/config.inc.php helyére
+ * Konfiguráció - Oldalak definíció és adatbázis kapcsolat
+ * 7a - PHP Front-controller tervezési minta (2. Megoldás)
  */
 
 // === Oldalak tömb ===
+// 'menun' => [bejelentkezve_latszik, kijelentkezve_latszik]
 $oldalak = [
     'fooldal'       => ['cim' => 'Főoldal',         'menun' => [1, 1]],
     'kepek'         => ['cim' => 'Képek',            'menun' => [1, 1]],
@@ -16,11 +17,11 @@ $oldalak = [
     'kijelentkezes' => ['cim' => 'Kijelentkezés',    'menun' => [1, 0]],
 ];
 
-// === Adatbázis konfiguráció (Nethely) ===
+// === Adatbázis konfiguráció ===
 define('DB_HOST', 'localhost');
-define('DB_NAME', 'PASTE_NETHELY_DB_NAME_HERE');
-define('DB_USER', 'PASTE_NETHELY_DB_USER_HERE');
-define('DB_PASS', 'PASTE_NETHELY_DB_PASSWORD_HERE');
+define('DB_NAME', 'filmtar');
+define('DB_USER', 'root');
+define('DB_PASS', '');
 define('DB_CHARSET', 'utf8mb4');
 
 try {

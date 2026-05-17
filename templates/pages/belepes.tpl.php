@@ -19,7 +19,7 @@
         </div>
 
         <div class="form-footer">
-            <p>Még nincs fiókod? <a href="index.php?page=regisztracio">Regisztrálj itt!</a></p>
+            <p>Még nincs fiókod? <a href="regisztracio">Regisztrálj itt!</a></p>
         </div>
     </form>
 </section>

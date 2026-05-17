@@ -1,6 +1,6 @@
 <h1>Üzenetek</h1>
 
-<?php if (!isset($_SESSION['user'])): ?>
+<?php if (!bejelentkezveVan()): ?>
     <p class="error-message">Az üzenetek megtekintéséhez bejelentkezés szükséges!</p>
 <?php else: ?>
 

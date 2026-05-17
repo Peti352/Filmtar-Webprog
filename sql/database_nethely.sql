@@ -1,6 +1,3 @@
-SET NAMES utf8mb4;
-SET CHARACTER SET utf8mb4;
-
 DROP TABLE IF EXISTS `g_kepek`;
 DROP TABLE IF EXISTS `g_uzenetek`;
 DROP TABLE IF EXISTS `g_filmek`;
@@ -14,7 +11,7 @@ CREATE TABLE `g_felhasznalok` (
  `utonev` VARCHAR(100) NOT NULL ,
  `email` VARCHAR(100) NOT NULL ,
  `letrehozva` DATETIME DEFAULT CURRENT_TIMESTAMP 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci
  COMMENT='Regisztrált felhasználók';
 
 CREATE TABLE `g_filmek` (
@@ -25,7 +22,7 @@ CREATE TABLE `g_filmek` (
  `mufaj` VARCHAR(100) NOT NULL ,
  `ertekeles` DECIMAL(3,1) DEFAULT NULL ,
  `leiras` TEXT DEFAULT NULL 
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci
  COMMENT='Filmek adatbázisa';
 
 CREATE TABLE `g_uzenetek` (
@@ -40,7 +37,7 @@ CREATE TABLE `g_uzenetek` (
  FOREIGN KEY (`kuldo_id`) REFERENCES `g_felhasznalok`(`id`)
  ON DELETE SET NULL
  ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci
  COMMENT='Kapcsolatfelvételi üzenetek';
 
 CREATE TABLE `g_kepek` (
@@ -53,7 +50,7 @@ CREATE TABLE `g_kepek` (
  FOREIGN KEY (`feltolto_id`) REFERENCES `g_felhasznalok`(`id`)
  ON DELETE CASCADE
  ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_hungarian_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_hungarian_ci
  COMMENT='Galéria képek';
 
 INSERT INTO `g_felhasznalok` (`felhasznalonev`, `jelszo`, `csaladi_nev`, `utonev`, `email`, `letrehozva`) VALUES

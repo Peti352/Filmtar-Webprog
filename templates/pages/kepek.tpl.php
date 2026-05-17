@@ -1,9 +1,9 @@
 <h1>Képgaléria</h1>
 
-<?php if (isset($_SESSION['user'])): ?>
+<?php if (bejelentkezveVan()): ?>
     <section class="upload-section">
         <h2>Új kép feltöltése</h2>
-        <form action="index.php?page=kepek" method="POST" enctype="multipart/form-data">
+        <form action="index.php" method="POST" enctype="multipart/form-data">
             <input type="hidden" name="action" value="image_upload">
             <div class="form-group">
                 <label for="kep">Válasszon képet:</label>

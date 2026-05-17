@@ -39,7 +39,7 @@
         </div>
 
         <div class="form-footer">
-            <p>Már van fiókod? <a href="index.php?page=belepes">Jelentkezz be itt!</a></p>
+            <p>Már van fiókod? <a href="belepes">Jelentkezz be itt!</a></p>
         </div>
     </form>
 </section>

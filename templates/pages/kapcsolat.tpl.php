@@ -24,7 +24,7 @@ $nev = trim($nev);
 <?php endif; ?>
 
 <section class="contact-section">
-    <form id="contactForm" action="index.php?page=kapcsolat" method="POST" onsubmit="return validateContactForm()">
+    <form id="contactForm" action="index.php" method="POST" onsubmit="return validateContactForm()">
         <input type="hidden" name="action" value="contact_submit">
 
         <div class="form-group">

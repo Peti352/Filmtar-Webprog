@@ -6,7 +6,7 @@ switch ($action) {
     default:
         ?>
         <h1>Filmek kezelése (CRUD)</h1>
-        <a href="index.php?page=crud&action=uj" class="btn btn-success">+ Új film hozzáadása</a>
+        <a href="crud?action=uj" class="btn btn-success">+ Új film hozzáadása</a>
 
         <?php
         $stmt = $dbh->prepare('SELECT * FROM g_filmek ORDER BY id DESC');
@@ -38,8 +38,8 @@ switch ($action) {
                                 <td><?= htmlspecialchars($film['mufaj']) ?></td>
                                 <td><?= isset($film['ertekeles']) ? number_format((float)$film['ertekeles'], 1) : '–' ?></td>
                                 <td class="actions">
-                                    <a href="index.php?page=crud&action=szerkeszt&id=<?= (int)$film['id'] ?>" class="btn btn-primary btn-sm">Szerkesztés</a>
-                                    <a href="index.php?page=crud&action=torol&id=<?= (int)$film['id'] ?>" class="btn btn-danger btn-sm">Törlés</a>
+                                    <a href="crud?action=szerkeszt&id=<?= (int)$film['id'] ?>" class="btn btn-primary btn-sm">Szerkesztés</a>
+                                    <a href="crud?action=torol&id=<?= (int)$film['id'] ?>" class="btn btn-danger btn-sm">Törlés</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -69,7 +69,7 @@ switch ($action) {
             <?php unset($_SESSION['form_errors']); ?>
         <?php endif; ?>
 
-        <form action="index.php?page=crud" method="POST" class="crud-form">
+        <form action="index.php" method="POST" class="crud-form">
             <input type="hidden" name="action" value="crud_create">
 
             <div class="form-group">
@@ -104,7 +104,7 @@ switch ($action) {
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-success">Mentés</button>
-                <a href="index.php?page=crud" class="btn btn-secondary">Vissza a listához</a>
+                <a href="crud" class="btn btn-secondary">Vissza a listához</a>
             </div>
         </form>
         <?php
@@ -120,7 +120,7 @@ switch ($action) {
         ?>
             <div class="alert alert-danger">
                 <p>A keresett film nem található (ID: <?= $id ?>).</p>
-                <a href="index.php?page=crud" class="btn btn-secondary">Vissza a listához</a>
+                <a href="crud" class="btn btn-secondary">Vissza a listához</a>
             </div>
         <?php
             break;
@@ -142,7 +142,7 @@ switch ($action) {
             <?php unset($_SESSION['form_errors']); ?>
         <?php endif; ?>
 
-        <form action="index.php?page=crud" method="POST" class="crud-form">
+        <form action="index.php" method="POST" class="crud-form">
             <input type="hidden" name="action" value="crud_update">
             <input type="hidden" name="id" value="<?= (int)$id ?>">
 
@@ -178,7 +178,7 @@ switch ($action) {
 
             <div class="form-actions">
                 <button type="submit" class="btn btn-success">Módosítás mentése</button>
-                <a href="index.php?page=crud" class="btn btn-secondary">Vissza a listához</a>
+                <a href="crud" class="btn btn-secondary">Vissza a listához</a>
             </div>
         </form>
         <?php
@@ -194,7 +194,7 @@ switch ($action) {
         ?>
             <div class="alert alert-danger">
                 <p>A keresett film nem található (ID: <?= $id ?>).</p>
-                <a href="index.php?page=crud" class="btn btn-secondary">Vissza a listához</a>
+                <a href="crud" class="btn btn-secondary">Vissza a listához</a>
             </div>
         <?php
             break;
@@ -214,11 +214,11 @@ switch ($action) {
                 <?php endif; ?>
             </div>
 
-            <form action="index.php?page=crud" method="POST" class="confirm-actions">
+            <form action="index.php" method="POST" class="confirm-actions">
                 <input type="hidden" name="action" value="crud_delete">
                 <input type="hidden" name="id" value="<?= (int)$id ?>">
                 <button type="submit" class="btn btn-danger">Igen, törlés</button>
-                <a href="index.php?page=crud" class="btn btn-secondary">Mégsem</a>
+                <a href="crud" class="btn btn-secondary">Mégsem</a>
             </form>
         </div>
         <?php

@@ -7,11 +7,20 @@ php_value post_max_size 12M
 
 Options -Indexes
 
-<FilesMatch "\.(sql|md|log)$">
+<FilesMatch "\.(sql|md|log|inc\.php)$">
     Require all denied
 </FilesMatch>
 
 <IfModule mod_rewrite.c>
     RewriteEngine On
+
+    # Ne írjuk át a valóban létező fájlokat és mappákat (css, js, uploads, videos)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # URL rewrite: /kepek → index.php?kepek, /crud&action=uj → index.php?crud&action=uj
+    RewriteRule ^(.+)$ index.php?$1 [L,QSA]
+
+    # PHP futtatás tiltása az uploads mappában
     RewriteRule ^uploads/.*\.php$ - [F,L]
 </IfModule>
